@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AegisTrap — Deception Console</title>
+<style>
+  :root {
+    --bg: #0b0e14;
+    --bg-raised: #121722;
+    --bg-hover: #1a2130;
+    --border: #232b3a;
+    --text: #e4e8f0;
+    --text-dim: #8b95a8;
+    --text-faint: #5a6478;
+    --accent: #4a9eff;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+    --critical: #ff4d5e;
+    --high: #ff8a3d;
+    --medium: #ffc93d;
+    --low: #4ad4a8;
+    --info: #6b7688;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  header {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 22px; border-bottom: 1px solid var(--border);
+    background: var(--bg-raised); position: sticky; top: 0; z-index: 20;
+  }
+  .brand { font-weight: 650; letter-spacing: -0.2px; font-size: 15px; }
+  .brand span { color: var(--accent); }
+  .sub { color: var(--text-faint); font-size: 12px; }
+  .spacer { flex: 1; }
+  .pill {
+    font: 11px/1 var(--mono); padding: 5px 9px; border-radius: 5px;
+    background: var(--bg-hover); border: 1px solid var(--border); color: var(--text-dim);
+    white-space: nowrap;
+  }
+  button {
+    font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 6px;
+    background: var(--bg-hover); color: var(--text); border: 1px solid var(--border);
+    cursor: pointer;
+  }
+  button:hover { background: #222b3d; border-color: #33405a; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #061019; font-weight: 600; }
+  button.primary:hover { background: #6cb0ff; }
+
+  nav { display: flex; gap: 4px; padding: 0 22px; border-bottom: 1px solid var(--border); background: var(--bg-raised); }
+  nav button {
+    background: none; border: none; border-bottom: 2px solid transparent;
+    border-radius: 0; padding: 11px 14px; color: var(--text-dim); font-size: 13px;
+  }
+  nav button:hover { color: var(--text); background: none; }
+  nav button.active { color: var(--text); border-bottom-color: var(--accent); font-weight: 600; }
+
+  main { padding: 22px; max-width: 1600px; margin: 0 auto; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .card { background: var(--bg-raised); border: 1px solid var(--border); border-radius: 9px; padding: 14px 16px; }
+  .card .k { color: var(--text-faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .card .v { font-size: 26px; font-weight: 650; margin-top: 5px; letter-spacing: -0.5px; }
+  .card .n { color: var(--text-faint); font-size: 11px; margin-top: 3px; font-family: var(--mono); }
+
+  .panel { background: var(--bg-raised); border: 1px solid var(--border); border-radius: 9px; overflow: hidden; margin-bottom: 18px; }
+  .panel > h2 {
+    margin: 0; padding: 12px 16px; font-size: 12px; text-transform: uppercase;
+    letter-spacing: 0.7px; color: var(--text-dim); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .panel-body { padding: 14px 16px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left; padding: 9px 12px; color: var(--text-faint); font-weight: 600;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+  td { padding: 9px 12px; border-bottom: 1px solid #1a2029; vertical-align: top; }
+  tbody tr:hover { background: var(--bg-hover); }
+  tbody tr.clickable { cursor: pointer; }
+  .mono { font-family: var(--mono); font-size: 12px; }
+  .dim { color: var(--text-dim); }
+  .faint { color: var(--text-faint); }
+  .nowrap { white-space: nowrap; }
+  .truncate { max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .tag {
+    display: inline-block; font: 11px/1.4 var(--mono); padding: 2px 7px;
+    border-radius: 4px; background: var(--bg-hover); border: 1px solid var(--border);
+    color: var(--text-dim); margin: 1px 3px 1px 0;
+  }
+  .tag.p-ai_agent { color: #d78cff; border-color: #4a2d63; background: #241733; }
+  .tag.p-skilled_human { color: #ff8a3d; border-color: #5c3418; background: #2b1a0c; }
+  .tag.p-scanner { color: #ffc93d; border-color: #5a4a12; background: #2a2408; }
+  .tag.p-script_kiddie { color: #6cb0ff; border-color: #1f3b5c; background: #0f1e2e; }
+  .tag.p-benign { color: #4ad4a8; border-color: #1a4a3a; background: #0c241c; }
+  .tag.p-unknown { color: var(--text-faint); }
+
+  .sev { font-weight: 650; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+  .sev.critical { color: var(--critical); }
+  .sev.high { color: var(--high); }
+  .sev.medium { color: var(--medium); }
+  .sev.low { color: var(--low); }
+  .sev.informational { color: var(--info); }
+
+  .bar { height: 6px; border-radius: 3px; background: var(--bg-hover); overflow: hidden; min-width: 60px; }
+  .bar > i { display: block; height: 100%; background: var(--accent); }
+
+  .status-2xx { color: #4ad4a8; }
+  .status-4xx { color: var(--medium); }
+  .status-5xx { color: var(--critical); }
+  .status-3xx { color: var(--accent); }
+
+  .gen-llm { color: #d78cff; }
+  .gen-template { color: var(--text-faint); }
+  .gen-llm-cache { color: #8cc9ff; }
+
+  pre {
+    margin: 0; font-family: var(--mono); font-size: 12px; line-height: 1.55;
+    background: #0a0d13; border: 1px solid var(--border); border-radius: 7px;
+    padding: 12px; overflow-x: auto; white-space: pre-wrap; word-break: break-word;
+    color: #c9d1e1; max-height: 480px; overflow-y: auto;
+  }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 1100px) { .split { grid-template-columns: 1fr; } }
+
+  .empty { padding: 34px 16px; text-align: center; color: var(--text-faint); font-size: 13px; }
+  .back { margin-bottom: 14px; }
+  .kv { display: grid; grid-template-columns: 190px 1fr; gap: 7px 14px; font-size: 13px; }
+  .kv .k { color: var(--text-faint); }
+  ul.sig { margin: 4px 0 0; padding-left: 18px; color: var(--text-dim); font-size: 12px; }
+  .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .md h1, .md h2 { font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">Aegis<span>Trap</span> Deception Console</div>
+    <div class="sub">LLM-powered adaptive API honeypot</div>
+  </div>
+  <div class="spacer"></div>
+  <span class="pill" id="pill-provider">provider: —</span>
+  <span class="pill" id="pill-persona">api: —</span>
+  <span class="pill" id="pill-adaptive">adaptive: —</span>
+  <button id="btn-sweep">Run sweep</button>
+  <button id="btn-refresh" class="primary">Refresh</button>
+</header>
+
+<nav>
+  <button data-view="overview" class="active">Overview</button>
+  <button data-view="sessions">Sessions</button>
+  <button data-view="reports">Reports</button>
+  <button data-view="policy">Policy matrix</button>
+</nav>
+
+<main>
+  <section id="view-overview" class="view active">
+    <div class="cards" id="ov-cards"></div>
+    <div class="split">
+      <div class="panel">
+        <h2>Attacker personas observed</h2>
+        <div class="panel-body" id="ov-personas"></div>
+      </div>
+      <div class="panel">
+        <h2>Engine and reporter</h2>
+        <div class="panel-body" id="ov-engine"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Most recent sessions</h2>
+      <div id="ov-recent"></div>
+    </div>
+  </section>
+
+  <section id="view-sessions" class="view">
+    <div id="sessions-list">
+      <div class="panel">
+        <h2>Sessions <span class="faint" id="sessions-count"></span></h2>
+        <div id="sessions-table"></div>
+      </div>
+    </div>
+    <div id="session-detail" style="display:none"></div>
+  </section>
+
+  <section id="view-reports" class="view">
+    <div id="reports-list">
+      <div class="panel">
+        <h2>Generated threat-intelligence reports</h2>
+        <div id="reports-table"></div>
+      </div>
+    </div>
+    <div id="report-detail" style="display:none"></div>
+  </section>
+
+  <section id="view-policy" class="view">
+    <div class="panel">
+      <h2>Deception policy by attacker persona</h2>
+      <div id="policy-table"></div>
+    </div>
+    <div class="panel">
+      <h2>Seeded weakness catalogue</h2>
+      <div id="catalogue-table"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+const token = new URLSearchParams(location.search).get("token") || "";
+const api = (path) => fetch(`/dashboard/api${path}`, {
+  headers: token ? { "X-Dashboard-Token": token } : {},
+}).then(r => r.json());
+const post = (path) => fetch(`/dashboard/api${path}`, {
+  method: "POST", headers: token ? { "X-Dashboard-Token": token } : {},
+}).then(r => r.json());
+
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, c =>
+  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const ago = (ts) => {
+  if (!ts) return "—";
+  const d = Date.now() / 1000 - ts;
+  if (d < 60) return `${Math.max(0, Math.round(d))}s ago`;
+  if (d < 3600) return `${Math.round(d / 60)}m ago`;
+  if (d < 86400) return `${Math.round(d / 3600)}h ago`;
+  return `${Math.round(d / 86400)}d ago`;
+};
+const statusClass = (s) => s >= 500 ? "status-5xx" : s >= 400 ? "status-4xx"
+  : s >= 300 ? "status-3xx" : "status-2xx";
+const personaTag = (p, label) =>
+  `<span class="tag p-${esc(p)}">${esc(label || p)}</span>`;
+
+let view = "overview";
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => {
+  view = b.dataset.view;
+  document.querySelectorAll("nav button").forEach(x => x.classList.toggle("active", x === b));
+  document.querySelectorAll(".view").forEach(v =>
+    v.classList.toggle("active", v.id === `view-${view}`));
+  render();
+});
+document.getElementById("btn-refresh").onclick = () => render();
+document.getElementById("btn-sweep").onclick = async () => {
+  const r = await post("/sweep");
+  document.getElementById("btn-sweep").textContent =
+    `closed ${r.closed ?? 0} / ${r.reports ?? 0} reports`;
+  setTimeout(() => { document.getElementById("btn-sweep").textContent = "Run sweep"; }, 2600);
+  render();
+};
+
+async function render() {
+  if (view === "overview") await renderOverview();
+  if (view === "sessions") await renderSessions();
+  if (view === "reports") await renderReports();
+  if (view === "policy") await renderPolicy();
+}
+
+async function renderChrome(ov) {
+  document.getElementById("pill-provider").textContent =
+    `engine: ${ov.engine.provider}${ov.engine.generative ? ` (${ov.engine.model})` : " — deterministic"}`;
+  document.getElementById("pill-persona").textContent = `api: ${ov.config.persona}`;
+  document.getElementById("pill-adaptive").textContent =
+    `adaptive: ${ov.config.adaptive_deception ? "on" : "off"} · profiler: ${ov.config.profiler_mode}`;
+}
+
+async function renderOverview() {
+  const ov = await api("/overview");
+  if (ov.error) return;
+  renderChrome(ov);
+  const s = ov.stats;
+  document.getElementById("ov-cards").innerHTML = [
+    ["Sessions", s.sessions, `${ov.active_sessions} active`],
+    ["Requests captured", s.requests, `${s.avg_latency_ms} ms mean`],
+    ["Reports generated", s.reports, ov.reporter.generative ? "LLM narrative" : "rule-based"],
+    ["LLM calls", s.llm_calls, `${s.llm_tokens} tokens`],
+    ["Cache hit rate", `${Math.round((ov.engine.cache.hit_rate || 0) * 100)}%`,
+      `${ov.engine.cache.entries} entries`],
+    ["State contradictions", s.consistency_violations, "repaired before send"],
+  ].map(([k, v, n]) =>
+    `<div class="card"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div>
+     <div class="n">${esc(n)}</div></div>`).join("");
+
+  const total = ov.persona_breakdown.reduce((a, p) => a + p.count, 0) || 1;
+  document.getElementById("ov-personas").innerHTML = ov.persona_breakdown.length
+    ? ov.persona_breakdown.map(p => `
+      <div class="row" style="margin-bottom:9px">
+        <div style="width:150px">${personaTag(p.persona, p.label)}</div>
+        <div class="bar" style="flex:1"><i style="width:${(p.count / total * 100).toFixed(1)}%"></i></div>
+        <div class="mono dim" style="width:34px;text-align:right">${p.count}</div>
+      </div>`).join("")
+    : '<div class="faint">No sessions captured yet.</div>';
+
+  document.getElementById("ov-engine").innerHTML = `<div class="kv">
+    <div class="k">Response provider</div><div class="mono">${esc(ov.engine.provider)} / ${esc(ov.engine.model)}</div>
+    <div class="k">Generation calls</div><div class="mono">${ov.engine.calls} (${ov.engine.failures} failed)</div>
+    <div class="k">Reporter provider</div><div class="mono">${esc(ov.reporter.provider)}</div>
+    <div class="k">Reports written</div><div class="mono">${ov.reporter.generated}</div>
+    <div class="k">Invalid tags dropped</div><div class="mono">${ov.reporter.dropped_invalid_tags}</div>
+    <div class="k">Fingerprint evasion</div><div class="mono">${ov.evasion.enabled ? `on (epoch ${ov.evasion.current_epoch})` : "off"}</div>
+    <div class="k">Sweeps run</div><div class="mono">${ov.sweeper.sweeps ?? 0}</div>
+    <div class="k">Idle timeout</div><div class="mono">${ov.config.session_idle_seconds}s</div>
+  </div>`;
+
+  const list = await api("/sessions?limit=8");
+  document.getElementById("ov-recent").innerHTML = sessionTable(list.items || [], false);
+  wireSessionRows();
+}
+
+function sessionTable(items, showTag) {
+  if (!items.length) return '<div class="empty">No sessions captured yet.</div>';
+  return `<table><thead><tr>
+    <th>Last seen</th><th>Source</th><th>Persona</th><th>Conf.</th><th>Reqs</th>
+    <th>Client</th><th>LLM</th><th>State</th><th></th>
+  </tr></thead><tbody>${items.map(s => `
+    <tr class="clickable" data-session="${esc(s.id)}">
+      <td class="nowrap faint">${esc(ago(s.last_seen))}</td>
+      <td class="mono">${esc(s.source_ip || "—")}</td>
+      <td>${personaTag(s.persona, s.persona_label)}${
+        s.ground_truth_persona && s.ground_truth_persona !== s.persona
+          ? `<span class="tag" title="seeded ground truth">gt: ${esc(s.ground_truth_persona)}</span>` : ""}</td>
+      <td class="mono dim">${(s.persona_confidence ?? 0).toFixed(2)}</td>
+      <td class="mono">${s.requests}</td>
+      <td class="mono dim truncate">${esc(s.user_agent || "none")}</td>
+      <td class="mono dim">${s.llm_calls}/${s.llm_tokens}t</td>
+      <td class="mono ${s.consistency_violations ? "status-4xx" : "dim"}">${s.consistency_violations}</td>
+      <td class="faint nowrap">${s.closed ? (s.reported ? "reported" : "closed") : "live"}</td>
+    </tr>`).join("")}</tbody></table>`;
+}
+
+function wireSessionRows() {
+  document.querySelectorAll("tr[data-session]").forEach(tr =>
+    tr.onclick = () => openSession(tr.dataset.session));
+}
+
+async function renderSessions() {
+  document.getElementById("session-detail").style.display = "none";
+  document.getElementById("sessions-list").style.display = "";
+  const list = await api("/sessions?limit=200");
+  const items = list.items || [];
+  document.getElementById("sessions-count").textContent = `(${items.length})`;
+  document.getElementById("sessions-table").innerHTML = sessionTable(items, true);
+  wireSessionRows();
+}
+
+async function openSession(id) {
+  const d = await api(`/sessions/${id}`);
+  if (d.error) return;
+  document.querySelectorAll("nav button").forEach(x =>
+    x.classList.toggle("active", x.dataset.view === "sessions"));
+  document.querySelectorAll(".view").forEach(v =>
+    v.classList.toggle("active", v.id === "view-sessions"));
+  view = "sessions";
+  document.getElementById("sessions-list").style.display = "none";
+  const el = document.getElementById("session-detail");
+  el.style.display = "";
+  const s = d.session, a = d.analysis;
+
+  const scores = Object.entries(d.persona_scores || {})
+    .sort((x, y) => y[1] - x[1]);
+
+  el.innerHTML = `
+  <div class="back"><button onclick="renderSessions()">&larr; All sessions</button>
+    <button class="primary" onclick="forceReport('${esc(s.id)}')">Generate report now</button></div>
+  <div class="split">
+    <div class="panel"><h2>Session</h2><div class="panel-body"><div class="kv">
+      <div class="k">Session ID</div><div class="mono">${esc(s.id)}</div>
+      <div class="k">Source</div><div class="mono">${esc(s.source_ip || "—")}</div>
+      <div class="k">User-Agent</div><div class="mono" style="word-break:break-all">${esc(s.user_agent || "none")}</div>
+      <div class="k">Classification</div><div>${personaTag(s.persona, s.persona_label)}
+        <span class="mono dim">confidence ${(s.persona_confidence ?? 0).toFixed(3)}</span></div>
+      ${s.ground_truth_persona ? `<div class="k">Seeded ground truth</div><div class="mono">${esc(s.ground_truth_persona)}</div>` : ""}
+      <div class="k">Requests</div><div class="mono">${s.requests} over ${s.duration_seconds}s</div>
+      <div class="k">LLM usage</div><div class="mono">${s.llm_calls} calls, ${s.llm_tokens} tokens</div>
+      <div class="k">State contradictions</div><div class="mono">${s.consistency_violations}</div>
+      <div class="k">Severity assessed</div><div class="sev ${esc(a.severity)}">${esc(a.severity)}</div>
+    </div>
+    ${(s.signals || []).length ? `<div style="margin-top:12px"><div class="k faint" style="font-size:11px;text-transform:uppercase;letter-spacing:.6px">Classification signals</div>
+      <ul class="sig">${s.signals.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
+    </div></div>
+
+    <div class="panel"><h2>Persona scoring</h2><div class="panel-body">
+      ${scores.map(([k, v]) => `<div class="row" style="margin-bottom:8px">
+        <div style="width:150px">${personaTag(k, k)}</div>
+        <div class="bar" style="flex:1"><i style="width:${Math.max(0, Math.min(100, v * 100)).toFixed(1)}%"></i></div>
+        <div class="mono dim" style="width:52px;text-align:right">${(v ?? 0).toFixed(3)}</div>
+      </div>`).join("") || '<div class="faint">No scores recorded.</div>'}
+      <div style="margin-top:14px"><div class="k faint" style="font-size:11px;text-transform:uppercase;letter-spacing:.6px">ATT&amp;CK techniques</div>
+        <div style="margin-top:6px">${(a.attack_techniques || []).map(t =>
+          `<span class="tag" title="${esc(t.name)}">${esc(t.id)}</span>`).join("") || '<span class="faint">none</span>'}</div></div>
+      <div style="margin-top:12px"><div class="k faint" style="font-size:11px;text-transform:uppercase;letter-spacing:.6px">OWASP API</div>
+        <div style="margin-top:6px">${(a.owasp_api || []).map(c =>
+          `<span class="tag">${esc(c)}</span>`).join("") || '<span class="faint">none</span>'}</div></div>
+    </div></div>
+  </div>
+
+  ${(a.exposed_weaknesses || []).length ? `<div class="panel"><h2>Weaknesses exposed</h2>
+    <table><thead><tr><th>Weakness</th><th>Severity</th><th>OWASP API</th><th>CWE</th></tr></thead>
+    <tbody>${a.exposed_weaknesses.map(w => `<tr>
+      <td>${esc(w.title)}</td><td class="sev ${esc(w.severity)}">${esc(w.severity)}</td>
+      <td class="mono">${esc(w.owasp_api.id)}</td><td class="mono">${esc(w.cwe.id)}</td>
+    </tr>`).join("")}</tbody></table></div>` : ""}
+
+  <div class="panel"><h2>Request transcript</h2>
+    <table><thead><tr><th>#</th><th>Request</th><th>Status</th><th>Rendered by</th>
+      <th>Latency</th><th>Persona then</th><th>Weaknesses</th></tr></thead>
+    <tbody>${(d.events || []).map(e => `<tr class="clickable" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none'">
+        <td class="mono faint">${e.seq}</td>
+        <td class="mono truncate" style="max-width:420px">${esc(e.method)} ${esc(e.path)}${e.query ? "?" + esc(e.query) : ""}</td>
+        <td class="mono ${statusClass(e.status)}">${e.status}</td>
+        <td class="mono gen-${esc(String(e.generator).replace(".", "-"))}">${esc(e.generator)}</td>
+        <td class="mono dim">${e.latency_ms}ms</td>
+        <td>${personaTag(e.persona_at_time, e.persona_at_time)}</td>
+        <td>${(e.weaknesses || []).map(w => `<span class="tag">${esc(w)}</span>`).join("") || ""}</td>
+      </tr>
+      <tr style="display:none"><td colspan="7">
+        ${e.body ? `<div class="k faint" style="font-size:11px">REQUEST BODY</div><pre>${esc(e.body)}</pre>` : ""}
+        <div class="k faint" style="font-size:11px;margin-top:8px">RESPONSE</div><pre>${esc(e.response)}</pre>
+      </td></tr>`).join("")}</tbody></table></div>
+
+  ${(d.reports || []).length ? `<div class="panel"><h2>Reports for this session</h2>
+    <table><thead><tr><th>Created</th><th>Severity</th><th>Generator</th><th>Confidence</th></tr></thead>
+    <tbody>${d.reports.map(r => `<tr class="clickable" onclick="openReport('${esc(r.id)}')">
+      <td class="faint">${esc(ago(r.created_at))}</td>
+      <td class="sev ${esc(r.severity)}">${esc(r.severity)}</td>
+      <td class="mono dim">${esc(r.generator)}</td>
+      <td class="mono">${(r.confidence ?? 0).toFixed(2)}</td>
+    </tr>`).join("")}</tbody></table></div>` : ""}`;
+}
+
+async function forceReport(id) {
+  const r = await post(`/sessions/${id}/report`);
+  if (r.error) return;
+  alert(`Report generated — severity ${r.severity} via ${r.generator}\n${r.yaml_path || ""}`);
+  openSession(id);
+}
+
+async function renderReports() {
+  document.getElementById("report-detail").style.display = "none";
+  document.getElementById("reports-list").style.display = "";
+  const list = await api("/reports?limit=100");
+  const items = list.items || [];
+  document.getElementById("reports-table").innerHTML = items.length
+    ? `<table><thead><tr><th>Created</th><th>Severity</th><th>Title</th>
+        <th>ATT&amp;CK</th><th>OWASP API</th><th>Generator</th></tr></thead>
+      <tbody>${items.map(r => `<tr class="clickable" onclick="openReport('${esc(r.id)}')">
+        <td class="faint nowrap">${esc(ago(r.created_at))}</td>
+        <td class="sev ${esc(r.severity)}">${esc(r.severity)}</td>
+        <td class="truncate" style="max-width:420px">${esc(r.title)}</td>
+        <td>${(r.techniques || []).slice(0, 5).map(t => `<span class="tag">${esc(t)}</span>`).join("")}${
+          (r.techniques || []).length > 5 ? `<span class="faint">+${r.techniques.length - 5}</span>` : ""}</td>
+        <td>${(r.owasp_api || []).slice(0, 3).map(t => `<span class="tag">${esc(t)}</span>`).join("")}</td>
+        <td class="mono dim">${esc(r.generator)}</td>
+      </tr>`).join("")}</tbody></table>`
+    : '<div class="empty">No reports yet. Sessions are reported once they go idle, or use “Generate report now”.</div>';
+}
+
+async function openReport(id) {
+  const r = await api(`/reports/${id}`);
+  if (r.error) return;
+  document.querySelectorAll("nav button").forEach(x =>
+    x.classList.toggle("active", x.dataset.view === "reports"));
+  document.querySelectorAll(".view").forEach(v =>
+    v.classList.toggle("active", v.id === "view-reports"));
+  view = "reports";
+  document.getElementById("reports-list").style.display = "none";
+  const el = document.getElementById("report-detail");
+  el.style.display = "";
+  el.innerHTML = `
+    <div class="back"><button onclick="renderReports()">&larr; All reports</button>
+      <button onclick="openSession('${esc(r.session_id)}')">View session</button></div>
+    <div class="panel"><h2>Report ${esc(r.id.slice(0, 8))}
+      <span class="sev ${esc(r.severity)}">${esc(r.severity)}</span>
+      <span class="faint">via ${esc(r.generator)}</span></h2>
+      <div class="panel-body"><pre class="md">${esc(r.markdown)}</pre></div></div>
+    <div class="panel"><h2>Structured document (YAML-equivalent)</h2>
+      <div class="panel-body"><pre>${esc(JSON.stringify(r.document, null, 2))}</pre></div></div>`;
+}
+
+async function renderPolicy() {
+  const p = await api("/policies");
+  document.getElementById("policy-table").innerHTML =
+    `<table><thead><tr><th>Persona</th><th>Error verbosity</th><th>BOLA leak</th>
+      <th>LLM</th><th>Detail</th><th>Page cap</th><th>Rationale</th><th>Unlocked</th></tr></thead>
+    <tbody>${(p.policies || []).map(x => `<tr>
+      <td>${personaTag(x.persona, x.persona)}</td>
+      <td class="mono">${esc(x.error_verbosity)}</td>
+      <td class="mono">${(x.idor_leak_probability * 100).toFixed(0)}%</td>
+      <td class="mono ${x.use_llm ? "" : "faint"}">${x.use_llm ? "yes" : "no"}</td>
+      <td class="mono dim">${esc(x.narrative_richness)}</td>
+      <td class="mono dim">${x.max_page_size}</td>
+      <td class="dim" style="max-width:340px">${esc(x.rationale)}</td>
+      <td class="mono dim">${(x.unlocked_weaknesses || []).length}</td>
+    </tr>`).join("")}</tbody></table>`;
+
+  document.getElementById("catalogue-table").innerHTML =
+    `<table><thead><tr><th>ID</th><th>Weakness</th><th>Severity</th>
+      <th>OWASP API</th><th>CWE</th><th>Min skill rank</th></tr></thead>
+    <tbody>${(p.catalogue || []).map(w => `<tr>
+      <td class="mono dim">${esc(w.id)}</td>
+      <td>${esc(w.title)}</td>
+      <td class="sev ${esc(w.severity)}">${esc(w.severity)}</td>
+      <td class="mono">${esc(w.owasp_api)}</td>
+      <td class="mono dim">${esc(w.cwe)}</td>
+      <td class="mono">${w.min_persona_rank}</td>
+    </tr>`).join("")}</tbody></table>`;
+}
+
+render();
+setInterval(() => { if (
+  document.getElementById("session-detail").style.display === "none" &&
+  document.getElementById("report-detail").style.display === "none"
+) render(); }, 6000);
+</script>
+</body>
+</html>

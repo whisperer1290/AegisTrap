@@ -1,0 +1,45 @@
+{
+  "ground_truth_persona": "script_kiddie",
+  "notes": "Replay with: python scripts/replay_synthetic.py --persona script_kiddie",
+  "steps": [
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "headers": {
+        "user-agent": "curl/8.4.0"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/1' OR '1'='1",
+      "headers": {
+        "user-agent": "python-requests/2.31.0"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts/1001",
+      "headers": {
+        "user-agent": "curl/8.4.0"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "headers": {
+        "user-agent": "curl/8.4.0"
+      },
+      "json": {
+        "email": "admin@example.com",
+        "password": "admin123"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-keys",
+      "headers": {
+        "user-agent": "curl/8.4.0"
+      }
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "seed": 20260831,
+  "per_persona": 12,
+  "personas": [
+    "benign",
+    "script_kiddie",
+    "scanner",
+    "skilled_human",
+    "ai_agent"
+  ],
+  "files": {
+    "world_fintech.json": "Deterministic Northwind Capital fake world + login credentials",
+    "world_ecommerce.json": "Deterministic Northwind Shop fake world + login credentials",
+    "sessions.jsonl": "Labelled synthetic sessions with features and truncated transcripts",
+    "feature_matrix.csv": "Numeric feature matrix for the ML comparison arm",
+    "payload_catalogue.json": "Payload-family detection fixtures",
+    "http/*.json": "HTTP replay scripts per persona, for a live decoy"
+  },
+  "heuristic_agreement_on_this_export": {
+    "n": 60,
+    "matches": 57,
+    "accuracy": 0.95
+  },
+  "fintech_login_example": {
+    "email": "a.alrashid.1@example.com",
+    "password": "admin123",
+    "role": "customer",
+    "note": "Valid only against a world seeded from session id synthetic-fintech-fixture, or after GET /health in a fresh session whose users you read from the store. Against a live decoy, log in with credentials from THAT session's world (see dashboard or data/aegistrap.sqlite3)."
+  }
+}

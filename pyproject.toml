@@ -1,0 +1,61 @@
+[project]
+name = "aegistrap"
+version = "1.0.0"
+description = "LLM-powered adaptive API honeypot with attacker profiling and threat-intel auto-reporting"
+requires-python = ">=3.11"
+readme = "README.md"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+aegistrap = "aegistrap.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["aegistrap*"]
+
+[tool.setuptools.package-data]
+aegistrap = ["static/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+# The decoy layer and reporter are async, so tests are written as coroutines
+# without needing a marker on each one.
+asyncio_mode = "auto"
+addopts = "-q --strict-markers"
+filterwarnings = [
+    "error",
+    # Starlette's TestClient still ships an httpx-based transport.
+    "ignore::DeprecationWarning:starlette.*",
+    "ignore:Using `httpx` with `starlette.testclient`:UserWarning",
+    "default",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "I",    # isort
+    "UP",   # pyupgrade
+    "B",    # bugbear
+    "SIM",  # simplify
+    "C4",   # comprehensions
+    "RUF",
+]
+ignore = [
+    "E501",    # long lines are checked by the formatter's judgement, not hard-failed
+    "B008",    # FastAPI's Depends() in defaults is the documented idiom
+    "RUF012",  # ClassVar annotations on dataclass constants add noise here
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests reach into private helpers deliberately, to test them directly.
+"tests/*" = ["SIM117", "B011"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["aegistrap"]

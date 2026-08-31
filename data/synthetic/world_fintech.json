@@ -1,0 +1,3628 @@
+{
+  "persona": "fintech",
+  "session_id": "synthetic-fintech-fixture",
+  "collections": {
+    "users": [
+      {
+        "id": "usr_2000",
+        "owner_id": "usr_2000",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2000",
+          "email": "b.mensah.0@example.net",
+          "full_name": "Beatriz Mensah",
+          "role": "admin",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0153",
+          "city": "Pune",
+          "kyc_status": "verified",
+          "created_at": "2023-07-02T19:02:01Z",
+          "password_hash": "$2b$12$dbc9e4aaa2b5a3a6295ddc8739c231e",
+          "password_plaintext": "admin123",
+          "risk_score": 0.521,
+          "internal_notes": "Escalated to compliance 2024-11; cleared.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2001",
+        "owner_id": "usr_2001",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2001",
+          "email": "a.alrashid.1@example.com",
+          "full_name": "Adaeze Al-Rashid",
+          "role": "customer",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0164",
+          "city": "Busan",
+          "kyc_status": "verified",
+          "created_at": "2025-01-23T19:02:01Z",
+          "password_hash": "$2b$12$be2c2e20795db0f08c23d6006f45d89",
+          "password_plaintext": "admin123",
+          "risk_score": 0.558,
+          "internal_notes": "No adverse findings.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2002",
+        "owner_id": "usr_2002",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2002",
+          "email": "n.marchetti.2@example.com",
+          "full_name": "Nadia Marchetti",
+          "role": "customer",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0170",
+          "city": "Valencia",
+          "kyc_status": "verified",
+          "created_at": "2024-04-26T19:02:01Z",
+          "password_hash": "$2b$12$7f68f2bbc3e75f9ffc9d4bd57013fca",
+          "password_plaintext": "Password123",
+          "risk_score": 0.714,
+          "internal_notes": "Requested limit increase, pending review.",
+          "aml_flags": [
+            "velocity_review"
+          ]
+        }
+      },
+      {
+        "id": "usr_2003",
+        "owner_id": "usr_2003",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2003",
+          "email": "m.okafor.3@example.com",
+          "full_name": "Mira Okafor",
+          "role": "customer",
+          "status": "suspended",
+          "mfa_enabled": false,
+          "phone": "+1-555-0175",
+          "city": "Tallinn",
+          "kyc_status": "pending",
+          "created_at": "2023-08-06T19:02:01Z",
+          "password_hash": "$2b$12$578ff4760350106bd67f26b4b245acc",
+          "password_plaintext": "letmein",
+          "risk_score": 0.555,
+          "internal_notes": "Device change flagged, resolved by support.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2004",
+        "owner_id": "usr_2004",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2004",
+          "email": "k.vermeulen.4@example.net",
+          "full_name": "Kofi Vermeulen",
+          "role": "support",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0160",
+          "city": "Vilnius",
+          "kyc_status": "verified",
+          "created_at": "2025-12-28T19:02:01Z",
+          "password_hash": "$2b$12$e91d44cb1261d1501d2a352203232fb",
+          "password_plaintext": "Summer2024!",
+          "risk_score": 0.088,
+          "internal_notes": "Escalated to compliance 2024-11; cleared.",
+          "aml_flags": [
+            "velocity_review"
+          ]
+        }
+      },
+      {
+        "id": "usr_2005",
+        "owner_id": "usr_2005",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2005",
+          "email": "j.iyer.5@mail.invalid",
+          "full_name": "Joon Iyer",
+          "role": "customer",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0162",
+          "city": "Busan",
+          "kyc_status": "verified",
+          "created_at": "2024-08-26T19:02:01Z",
+          "password_hash": "$2b$12$b6e5956743c4b53dacf14b57a2eda5a",
+          "password_plaintext": "Password123",
+          "risk_score": 0.111,
+          "internal_notes": "No adverse findings.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2006",
+        "owner_id": "usr_2006",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2006",
+          "email": "h.iyer.6@example.net",
+          "full_name": "Halima Iyer",
+          "role": "customer",
+          "status": "suspended",
+          "mfa_enabled": false,
+          "phone": "+1-555-0139",
+          "city": "Rotterdam",
+          "kyc_status": "verified",
+          "created_at": "2025-10-15T19:02:01Z",
+          "password_hash": "$2b$12$78313b42d0f5539831fa1a5ddf43f36",
+          "password_plaintext": "qwerty123",
+          "risk_score": 0.441,
+          "internal_notes": "Device change flagged, resolved by support.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2007",
+        "owner_id": "usr_2007",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2007",
+          "email": "e.lindqvist.7@example.net",
+          "full_name": "Ewan Lindqvist",
+          "role": "support",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0195",
+          "city": "Turin",
+          "kyc_status": "verified",
+          "created_at": "2022-12-25T19:02:01Z",
+          "password_hash": "$2b$12$3970521c131500c204afbb934e588b3",
+          "password_plaintext": "Password123",
+          "risk_score": 0.583,
+          "internal_notes": "Escalated to compliance 2024-11; cleared.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2008",
+        "owner_id": "usr_2008",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2008",
+          "email": "e.zayed.8@example.net",
+          "full_name": "Ewan Zayed",
+          "role": "customer",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0152",
+          "city": "Amman",
+          "kyc_status": "verified",
+          "created_at": "2023-08-02T19:02:01Z",
+          "password_hash": "$2b$12$af294e302f6a89bec3f2cba218a7f99",
+          "password_plaintext": "admin123",
+          "risk_score": 0.234,
+          "internal_notes": "Device change flagged, resolved by support.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2009",
+        "owner_id": "usr_2009",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2009",
+          "email": "a.park.9@example.com",
+          "full_name": "Adaeze Park",
+          "role": "analyst",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0157",
+          "city": "Bristol",
+          "kyc_status": "verified",
+          "created_at": "2025-09-25T19:02:01Z",
+          "password_hash": "$2b$12$ccd08dce06e7828348f44544356eacd",
+          "password_plaintext": "admin123",
+          "risk_score": 0.449,
+          "internal_notes": "Escalated to compliance 2024-11; cleared.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2010",
+        "owner_id": "usr_2010",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2010",
+          "email": "h.mensah.10@example.com",
+          "full_name": "Halima Mensah",
+          "role": "customer",
+          "status": "suspended",
+          "mfa_enabled": false,
+          "phone": "+1-555-0115",
+          "city": "Vilnius",
+          "kyc_status": "verified",
+          "created_at": "2025-07-18T19:02:01Z",
+          "password_hash": "$2b$12$bdfded2da3bad05615e364a69b2d975",
+          "password_plaintext": "northwind",
+          "risk_score": 0.114,
+          "internal_notes": "No adverse findings.",
+          "aml_flags": []
+        }
+      },
+      {
+        "id": "usr_2011",
+        "owner_id": "usr_2011",
+        "sensitive": true,
+        "data": {
+          "id": "usr_2011",
+          "email": "b.lindqvist.11@example.com",
+          "full_name": "Beatriz Lindqvist",
+          "role": "support",
+          "status": "active",
+          "mfa_enabled": false,
+          "phone": "+1-555-0155",
+          "city": "Bristol",
+          "kyc_status": "verified",
+          "created_at": "2023-11-19T19:02:01Z",
+          "password_hash": "$2b$12$556ee6842c879ae7e651f70acd2b8c9",
+          "password_plaintext": "Welcome1",
+          "risk_score": 0.782,
+          "internal_notes": "No adverse findings.",
+          "aml_flags": []
+        }
+      }
+    ],
+    "accounts": [
+      {
+        "id": "1001",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "1001",
+          "owner_id": "usr_2000",
+          "iban": "XX43NWCB7418768738",
+          "product": "checking",
+          "currency": "USD",
+          "balance_minor": 7486641,
+          "available_minor": 7486213,
+          "status": "frozen",
+          "opened_at": "2024-04-21T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-8",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "ops_desk_2",
+          "risk_band": "C"
+        }
+      },
+      {
+        "id": "1002",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "1002",
+          "owner_id": "usr_2001",
+          "iban": "XX27NWCB7782264939",
+          "product": "credit_line",
+          "currency": "GBP",
+          "balance_minor": 1575822,
+          "available_minor": 1573339,
+          "status": "open",
+          "opened_at": "2023-11-15T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-7",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "ops_desk_2",
+          "risk_band": "B"
+        }
+      },
+      {
+        "id": "1003",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "1003",
+          "owner_id": "usr_2002",
+          "iban": "XX55NWCB3312291963",
+          "product": "checking",
+          "currency": "USD",
+          "balance_minor": 4366300,
+          "available_minor": 4364788,
+          "status": "open",
+          "opened_at": "2025-03-14T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-6",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "",
+          "risk_band": "B"
+        }
+      },
+      {
+        "id": "1004",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "1004",
+          "owner_id": "usr_2003",
+          "iban": "XX52NWCB0630543483",
+          "product": "credit_line",
+          "currency": "EUR",
+          "balance_minor": 1321532,
+          "available_minor": 1321520,
+          "status": "frozen",
+          "opened_at": "2023-10-04T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-1",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "",
+          "risk_band": "B"
+        }
+      },
+      {
+        "id": "1005",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "1005",
+          "owner_id": "usr_2004",
+          "iban": "XX72NWCB8148670715",
+          "product": "savings",
+          "currency": "GBP",
+          "balance_minor": 9027911,
+          "available_minor": 9023984,
+          "status": "frozen",
+          "opened_at": "2023-07-25T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-6",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "",
+          "risk_band": "B"
+        }
+      },
+      {
+        "id": "1006",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "1006",
+          "owner_id": "usr_2005",
+          "iban": "XX10NWCB4884306212",
+          "product": "checking",
+          "currency": "USD",
+          "balance_minor": 8002355,
+          "available_minor": 8001822,
+          "status": "open",
+          "opened_at": "2021-11-13T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-7",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "",
+          "risk_band": "B"
+        }
+      },
+      {
+        "id": "1007",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "1007",
+          "owner_id": "usr_2006",
+          "iban": "XX08NWCB2297676433",
+          "product": "checking",
+          "currency": "EUR",
+          "balance_minor": 5769855,
+          "available_minor": 5767993,
+          "status": "open",
+          "opened_at": "2021-04-24T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-7",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "",
+          "risk_band": "C"
+        }
+      },
+      {
+        "id": "1008",
+        "owner_id": "usr_2007",
+        "sensitive": false,
+        "data": {
+          "id": "1008",
+          "owner_id": "usr_2007",
+          "iban": "XX72NWCB5337809533",
+          "product": "checking",
+          "currency": "GBP",
+          "balance_minor": 4759086,
+          "available_minor": 4755089,
+          "status": "open",
+          "opened_at": "2020-11-10T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-6",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "ops_desk_2",
+          "risk_band": "B"
+        }
+      },
+      {
+        "id": "1009",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "1009",
+          "owner_id": "usr_2008",
+          "iban": "XX89NWCB5985610821",
+          "product": "savings",
+          "currency": "USD",
+          "balance_minor": 7504946,
+          "available_minor": 7501067,
+          "status": "open",
+          "opened_at": "2025-01-10T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-7",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "",
+          "risk_band": "C"
+        }
+      },
+      {
+        "id": "1010",
+        "owner_id": "usr_2009",
+        "sensitive": false,
+        "data": {
+          "id": "1010",
+          "owner_id": "usr_2009",
+          "iban": "XX08NWCB8977198327",
+          "product": "checking",
+          "currency": "GBP",
+          "balance_minor": 7695236,
+          "available_minor": 7694088,
+          "status": "open",
+          "opened_at": "2020-10-26T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-5",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "",
+          "risk_band": "A"
+        }
+      },
+      {
+        "id": "1011",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "1011",
+          "owner_id": "usr_2010",
+          "iban": "XX46NWCB3212066721",
+          "product": "checking",
+          "currency": "USD",
+          "balance_minor": 5284108,
+          "available_minor": 5282162,
+          "status": "open",
+          "opened_at": "2025-07-11T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-7",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "ops_desk_2",
+          "risk_band": "C"
+        }
+      },
+      {
+        "id": "1012",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "1012",
+          "owner_id": "usr_2011",
+          "iban": "XX60NWCB9592202495",
+          "product": "credit_line",
+          "currency": "EUR",
+          "balance_minor": 7870937,
+          "available_minor": 7870116,
+          "status": "open",
+          "opened_at": "2023-08-03T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-6",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "ops_desk_2",
+          "risk_band": "A"
+        }
+      },
+      {
+        "id": "1013",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "1013",
+          "owner_id": "usr_2000",
+          "iban": "XX55NWCB1399660586",
+          "product": "credit_line",
+          "currency": "EUR",
+          "balance_minor": 6919323,
+          "available_minor": 6919003,
+          "status": "frozen",
+          "opened_at": "2022-10-16T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-2",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "",
+          "risk_band": "B"
+        }
+      },
+      {
+        "id": "1014",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "1014",
+          "owner_id": "usr_2001",
+          "iban": "XX57NWCB8394250397",
+          "product": "checking",
+          "currency": "USD",
+          "balance_minor": 841270,
+          "available_minor": 839157,
+          "status": "open",
+          "opened_at": "2023-06-06T19:02:01Z",
+          "ledger_shard": "eu-w1-shard-5",
+          "internal_notes": "Standard retail account.",
+          "overdraft_authorised_by": "ops_desk_2",
+          "risk_band": "C"
+        }
+      }
+    ],
+    "transactions": [
+      {
+        "id": "txn_0024b52f52",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_0024b52f52",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 213379,
+          "currency": "USD",
+          "counterparty_name": "Fernway Clinic",
+          "counterparty_iban": "XX87NWCB2182904595",
+          "category": "insurance",
+          "status": "booked",
+          "booked_at": "2026-06-09T19:02:01Z",
+          "description": "Fernway Clinic Rotterdam",
+          "fraud_score": 0.221,
+          "processor_ref": "PSP-a6a2da37",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_0250ce8a69",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_0250ce8a69",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 1475,
+          "currency": "USD",
+          "counterparty_name": "Fernway Clinic",
+          "counterparty_iban": "XX99NWCB0172997570",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-07-08T19:02:01Z",
+          "description": "Fernway Clinic Valencia",
+          "fraud_score": 0.214,
+          "processor_ref": "PSP-32aa162f",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_04d81cfffb",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_04d81cfffb",
+          "account_id": "1007",
+          "direction": "debit",
+          "amount_minor": 198636,
+          "currency": "EUR",
+          "counterparty_name": "Blue Ibis Cafe",
+          "counterparty_iban": "XX99NWCB6445789452",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-07-19T19:02:01Z",
+          "description": "Blue Ibis Cafe Amman",
+          "fraud_score": 0.206,
+          "processor_ref": "PSP-92941abe",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_06e9373b14",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_06e9373b14",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 9629,
+          "currency": "USD",
+          "counterparty_name": "Waypoint Travel",
+          "counterparty_iban": "XX49NWCB1526636442",
+          "category": "insurance",
+          "status": "pending",
+          "booked_at": "2026-07-09T19:02:01Z",
+          "description": "Waypoint Travel Bristol",
+          "fraud_score": 0.208,
+          "processor_ref": "PSP-a35cbb53",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_092f52ed33",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_092f52ed33",
+          "account_id": "1002",
+          "direction": "debit",
+          "amount_minor": 968,
+          "currency": "GBP",
+          "counterparty_name": "Lumen Utilities",
+          "counterparty_iban": "XX37NWCB9445125709",
+          "category": "groceries",
+          "status": "booked",
+          "booked_at": "2026-06-08T19:02:01Z",
+          "description": "Lumen Utilities Rotterdam",
+          "fraud_score": 0.08,
+          "processor_ref": "PSP-409ed901",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_092ffe9a64",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_092ffe9a64",
+          "account_id": "1003",
+          "direction": "credit",
+          "amount_minor": 547482,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX41NWCB5551056824",
+          "category": "travel",
+          "status": "booked",
+          "booked_at": "2026-08-18T19:02:01Z",
+          "description": "Halcyon Fitness Bergen",
+          "fraud_score": 0.303,
+          "processor_ref": "PSP-60c4715a",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_0b88f09661",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_0b88f09661",
+          "account_id": "1006",
+          "direction": "credit",
+          "amount_minor": 55226,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX26NWCB2468071195",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-07-17T19:02:01Z",
+          "description": "Torvald Hardware Bergen",
+          "fraud_score": 0.151,
+          "processor_ref": "PSP-bfb0cd84",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_0bfb5abcb0",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_0bfb5abcb0",
+          "account_id": "1007",
+          "direction": "debit",
+          "amount_minor": 132135,
+          "currency": "EUR",
+          "counterparty_name": "Meridian Books",
+          "counterparty_iban": "XX04NWCB6061823425",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-07-06T19:02:01Z",
+          "description": "Meridian Books Accra",
+          "fraud_score": 0.223,
+          "processor_ref": "PSP-f9cee9ac",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_116397ab28",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_116397ab28",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 118937,
+          "currency": "USD",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX99NWCB7448308317",
+          "category": "insurance",
+          "status": "booked",
+          "booked_at": "2026-07-01T19:02:01Z",
+          "description": "Cobalt Telecom Bergen",
+          "fraud_score": 0.03,
+          "processor_ref": "PSP-f7e28199",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_11842c4a8d",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_11842c4a8d",
+          "account_id": "1007",
+          "direction": "debit",
+          "amount_minor": 135424,
+          "currency": "EUR",
+          "counterparty_name": "Orchard Pharmacy",
+          "counterparty_iban": "XX37NWCB8434572194",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-07-22T19:02:01Z",
+          "description": "Orchard Pharmacy Valencia",
+          "fraud_score": 0.066,
+          "processor_ref": "PSP-213b96d5",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_1585ae3d79",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_1585ae3d79",
+          "account_id": "1012",
+          "direction": "credit",
+          "amount_minor": 513674,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX79NWCB5418621691",
+          "category": "travel",
+          "status": "booked",
+          "booked_at": "2026-07-18T19:02:01Z",
+          "description": "Meridian Books Busan",
+          "fraud_score": 0.135,
+          "processor_ref": "PSP-37a1e40d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_1788ea2572",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_1788ea2572",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 116921,
+          "currency": "USD",
+          "counterparty_name": "Waypoint Travel",
+          "counterparty_iban": "XX25NWCB7902191435",
+          "category": "dining",
+          "status": "booked",
+          "booked_at": "2026-07-27T19:02:01Z",
+          "description": "Waypoint Travel Pune",
+          "fraud_score": 0.157,
+          "processor_ref": "PSP-7be7db3d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_1a4c124a02",
+        "owner_id": "usr_2007",
+        "sensitive": false,
+        "data": {
+          "id": "txn_1a4c124a02",
+          "account_id": "1008",
+          "direction": "debit",
+          "amount_minor": 91896,
+          "currency": "GBP",
+          "counterparty_name": "Lumen Utilities",
+          "counterparty_iban": "XX79NWCB1223985149",
+          "category": "dining",
+          "status": "booked",
+          "booked_at": "2026-08-02T19:02:01Z",
+          "description": "Lumen Utilities Bristol",
+          "fraud_score": 0.115,
+          "processor_ref": "PSP-409f3460",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_1af5e3044d",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_1af5e3044d",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 72320,
+          "currency": "USD",
+          "counterparty_name": "Lumen Utilities",
+          "counterparty_iban": "XX03NWCB8338609945",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-08-12T19:02:01Z",
+          "description": "Lumen Utilities Rotterdam",
+          "fraud_score": 0.288,
+          "processor_ref": "PSP-d630b556",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_1c8664cdb6",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_1c8664cdb6",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 165518,
+          "currency": "USD",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX32NWCB7350774504",
+          "category": "telecom",
+          "status": "pending",
+          "booked_at": "2026-07-21T19:02:01Z",
+          "description": "Vantage Fuel Rotterdam",
+          "fraud_score": 0.268,
+          "processor_ref": "PSP-8f5a6072",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_1d30d75edf",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_1d30d75edf",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 101758,
+          "currency": "USD",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX06NWCB8665521654",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-06-25T19:02:01Z",
+          "description": "Cobalt Telecom Rotterdam",
+          "fraud_score": 0.051,
+          "processor_ref": "PSP-8d1f76c7",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_1e74d20f47",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_1e74d20f47",
+          "account_id": "1005",
+          "direction": "debit",
+          "amount_minor": 25307,
+          "currency": "GBP",
+          "counterparty_name": "Waypoint Travel",
+          "counterparty_iban": "XX44NWCB1024367511",
+          "category": "dining",
+          "status": "booked",
+          "booked_at": "2026-07-26T19:02:01Z",
+          "description": "Waypoint Travel Pune",
+          "fraud_score": 0.072,
+          "processor_ref": "PSP-70b2a5f6",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_26b4fc086d",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_26b4fc086d",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 152731,
+          "currency": "USD",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX01NWCB4039478453",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-08-14T19:02:01Z",
+          "description": "Cobalt Telecom Bergen",
+          "fraud_score": 0.056,
+          "processor_ref": "PSP-e0671325",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_276416646c",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_276416646c",
+          "account_id": "1012",
+          "direction": "credit",
+          "amount_minor": 253560,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX28NWCB5838527475",
+          "category": "telecom",
+          "status": "booked",
+          "booked_at": "2026-06-08T19:02:01Z",
+          "description": "Torvald Hardware Bergen",
+          "fraud_score": 0.243,
+          "processor_ref": "PSP-a4fbbcda",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_2acc874fa4",
+        "owner_id": "usr_2009",
+        "sensitive": false,
+        "data": {
+          "id": "txn_2acc874fa4",
+          "account_id": "1010",
+          "direction": "debit",
+          "amount_minor": 32250,
+          "currency": "GBP",
+          "counterparty_name": "Blue Ibis Cafe",
+          "counterparty_iban": "XX35NWCB1384431919",
+          "category": "transfer",
+          "status": "pending",
+          "booked_at": "2026-06-30T19:02:01Z",
+          "description": "Blue Ibis Cafe Rotterdam",
+          "fraud_score": 0.301,
+          "processor_ref": "PSP-6946ce1e",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_2b1335a366",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "txn_2b1335a366",
+          "account_id": "1009",
+          "direction": "credit",
+          "amount_minor": 509945,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX17NWCB2007342491",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-08-02T19:02:01Z",
+          "description": "Vantage Fuel Vilnius",
+          "fraud_score": 0.197,
+          "processor_ref": "PSP-c257c5fc",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_2cd3d9e7da",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_2cd3d9e7da",
+          "account_id": "1013",
+          "direction": "debit",
+          "amount_minor": 77720,
+          "currency": "EUR",
+          "counterparty_name": "Orchard Pharmacy",
+          "counterparty_iban": "XX71NWCB6062543244",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-08-10T19:02:01Z",
+          "description": "Orchard Pharmacy Vilnius",
+          "fraud_score": 0.13,
+          "processor_ref": "PSP-d2b0d82f",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_2d34df7c2a",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_2d34df7c2a",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 26203,
+          "currency": "USD",
+          "counterparty_name": "Waypoint Travel",
+          "counterparty_iban": "XX12NWCB5493220950",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-07-01T19:02:01Z",
+          "description": "Waypoint Travel Bristol",
+          "fraud_score": 0.199,
+          "processor_ref": "PSP-b72261c0",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_31df2d3763",
+        "owner_id": "usr_2009",
+        "sensitive": false,
+        "data": {
+          "id": "txn_31df2d3763",
+          "account_id": "1010",
+          "direction": "debit",
+          "amount_minor": 165622,
+          "currency": "GBP",
+          "counterparty_name": "Torvald Hardware",
+          "counterparty_iban": "XX21NWCB9534047705",
+          "category": "health",
+          "status": "booked",
+          "booked_at": "2026-07-25T19:02:01Z",
+          "description": "Torvald Hardware Vilnius",
+          "fraud_score": 0.014,
+          "processor_ref": "PSP-87064b3c",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_33764adc69",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_33764adc69",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 18000,
+          "currency": "USD",
+          "counterparty_name": "Torvald Hardware",
+          "counterparty_iban": "XX71NWCB5395157345",
+          "category": "utilities",
+          "status": "pending",
+          "booked_at": "2026-08-04T19:02:01Z",
+          "description": "Torvald Hardware Accra",
+          "fraud_score": 0.04,
+          "processor_ref": "PSP-9266254e",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_342b7e011d",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "txn_342b7e011d",
+          "account_id": "1004",
+          "direction": "debit",
+          "amount_minor": 237653,
+          "currency": "EUR",
+          "counterparty_name": "Halcyon Fitness",
+          "counterparty_iban": "XX38NWCB7316911384",
+          "category": "transport",
+          "status": "pending",
+          "booked_at": "2026-07-26T19:02:01Z",
+          "description": "Halcyon Fitness Porto",
+          "fraud_score": 0.052,
+          "processor_ref": "PSP-80d75dfa",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_369a51a4e3",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_369a51a4e3",
+          "account_id": "1005",
+          "direction": "debit",
+          "amount_minor": 230003,
+          "currency": "GBP",
+          "counterparty_name": "Ardent Insurance",
+          "counterparty_iban": "XX91NWCB5907221067",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-06-10T19:02:01Z",
+          "description": "Ardent Insurance Vilnius",
+          "fraud_score": 0.114,
+          "processor_ref": "PSP-badcbca1",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_37013ffc4a",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_37013ffc4a",
+          "account_id": "1012",
+          "direction": "credit",
+          "amount_minor": 215713,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX38NWCB9709935143",
+          "category": "telecom",
+          "status": "booked",
+          "booked_at": "2026-08-27T19:02:01Z",
+          "description": "Fernway Clinic Valencia",
+          "fraud_score": 0.107,
+          "processor_ref": "PSP-a8971163",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_38c3e3aeb6",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_38c3e3aeb6",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 172979,
+          "currency": "USD",
+          "counterparty_name": "Fernway Clinic",
+          "counterparty_iban": "XX40NWCB4999906034",
+          "category": "rent",
+          "status": "pending",
+          "booked_at": "2026-07-22T19:02:01Z",
+          "description": "Fernway Clinic Bergen",
+          "fraud_score": 0.152,
+          "processor_ref": "PSP-d71326de",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_38ec85d990",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_38ec85d990",
+          "account_id": "1012",
+          "direction": "debit",
+          "amount_minor": 19945,
+          "currency": "EUR",
+          "counterparty_name": "Kestrel Grocers",
+          "counterparty_iban": "XX09NWCB1726824734",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-08-01T19:02:01Z",
+          "description": "Kestrel Grocers Tallinn",
+          "fraud_score": 0.079,
+          "processor_ref": "PSP-d4a47846",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_3a30d7b7e2",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "txn_3a30d7b7e2",
+          "account_id": "1004",
+          "direction": "credit",
+          "amount_minor": 261664,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX85NWCB3365325645",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-08-16T19:02:01Z",
+          "description": "Stonebridge Rent Turin",
+          "fraud_score": 0.107,
+          "processor_ref": "PSP-7bd90843",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_3ab353a8b3",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_3ab353a8b3",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 153278,
+          "currency": "USD",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX42NWCB9043566889",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-06-22T19:02:01Z",
+          "description": "Vantage Fuel Amman",
+          "fraud_score": 0.113,
+          "processor_ref": "PSP-ef74dced",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_3b125174f7",
+        "owner_id": "usr_2007",
+        "sensitive": false,
+        "data": {
+          "id": "txn_3b125174f7",
+          "account_id": "1008",
+          "direction": "debit",
+          "amount_minor": 184463,
+          "currency": "GBP",
+          "counterparty_name": "Blue Ibis Cafe",
+          "counterparty_iban": "XX08NWCB5049049123",
+          "category": "insurance",
+          "status": "booked",
+          "booked_at": "2026-07-02T19:02:01Z",
+          "description": "Blue Ibis Cafe Pune",
+          "fraud_score": 0.306,
+          "processor_ref": "PSP-7ba5126f",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_3b40a18666",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_3b40a18666",
+          "account_id": "1005",
+          "direction": "debit",
+          "amount_minor": 33364,
+          "currency": "GBP",
+          "counterparty_name": "Orchard Pharmacy",
+          "counterparty_iban": "XX19NWCB1726621446",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-08-02T19:02:01Z",
+          "description": "Orchard Pharmacy Pune",
+          "fraud_score": 0.202,
+          "processor_ref": "PSP-2dc84ccf",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_3b62a0e06a",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_3b62a0e06a",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 224012,
+          "currency": "USD",
+          "counterparty_name": "Kestrel Grocers",
+          "counterparty_iban": "XX21NWCB6668134590",
+          "category": "fuel",
+          "status": "pending",
+          "booked_at": "2026-08-11T19:02:01Z",
+          "description": "Kestrel Grocers Porto",
+          "fraud_score": 0.252,
+          "processor_ref": "PSP-c0f289ca",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_3c952d17fd",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_3c952d17fd",
+          "account_id": "1012",
+          "direction": "debit",
+          "amount_minor": 148447,
+          "currency": "EUR",
+          "counterparty_name": "Blue Ibis Cafe",
+          "counterparty_iban": "XX02NWCB1308892017",
+          "category": "travel",
+          "status": "pending",
+          "booked_at": "2026-06-25T19:02:01Z",
+          "description": "Blue Ibis Cafe Bristol",
+          "fraud_score": 0.293,
+          "processor_ref": "PSP-b89244cc",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_3dcfa6ff71",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_3dcfa6ff71",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 121536,
+          "currency": "USD",
+          "counterparty_name": "Fernway Clinic",
+          "counterparty_iban": "XX11NWCB3561684199",
+          "category": "telecom",
+          "status": "booked",
+          "booked_at": "2026-06-17T19:02:01Z",
+          "description": "Fernway Clinic Amman",
+          "fraud_score": 0.279,
+          "processor_ref": "PSP-1c95c88b",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_3e6084646c",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_3e6084646c",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 116730,
+          "currency": "USD",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX78NWCB9795175728",
+          "category": "insurance",
+          "status": "booked",
+          "booked_at": "2026-07-21T19:02:01Z",
+          "description": "Cobalt Telecom Bristol",
+          "fraud_score": 0.241,
+          "processor_ref": "PSP-49f4e297",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_42f12f2393",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_42f12f2393",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 185058,
+          "currency": "USD",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX57NWCB4075584621",
+          "category": "telecom",
+          "status": "booked",
+          "booked_at": "2026-06-06T19:02:01Z",
+          "description": "Cobalt Telecom Accra",
+          "fraud_score": 0.115,
+          "processor_ref": "PSP-7708916d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_443a4fd47d",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_443a4fd47d",
+          "account_id": "1013",
+          "direction": "debit",
+          "amount_minor": 198762,
+          "currency": "EUR",
+          "counterparty_name": "Lumen Utilities",
+          "counterparty_iban": "XX38NWCB8090644541",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-07-29T19:02:01Z",
+          "description": "Lumen Utilities Amman",
+          "fraud_score": 0.091,
+          "processor_ref": "PSP-9d4f9e57",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_459eb95849",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_459eb95849",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 117201,
+          "currency": "USD",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX48NWCB2035870934",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-07-06T19:02:01Z",
+          "description": "Stonebridge Rent Bergen",
+          "fraud_score": 0.076,
+          "processor_ref": "PSP-5930c692",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_4665758382",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_4665758382",
+          "account_id": "1002",
+          "direction": "credit",
+          "amount_minor": 322216,
+          "currency": "GBP",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX45NWCB8768521001",
+          "category": "transfer",
+          "status": "booked",
+          "booked_at": "2026-06-14T19:02:01Z",
+          "description": "Torvald Hardware Bergen",
+          "fraud_score": 0.045,
+          "processor_ref": "PSP-a7627e2d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_46816ae226",
+        "owner_id": "usr_2007",
+        "sensitive": false,
+        "data": {
+          "id": "txn_46816ae226",
+          "account_id": "1008",
+          "direction": "debit",
+          "amount_minor": 70599,
+          "currency": "GBP",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX09NWCB4084132941",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-07-07T19:02:01Z",
+          "description": "Stonebridge Rent Valencia",
+          "fraud_score": 0.073,
+          "processor_ref": "PSP-83c94a89",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_498dfbf6e8",
+        "owner_id": "usr_2007",
+        "sensitive": false,
+        "data": {
+          "id": "txn_498dfbf6e8",
+          "account_id": "1008",
+          "direction": "debit",
+          "amount_minor": 238113,
+          "currency": "GBP",
+          "counterparty_name": "Cinder & Sons",
+          "counterparty_iban": "XX79NWCB4009600290",
+          "category": "insurance",
+          "status": "pending",
+          "booked_at": "2026-07-04T19:02:01Z",
+          "description": "Cinder & Sons Busan",
+          "fraud_score": 0.147,
+          "processor_ref": "PSP-f2512dc6",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_4aa79819dc",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_4aa79819dc",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 103033,
+          "currency": "USD",
+          "counterparty_name": "Torvald Hardware",
+          "counterparty_iban": "XX25NWCB7973323304",
+          "category": "insurance",
+          "status": "booked",
+          "booked_at": "2026-08-10T19:02:01Z",
+          "description": "Torvald Hardware Pune",
+          "fraud_score": 0.103,
+          "processor_ref": "PSP-0035107d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_4c49f16323",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_4c49f16323",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 79676,
+          "currency": "USD",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX55NWCB1398019757",
+          "category": "transfer",
+          "status": "booked",
+          "booked_at": "2026-07-31T19:02:01Z",
+          "description": "Cobalt Telecom Busan",
+          "fraud_score": 0.238,
+          "processor_ref": "PSP-94e41501",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_4d9e714de7",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_4d9e714de7",
+          "account_id": "1002",
+          "direction": "debit",
+          "amount_minor": 34678,
+          "currency": "GBP",
+          "counterparty_name": "Halcyon Fitness",
+          "counterparty_iban": "XX23NWCB6625157945",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-06-06T19:02:01Z",
+          "description": "Halcyon Fitness Bergen",
+          "fraud_score": 0.245,
+          "processor_ref": "PSP-51ca38de",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_4f51a13c78",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_4f51a13c78",
+          "account_id": "1014",
+          "direction": "debit",
+          "amount_minor": 136895,
+          "currency": "USD",
+          "counterparty_name": "Torvald Hardware",
+          "counterparty_iban": "XX92NWCB3660773814",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-07-04T19:02:01Z",
+          "description": "Torvald Hardware Amman",
+          "fraud_score": 0.064,
+          "processor_ref": "PSP-adbffa8c",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_5159ee140b",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "txn_5159ee140b",
+          "account_id": "1004",
+          "direction": "debit",
+          "amount_minor": 162656,
+          "currency": "EUR",
+          "counterparty_name": "Blue Ibis Cafe",
+          "counterparty_iban": "XX25NWCB7213900691",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-07-06T19:02:01Z",
+          "description": "Blue Ibis Cafe Bergen",
+          "fraud_score": 0.297,
+          "processor_ref": "PSP-de9e4fb1",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_51cb214df7",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_51cb214df7",
+          "account_id": "1001",
+          "direction": "credit",
+          "amount_minor": 596054,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX79NWCB6231181100",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-06-13T19:02:01Z",
+          "description": "Northline Rail Tallinn",
+          "fraud_score": 0.198,
+          "processor_ref": "PSP-fd1b2578",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_54f7431df1",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_54f7431df1",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 11990,
+          "currency": "USD",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX97NWCB8114693514",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-06-17T19:02:01Z",
+          "description": "Stonebridge Rent Bristol",
+          "fraud_score": 0.073,
+          "processor_ref": "PSP-882a29c0",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_59bc09ab06",
+        "owner_id": "usr_2009",
+        "sensitive": false,
+        "data": {
+          "id": "txn_59bc09ab06",
+          "account_id": "1010",
+          "direction": "debit",
+          "amount_minor": 68931,
+          "currency": "GBP",
+          "counterparty_name": "Meridian Books",
+          "counterparty_iban": "XX01NWCB2051611617",
+          "category": "travel",
+          "status": "booked",
+          "booked_at": "2026-07-03T19:02:01Z",
+          "description": "Meridian Books Bristol",
+          "fraud_score": 0.084,
+          "processor_ref": "PSP-c7c6a78a",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_5b6b542102",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "txn_5b6b542102",
+          "account_id": "1009",
+          "direction": "debit",
+          "amount_minor": 28778,
+          "currency": "USD",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX46NWCB9314535377",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-06-28T19:02:01Z",
+          "description": "Stonebridge Rent Turin",
+          "fraud_score": 0.062,
+          "processor_ref": "PSP-569fcb92",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_5cdb764d49",
+        "owner_id": "usr_2009",
+        "sensitive": false,
+        "data": {
+          "id": "txn_5cdb764d49",
+          "account_id": "1010",
+          "direction": "credit",
+          "amount_minor": 594160,
+          "currency": "GBP",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX37NWCB2827607529",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-08-12T19:02:01Z",
+          "description": "Kestrel Grocers Turin",
+          "fraud_score": 0.235,
+          "processor_ref": "PSP-3b9b72a7",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_5cddd33c2f",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_5cddd33c2f",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 23623,
+          "currency": "USD",
+          "counterparty_name": "Kestrel Grocers",
+          "counterparty_iban": "XX80NWCB7054765392",
+          "category": "groceries",
+          "status": "booked",
+          "booked_at": "2026-06-14T19:02:01Z",
+          "description": "Kestrel Grocers Accra",
+          "fraud_score": 0.263,
+          "processor_ref": "PSP-2101ceb4",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_5cf4bdbb13",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_5cf4bdbb13",
+          "account_id": "1005",
+          "direction": "debit",
+          "amount_minor": 49042,
+          "currency": "GBP",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX44NWCB9200438007",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-07-23T19:02:01Z",
+          "description": "Stonebridge Rent Rotterdam",
+          "fraud_score": 0.3,
+          "processor_ref": "PSP-f939e428",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_6044d119ac",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "txn_6044d119ac",
+          "account_id": "1009",
+          "direction": "debit",
+          "amount_minor": 174208,
+          "currency": "USD",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX94NWCB6797957239",
+          "category": "transfer",
+          "status": "booked",
+          "booked_at": "2026-06-16T19:02:01Z",
+          "description": "Stonebridge Rent Turin",
+          "fraud_score": 0.298,
+          "processor_ref": "PSP-a849f68f",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_61f95809fa",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_61f95809fa",
+          "account_id": "1005",
+          "direction": "debit",
+          "amount_minor": 112020,
+          "currency": "GBP",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX16NWCB8806134393",
+          "category": "transfer",
+          "status": "pending",
+          "booked_at": "2026-06-21T19:02:01Z",
+          "description": "Cobalt Telecom Turin",
+          "fraud_score": 0.046,
+          "processor_ref": "PSP-9bdac2a6",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_621dc9d07a",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_621dc9d07a",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 10828,
+          "currency": "USD",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX06NWCB2171266103",
+          "category": "groceries",
+          "status": "booked",
+          "booked_at": "2026-06-20T19:02:01Z",
+          "description": "Vantage Fuel Porto",
+          "fraud_score": 0.126,
+          "processor_ref": "PSP-3ffff367",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_63a53ca37e",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_63a53ca37e",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 33490,
+          "currency": "USD",
+          "counterparty_name": "Lumen Utilities",
+          "counterparty_iban": "XX03NWCB3015827235",
+          "category": "groceries",
+          "status": "booked",
+          "booked_at": "2026-06-20T19:02:01Z",
+          "description": "Lumen Utilities Tallinn",
+          "fraud_score": 0.108,
+          "processor_ref": "PSP-9df1f3a1",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_63eb24a1f0",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_63eb24a1f0",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 197991,
+          "currency": "USD",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX23NWCB4459554342",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-06-20T19:02:01Z",
+          "description": "Vantage Fuel Pune",
+          "fraud_score": 0.01,
+          "processor_ref": "PSP-7288a9b2",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_6484a55f94",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "txn_6484a55f94",
+          "account_id": "1004",
+          "direction": "debit",
+          "amount_minor": 81000,
+          "currency": "EUR",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX63NWCB3638789272",
+          "category": "travel",
+          "status": "booked",
+          "booked_at": "2026-08-17T19:02:01Z",
+          "description": "Stonebridge Rent Valencia",
+          "fraud_score": 0.018,
+          "processor_ref": "PSP-99909eb1",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_6486bff53c",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_6486bff53c",
+          "account_id": "1014",
+          "direction": "debit",
+          "amount_minor": 187598,
+          "currency": "USD",
+          "counterparty_name": "Cinder & Sons",
+          "counterparty_iban": "XX95NWCB5587826526",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-07-23T19:02:01Z",
+          "description": "Cinder & Sons Vilnius",
+          "fraud_score": 0.222,
+          "processor_ref": "PSP-ae358239",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_68f8fb42d9",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_68f8fb42d9",
+          "account_id": "1014",
+          "direction": "credit",
+          "amount_minor": 234840,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX58NWCB5215921536",
+          "category": "dining",
+          "status": "booked",
+          "booked_at": "2026-07-04T19:02:01Z",
+          "description": "Torvald Hardware Rotterdam",
+          "fraud_score": 0.242,
+          "processor_ref": "PSP-170ff94c",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_6c2240e202",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_6c2240e202",
+          "account_id": "1012",
+          "direction": "debit",
+          "amount_minor": 37373,
+          "currency": "EUR",
+          "counterparty_name": "Cinder & Sons",
+          "counterparty_iban": "XX06NWCB3944239753",
+          "category": "travel",
+          "status": "booked",
+          "booked_at": "2026-06-16T19:02:01Z",
+          "description": "Cinder & Sons Turin",
+          "fraud_score": 0.067,
+          "processor_ref": "PSP-a69b4825",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_6ebc23a576",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_6ebc23a576",
+          "account_id": "1012",
+          "direction": "debit",
+          "amount_minor": 83791,
+          "currency": "EUR",
+          "counterparty_name": "Northline Rail",
+          "counterparty_iban": "XX73NWCB1111660887",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-06-23T19:02:01Z",
+          "description": "Northline Rail Porto",
+          "fraud_score": 0.12,
+          "processor_ref": "PSP-b65e2881",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_70ea9e1ea9",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_70ea9e1ea9",
+          "account_id": "1007",
+          "direction": "credit",
+          "amount_minor": 423415,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX80NWCB2690030501",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-07-22T19:02:01Z",
+          "description": "Kestrel Grocers Amman",
+          "fraud_score": 0.159,
+          "processor_ref": "PSP-044b162e",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_72e3fb05a8",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_72e3fb05a8",
+          "account_id": "1002",
+          "direction": "debit",
+          "amount_minor": 28465,
+          "currency": "GBP",
+          "counterparty_name": "Blue Ibis Cafe",
+          "counterparty_iban": "XX54NWCB8290162171",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-07-17T19:02:01Z",
+          "description": "Blue Ibis Cafe Bergen",
+          "fraud_score": 0.26,
+          "processor_ref": "PSP-df848110",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_73c20319cf",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "txn_73c20319cf",
+          "account_id": "1004",
+          "direction": "credit",
+          "amount_minor": 365618,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX36NWCB1227980486",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-08-22T19:02:01Z",
+          "description": "Fernway Clinic Vilnius",
+          "fraud_score": 0.064,
+          "processor_ref": "PSP-83a45272",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_74afa9f8f2",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_74afa9f8f2",
+          "account_id": "1005",
+          "direction": "debit",
+          "amount_minor": 63201,
+          "currency": "GBP",
+          "counterparty_name": "Kestrel Grocers",
+          "counterparty_iban": "XX58NWCB2161292658",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-08-25T19:02:01Z",
+          "description": "Kestrel Grocers Rotterdam",
+          "fraud_score": 0.2,
+          "processor_ref": "PSP-b87b385d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_74ed07d13d",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_74ed07d13d",
+          "account_id": "1013",
+          "direction": "debit",
+          "amount_minor": 25244,
+          "currency": "EUR",
+          "counterparty_name": "Halcyon Fitness",
+          "counterparty_iban": "XX83NWCB5328369232",
+          "category": "dining",
+          "status": "booked",
+          "booked_at": "2026-06-05T19:02:01Z",
+          "description": "Halcyon Fitness Rotterdam",
+          "fraud_score": 0.186,
+          "processor_ref": "PSP-79a60919",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_78dd947acc",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_78dd947acc",
+          "account_id": "1014",
+          "direction": "credit",
+          "amount_minor": 337340,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX67NWCB4688399026",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-06-11T19:02:01Z",
+          "description": "Fernway Clinic Accra",
+          "fraud_score": 0.073,
+          "processor_ref": "PSP-3091157c",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_79d123ef3c",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_79d123ef3c",
+          "account_id": "1003",
+          "direction": "credit",
+          "amount_minor": 118562,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX22NWCB7721591603",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-06-13T19:02:01Z",
+          "description": "Cinder & Sons Rotterdam",
+          "fraud_score": 0.248,
+          "processor_ref": "PSP-e3970869",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_7a69fd1489",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "txn_7a69fd1489",
+          "account_id": "1009",
+          "direction": "debit",
+          "amount_minor": 46468,
+          "currency": "USD",
+          "counterparty_name": "Cinder & Sons",
+          "counterparty_iban": "XX14NWCB2292537387",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-06-12T19:02:01Z",
+          "description": "Cinder & Sons Vilnius",
+          "fraud_score": 0.163,
+          "processor_ref": "PSP-f013207a",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_7dab3f9188",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_7dab3f9188",
+          "account_id": "1005",
+          "direction": "debit",
+          "amount_minor": 163243,
+          "currency": "GBP",
+          "counterparty_name": "Northline Rail",
+          "counterparty_iban": "XX07NWCB9736122281",
+          "category": "telecom",
+          "status": "pending",
+          "booked_at": "2026-06-24T19:02:01Z",
+          "description": "Northline Rail Porto",
+          "fraud_score": 0.307,
+          "processor_ref": "PSP-d4d6854b",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_826bb6d3e2",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_826bb6d3e2",
+          "account_id": "1012",
+          "direction": "debit",
+          "amount_minor": 182914,
+          "currency": "EUR",
+          "counterparty_name": "Waypoint Travel",
+          "counterparty_iban": "XX63NWCB0995619631",
+          "category": "telecom",
+          "status": "pending",
+          "booked_at": "2026-08-10T19:02:01Z",
+          "description": "Waypoint Travel Porto",
+          "fraud_score": 0.024,
+          "processor_ref": "PSP-7e43f7b5",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_830c943312",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_830c943312",
+          "account_id": "1002",
+          "direction": "credit",
+          "amount_minor": 214020,
+          "currency": "GBP",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX73NWCB2425487254",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-08-14T19:02:01Z",
+          "description": "Lumen Utilities Rotterdam",
+          "fraud_score": 0.158,
+          "processor_ref": "PSP-565291c4",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_83912ea3d0",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_83912ea3d0",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 55376,
+          "currency": "USD",
+          "counterparty_name": "Fernway Clinic",
+          "counterparty_iban": "XX91NWCB9537600218",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-07-29T19:02:01Z",
+          "description": "Fernway Clinic Vilnius",
+          "fraud_score": 0.299,
+          "processor_ref": "PSP-f8022433",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_83ef418b59",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_83ef418b59",
+          "account_id": "1012",
+          "direction": "debit",
+          "amount_minor": 21706,
+          "currency": "EUR",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX30NWCB0991565226",
+          "category": "telecom",
+          "status": "booked",
+          "booked_at": "2026-06-30T19:02:01Z",
+          "description": "Vantage Fuel Tallinn",
+          "fraud_score": 0.238,
+          "processor_ref": "PSP-852d0e83",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_844e134e1d",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_844e134e1d",
+          "account_id": "1013",
+          "direction": "debit",
+          "amount_minor": 78229,
+          "currency": "EUR",
+          "counterparty_name": "Meridian Books",
+          "counterparty_iban": "XX46NWCB7424407298",
+          "category": "dining",
+          "status": "pending",
+          "booked_at": "2026-06-03T19:02:01Z",
+          "description": "Meridian Books Rotterdam",
+          "fraud_score": 0.104,
+          "processor_ref": "PSP-d6648d51",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_84c5b9897d",
+        "owner_id": "usr_2007",
+        "sensitive": false,
+        "data": {
+          "id": "txn_84c5b9897d",
+          "account_id": "1008",
+          "direction": "credit",
+          "amount_minor": 238168,
+          "currency": "GBP",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX45NWCB4046872144",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-06-18T19:02:01Z",
+          "description": "Cobalt Telecom Pune",
+          "fraud_score": 0.11,
+          "processor_ref": "PSP-ccb47a18",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_85cf5282ee",
+        "owner_id": "usr_2009",
+        "sensitive": false,
+        "data": {
+          "id": "txn_85cf5282ee",
+          "account_id": "1010",
+          "direction": "debit",
+          "amount_minor": 199312,
+          "currency": "GBP",
+          "counterparty_name": "Blue Ibis Cafe",
+          "counterparty_iban": "XX36NWCB8523762819",
+          "category": "transfer",
+          "status": "booked",
+          "booked_at": "2026-08-17T19:02:01Z",
+          "description": "Blue Ibis Cafe Turin",
+          "fraud_score": 0.081,
+          "processor_ref": "PSP-41846182",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_89846137bd",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_89846137bd",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 22723,
+          "currency": "USD",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX28NWCB5160520112",
+          "category": "telecom",
+          "status": "pending",
+          "booked_at": "2026-07-16T19:02:01Z",
+          "description": "Vantage Fuel Busan",
+          "fraud_score": 0.269,
+          "processor_ref": "PSP-be3fa092",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_8b434058ac",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "txn_8b434058ac",
+          "account_id": "1009",
+          "direction": "debit",
+          "amount_minor": 5876,
+          "currency": "USD",
+          "counterparty_name": "Ardent Insurance",
+          "counterparty_iban": "XX53NWCB7948977607",
+          "category": "dining",
+          "status": "booked",
+          "booked_at": "2026-06-10T19:02:01Z",
+          "description": "Ardent Insurance Accra",
+          "fraud_score": 0.158,
+          "processor_ref": "PSP-09ffa14d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_8c2065923e",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_8c2065923e",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 102895,
+          "currency": "USD",
+          "counterparty_name": "Ardent Insurance",
+          "counterparty_iban": "XX93NWCB2166081958",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-08-18T19:02:01Z",
+          "description": "Ardent Insurance Bergen",
+          "fraud_score": 0.088,
+          "processor_ref": "PSP-c81191a6",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_8de23a9cb8",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_8de23a9cb8",
+          "account_id": "1014",
+          "direction": "debit",
+          "amount_minor": 158735,
+          "currency": "USD",
+          "counterparty_name": "Ardent Insurance",
+          "counterparty_iban": "XX82NWCB4866763442",
+          "category": "insurance",
+          "status": "pending",
+          "booked_at": "2026-07-19T19:02:01Z",
+          "description": "Ardent Insurance Pune",
+          "fraud_score": 0.211,
+          "processor_ref": "PSP-73f60f08",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_8e683cc4de",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_8e683cc4de",
+          "account_id": "1002",
+          "direction": "debit",
+          "amount_minor": 189878,
+          "currency": "GBP",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX08NWCB7494658018",
+          "category": "insurance",
+          "status": "pending",
+          "booked_at": "2026-08-22T19:02:01Z",
+          "description": "Vantage Fuel Busan",
+          "fraud_score": 0.066,
+          "processor_ref": "PSP-67db5e5c",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_8fe3724040",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_8fe3724040",
+          "account_id": "1013",
+          "direction": "debit",
+          "amount_minor": 170906,
+          "currency": "EUR",
+          "counterparty_name": "Orchard Pharmacy",
+          "counterparty_iban": "XX01NWCB3424550086",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-07-02T19:02:01Z",
+          "description": "Orchard Pharmacy Valencia",
+          "fraud_score": 0.081,
+          "processor_ref": "PSP-8a2a2bc7",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_9005259507",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_9005259507",
+          "account_id": "1002",
+          "direction": "credit",
+          "amount_minor": 317986,
+          "currency": "GBP",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX49NWCB3293779391",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-08-02T19:02:01Z",
+          "description": "Orchard Pharmacy Turin",
+          "fraud_score": 0.225,
+          "processor_ref": "PSP-80fd203a",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_9120523530",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_9120523530",
+          "account_id": "1005",
+          "direction": "credit",
+          "amount_minor": 294200,
+          "currency": "GBP",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX12NWCB5665133874",
+          "category": "telecom",
+          "status": "booked",
+          "booked_at": "2026-08-09T19:02:01Z",
+          "description": "Ardent Insurance Amman",
+          "fraud_score": 0.308,
+          "processor_ref": "PSP-813e12db",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_949318682b",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "txn_949318682b",
+          "account_id": "1009",
+          "direction": "debit",
+          "amount_minor": 216570,
+          "currency": "USD",
+          "counterparty_name": "Halcyon Fitness",
+          "counterparty_iban": "XX61NWCB4066179535",
+          "category": "travel",
+          "status": "booked",
+          "booked_at": "2026-08-30T19:02:01Z",
+          "description": "Halcyon Fitness Turin",
+          "fraud_score": 0.054,
+          "processor_ref": "PSP-a46838cc",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_966afab376",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_966afab376",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 155358,
+          "currency": "USD",
+          "counterparty_name": "Meridian Books",
+          "counterparty_iban": "XX50NWCB8364039383",
+          "category": "utilities",
+          "status": "pending",
+          "booked_at": "2026-07-27T19:02:01Z",
+          "description": "Meridian Books Pune",
+          "fraud_score": 0.029,
+          "processor_ref": "PSP-c8cc3762",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_97fe362f30",
+        "owner_id": "usr_2007",
+        "sensitive": false,
+        "data": {
+          "id": "txn_97fe362f30",
+          "account_id": "1008",
+          "direction": "debit",
+          "amount_minor": 209375,
+          "currency": "GBP",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX96NWCB3385598444",
+          "category": "fuel",
+          "status": "pending",
+          "booked_at": "2026-07-29T19:02:01Z",
+          "description": "Vantage Fuel Porto",
+          "fraud_score": 0.174,
+          "processor_ref": "PSP-a8b14162",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_98290ca39c",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_98290ca39c",
+          "account_id": "1012",
+          "direction": "debit",
+          "amount_minor": 163744,
+          "currency": "EUR",
+          "counterparty_name": "Fernway Clinic",
+          "counterparty_iban": "XX79NWCB1836762959",
+          "category": "travel",
+          "status": "pending",
+          "booked_at": "2026-07-12T19:02:01Z",
+          "description": "Fernway Clinic Amman",
+          "fraud_score": 0.026,
+          "processor_ref": "PSP-a82c36f4",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_99228e5254",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_99228e5254",
+          "account_id": "1007",
+          "direction": "credit",
+          "amount_minor": 310772,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX32NWCB1691490431",
+          "category": "groceries",
+          "status": "booked",
+          "booked_at": "2026-07-31T19:02:01Z",
+          "description": "Meridian Books Turin",
+          "fraud_score": 0.212,
+          "processor_ref": "PSP-e145c72d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_9ab3fe6afa",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_9ab3fe6afa",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 158979,
+          "currency": "USD",
+          "counterparty_name": "Halcyon Fitness",
+          "counterparty_iban": "XX16NWCB7322529497",
+          "category": "health",
+          "status": "booked",
+          "booked_at": "2026-06-23T19:02:01Z",
+          "description": "Halcyon Fitness Tallinn",
+          "fraud_score": 0.247,
+          "processor_ref": "PSP-2d08e571",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_a3d30142d4",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_a3d30142d4",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 105943,
+          "currency": "USD",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX14NWCB0022561122",
+          "category": "groceries",
+          "status": "booked",
+          "booked_at": "2026-08-21T19:02:01Z",
+          "description": "Stonebridge Rent Busan",
+          "fraud_score": 0.262,
+          "processor_ref": "PSP-4aa3bb3f",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_a4fbdc70c1",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_a4fbdc70c1",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 24352,
+          "currency": "USD",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX08NWCB9855182566",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-07-25T19:02:01Z",
+          "description": "Cobalt Telecom Vilnius",
+          "fraud_score": 0.219,
+          "processor_ref": "PSP-01737e10",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_a65a51248b",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_a65a51248b",
+          "account_id": "1013",
+          "direction": "debit",
+          "amount_minor": 124220,
+          "currency": "EUR",
+          "counterparty_name": "Meridian Books",
+          "counterparty_iban": "XX35NWCB6094914879",
+          "category": "dining",
+          "status": "pending",
+          "booked_at": "2026-08-18T19:02:01Z",
+          "description": "Meridian Books Pune",
+          "fraud_score": 0.025,
+          "processor_ref": "PSP-10e5deba",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_a6e84c61d8",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "txn_a6e84c61d8",
+          "account_id": "1004",
+          "direction": "credit",
+          "amount_minor": 55070,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX11NWCB2047284732",
+          "category": "transfer",
+          "status": "booked",
+          "booked_at": "2026-07-27T19:02:01Z",
+          "description": "Kestrel Grocers Pune",
+          "fraud_score": 0.063,
+          "processor_ref": "PSP-5aa1b05f",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_a896b187d4",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_a896b187d4",
+          "account_id": "1013",
+          "direction": "credit",
+          "amount_minor": 314321,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX01NWCB4627143603",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-07-08T19:02:01Z",
+          "description": "Blue Ibis Cafe Rotterdam",
+          "fraud_score": 0.29,
+          "processor_ref": "PSP-6f8c7202",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_aa8aeb0ecc",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "txn_aa8aeb0ecc",
+          "account_id": "1009",
+          "direction": "credit",
+          "amount_minor": 492045,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX44NWCB5650906947",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-08-25T19:02:01Z",
+          "description": "Stonebridge Rent Valencia",
+          "fraud_score": 0.296,
+          "processor_ref": "PSP-73bad6cc",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_ab45366527",
+        "owner_id": "usr_2007",
+        "sensitive": false,
+        "data": {
+          "id": "txn_ab45366527",
+          "account_id": "1008",
+          "direction": "debit",
+          "amount_minor": 231396,
+          "currency": "GBP",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX55NWCB2938496758",
+          "category": "health",
+          "status": "booked",
+          "booked_at": "2026-06-05T19:02:01Z",
+          "description": "Cobalt Telecom Busan",
+          "fraud_score": 0.135,
+          "processor_ref": "PSP-419b0499",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_ad765d83dd",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_ad765d83dd",
+          "account_id": "1002",
+          "direction": "debit",
+          "amount_minor": 235315,
+          "currency": "GBP",
+          "counterparty_name": "Cinder & Sons",
+          "counterparty_iban": "XX83NWCB1253842889",
+          "category": "insurance",
+          "status": "booked",
+          "booked_at": "2026-07-11T19:02:01Z",
+          "description": "Cinder & Sons Tallinn",
+          "fraud_score": 0.042,
+          "processor_ref": "PSP-0603b1bb",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_ae626e7403",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_ae626e7403",
+          "account_id": "1007",
+          "direction": "debit",
+          "amount_minor": 166045,
+          "currency": "EUR",
+          "counterparty_name": "Northline Rail",
+          "counterparty_iban": "XX38NWCB0934670758",
+          "category": "fuel",
+          "status": "pending",
+          "booked_at": "2026-06-22T19:02:01Z",
+          "description": "Northline Rail Vilnius",
+          "fraud_score": 0.275,
+          "processor_ref": "PSP-a99bcb95",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_aec7418477",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_aec7418477",
+          "account_id": "1005",
+          "direction": "credit",
+          "amount_minor": 590014,
+          "currency": "GBP",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX21NWCB8758656398",
+          "category": "travel",
+          "status": "pending",
+          "booked_at": "2026-07-08T19:02:01Z",
+          "description": "Blue Ibis Cafe Accra",
+          "fraud_score": 0.255,
+          "processor_ref": "PSP-e159246d",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_b56c5d3429",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_b56c5d3429",
+          "account_id": "1001",
+          "direction": "credit",
+          "amount_minor": 45300,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX79NWCB3326811197",
+          "category": "travel",
+          "status": "booked",
+          "booked_at": "2026-08-22T19:02:01Z",
+          "description": "Waypoint Travel Pune",
+          "fraud_score": 0.25,
+          "processor_ref": "PSP-e13a44c4",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_bef4c09482",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_bef4c09482",
+          "account_id": "1014",
+          "direction": "debit",
+          "amount_minor": 118182,
+          "currency": "USD",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX42NWCB6385902836",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-07-14T19:02:01Z",
+          "description": "Vantage Fuel Vilnius",
+          "fraud_score": 0.158,
+          "processor_ref": "PSP-b855eb23",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_bf89ae0b55",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_bf89ae0b55",
+          "account_id": "1011",
+          "direction": "credit",
+          "amount_minor": 249777,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX95NWCB9118504707",
+          "category": "insurance",
+          "status": "pending",
+          "booked_at": "2026-08-02T19:02:01Z",
+          "description": "Waypoint Travel Busan",
+          "fraud_score": 0.122,
+          "processor_ref": "PSP-dfa5bde5",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_c35eecac88",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_c35eecac88",
+          "account_id": "1014",
+          "direction": "debit",
+          "amount_minor": 40428,
+          "currency": "USD",
+          "counterparty_name": "Kestrel Grocers",
+          "counterparty_iban": "XX49NWCB0486274214",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-08-27T19:02:01Z",
+          "description": "Kestrel Grocers Amman",
+          "fraud_score": 0.058,
+          "processor_ref": "PSP-8358e671",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_c59f6c549c",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "txn_c59f6c549c",
+          "account_id": "1004",
+          "direction": "debit",
+          "amount_minor": 78754,
+          "currency": "EUR",
+          "counterparty_name": "Stonebridge Rent",
+          "counterparty_iban": "XX91NWCB0750147989",
+          "category": "transport",
+          "status": "pending",
+          "booked_at": "2026-08-23T19:02:01Z",
+          "description": "Stonebridge Rent Bergen",
+          "fraud_score": 0.306,
+          "processor_ref": "PSP-b5edcf8e",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_c671f2b50b",
+        "owner_id": "usr_2002",
+        "sensitive": false,
+        "data": {
+          "id": "txn_c671f2b50b",
+          "account_id": "1003",
+          "direction": "debit",
+          "amount_minor": 80229,
+          "currency": "USD",
+          "counterparty_name": "Northline Rail",
+          "counterparty_iban": "XX40NWCB5102004532",
+          "category": "transfer",
+          "status": "booked",
+          "booked_at": "2026-08-10T19:02:01Z",
+          "description": "Northline Rail Pune",
+          "fraud_score": 0.036,
+          "processor_ref": "PSP-27950d5b",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_c7b732bc67",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_c7b732bc67",
+          "account_id": "1013",
+          "direction": "credit",
+          "amount_minor": 553802,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX05NWCB8279782457",
+          "category": "telecom",
+          "status": "pending",
+          "booked_at": "2026-07-17T19:02:01Z",
+          "description": "Blue Ibis Cafe Turin",
+          "fraud_score": 0.173,
+          "processor_ref": "PSP-fe0a14f5",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_ca068648d4",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_ca068648d4",
+          "account_id": "1007",
+          "direction": "credit",
+          "amount_minor": 340716,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX98NWCB4215404603",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-07-19T19:02:01Z",
+          "description": "Cinder & Sons Vilnius",
+          "fraud_score": 0.193,
+          "processor_ref": "PSP-d9181aff",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_cdf93c16c1",
+        "owner_id": "usr_2009",
+        "sensitive": false,
+        "data": {
+          "id": "txn_cdf93c16c1",
+          "account_id": "1010",
+          "direction": "debit",
+          "amount_minor": 214111,
+          "currency": "GBP",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX43NWCB0348655093",
+          "category": "rent",
+          "status": "booked",
+          "booked_at": "2026-08-24T19:02:01Z",
+          "description": "Vantage Fuel Valencia",
+          "fraud_score": 0.212,
+          "processor_ref": "PSP-41bb617e",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_ce89ac02bf",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_ce89ac02bf",
+          "account_id": "1014",
+          "direction": "debit",
+          "amount_minor": 98319,
+          "currency": "USD",
+          "counterparty_name": "Fernway Clinic",
+          "counterparty_iban": "XX16NWCB3983408453",
+          "category": "insurance",
+          "status": "booked",
+          "booked_at": "2026-08-01T19:02:01Z",
+          "description": "Fernway Clinic Amman",
+          "fraud_score": 0.13,
+          "processor_ref": "PSP-5b051125",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_d290e41d9a",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_d290e41d9a",
+          "account_id": "1007",
+          "direction": "debit",
+          "amount_minor": 86244,
+          "currency": "EUR",
+          "counterparty_name": "Torvald Hardware",
+          "counterparty_iban": "XX78NWCB1546707773",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-07-15T19:02:01Z",
+          "description": "Torvald Hardware Amman",
+          "fraud_score": 0.302,
+          "processor_ref": "PSP-a7128cbc",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_d33b94e76a",
+        "owner_id": "usr_2006",
+        "sensitive": false,
+        "data": {
+          "id": "txn_d33b94e76a",
+          "account_id": "1007",
+          "direction": "debit",
+          "amount_minor": 95293,
+          "currency": "EUR",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX24NWCB9968014286",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-06-04T19:02:01Z",
+          "description": "Cobalt Telecom Tallinn",
+          "fraud_score": 0.015,
+          "processor_ref": "PSP-911f3324",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_d3c2749918",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_d3c2749918",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 211045,
+          "currency": "USD",
+          "counterparty_name": "Kestrel Grocers",
+          "counterparty_iban": "XX07NWCB4040316357",
+          "category": "fuel",
+          "status": "pending",
+          "booked_at": "2026-08-24T19:02:01Z",
+          "description": "Kestrel Grocers Tallinn",
+          "fraud_score": 0.027,
+          "processor_ref": "PSP-516baa81",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_d5ae353887",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_d5ae353887",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 144796,
+          "currency": "USD",
+          "counterparty_name": "Northline Rail",
+          "counterparty_iban": "XX84NWCB8252121710",
+          "category": "travel",
+          "status": "pending",
+          "booked_at": "2026-07-15T19:02:01Z",
+          "description": "Northline Rail Rotterdam",
+          "fraud_score": 0.147,
+          "processor_ref": "PSP-96aad5df",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_d66a15b10a",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_d66a15b10a",
+          "account_id": "1005",
+          "direction": "debit",
+          "amount_minor": 8624,
+          "currency": "GBP",
+          "counterparty_name": "Vantage Fuel",
+          "counterparty_iban": "XX84NWCB2841897521",
+          "category": "dining",
+          "status": "booked",
+          "booked_at": "2026-06-26T19:02:01Z",
+          "description": "Vantage Fuel Porto",
+          "fraud_score": 0.157,
+          "processor_ref": "PSP-33db232c",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_d80434f98a",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_d80434f98a",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 34332,
+          "currency": "USD",
+          "counterparty_name": "Cobalt Telecom",
+          "counterparty_iban": "XX85NWCB4220857890",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-06-09T19:02:01Z",
+          "description": "Cobalt Telecom Amman",
+          "fraud_score": 0.237,
+          "processor_ref": "PSP-d6710847",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_e39215b24a",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_e39215b24a",
+          "account_id": "1001",
+          "direction": "debit",
+          "amount_minor": 123678,
+          "currency": "USD",
+          "counterparty_name": "Northline Rail",
+          "counterparty_iban": "XX94NWCB4638832242",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-07-16T19:02:01Z",
+          "description": "Northline Rail Bristol",
+          "fraud_score": 0.244,
+          "processor_ref": "PSP-5f226124",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_ea6ab7516c",
+        "owner_id": "usr_2011",
+        "sensitive": false,
+        "data": {
+          "id": "txn_ea6ab7516c",
+          "account_id": "1012",
+          "direction": "debit",
+          "amount_minor": 100303,
+          "currency": "EUR",
+          "counterparty_name": "Blue Ibis Cafe",
+          "counterparty_iban": "XX38NWCB5731821379",
+          "category": "health",
+          "status": "booked",
+          "booked_at": "2026-06-09T19:02:01Z",
+          "description": "Blue Ibis Cafe Vilnius",
+          "fraud_score": 0.297,
+          "processor_ref": "PSP-ee7775cc",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_eb98bb501d",
+        "owner_id": "usr_2003",
+        "sensitive": false,
+        "data": {
+          "id": "txn_eb98bb501d",
+          "account_id": "1004",
+          "direction": "debit",
+          "amount_minor": 67119,
+          "currency": "EUR",
+          "counterparty_name": "Ardent Insurance",
+          "counterparty_iban": "XX74NWCB6249038532",
+          "category": "dining",
+          "status": "booked",
+          "booked_at": "2026-07-16T19:02:01Z",
+          "description": "Ardent Insurance Tallinn",
+          "fraud_score": 0.31,
+          "processor_ref": "PSP-c2b071bd",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_ec44d605b3",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_ec44d605b3",
+          "account_id": "1013",
+          "direction": "debit",
+          "amount_minor": 165940,
+          "currency": "EUR",
+          "counterparty_name": "Ardent Insurance",
+          "counterparty_iban": "XX68NWCB1740287726",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-07-24T19:02:01Z",
+          "description": "Ardent Insurance Turin",
+          "fraud_score": 0.004,
+          "processor_ref": "PSP-7dcdbae2",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_ecd729a89e",
+        "owner_id": "usr_2001",
+        "sensitive": false,
+        "data": {
+          "id": "txn_ecd729a89e",
+          "account_id": "1014",
+          "direction": "debit",
+          "amount_minor": 141986,
+          "currency": "USD",
+          "counterparty_name": "Northline Rail",
+          "counterparty_iban": "XX23NWCB8716945340",
+          "category": "travel",
+          "status": "pending",
+          "booked_at": "2026-08-14T19:02:01Z",
+          "description": "Northline Rail Vilnius",
+          "fraud_score": 0.252,
+          "processor_ref": "PSP-f8a8db96",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_f0c96bcb88",
+        "owner_id": "usr_2008",
+        "sensitive": false,
+        "data": {
+          "id": "txn_f0c96bcb88",
+          "account_id": "1009",
+          "direction": "credit",
+          "amount_minor": 563653,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX02NWCB7543351296",
+          "category": "groceries",
+          "status": "booked",
+          "booked_at": "2026-06-03T19:02:01Z",
+          "description": "Meridian Books Bergen",
+          "fraud_score": 0.119,
+          "processor_ref": "PSP-6d0acd3b",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_f258228d6c",
+        "owner_id": "usr_2004",
+        "sensitive": false,
+        "data": {
+          "id": "txn_f258228d6c",
+          "account_id": "1005",
+          "direction": "credit",
+          "amount_minor": 63161,
+          "currency": "GBP",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX85NWCB6984756632",
+          "category": "utilities",
+          "status": "booked",
+          "booked_at": "2026-08-06T19:02:01Z",
+          "description": "Northline Rail Rotterdam",
+          "fraud_score": 0.038,
+          "processor_ref": "PSP-49105baa",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_f4f733fb5b",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_f4f733fb5b",
+          "account_id": "1013",
+          "direction": "credit",
+          "amount_minor": 276141,
+          "currency": "EUR",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX96NWCB8535934330",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-06-13T19:02:01Z",
+          "description": "Stonebridge Rent Tallinn",
+          "fraud_score": 0.25,
+          "processor_ref": "PSP-d192c8fa",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_f8c8140dba",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_f8c8140dba",
+          "account_id": "1011",
+          "direction": "debit",
+          "amount_minor": 47537,
+          "currency": "USD",
+          "counterparty_name": "Cinder & Sons",
+          "counterparty_iban": "XX33NWCB5600905997",
+          "category": "retail",
+          "status": "booked",
+          "booked_at": "2026-08-18T19:02:01Z",
+          "description": "Cinder & Sons Busan",
+          "fraud_score": 0.228,
+          "processor_ref": "PSP-5a294222",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_f8d611f0eb",
+        "owner_id": "usr_2010",
+        "sensitive": false,
+        "data": {
+          "id": "txn_f8d611f0eb",
+          "account_id": "1011",
+          "direction": "credit",
+          "amount_minor": 372606,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX16NWCB2873093709",
+          "category": "fuel",
+          "status": "booked",
+          "booked_at": "2026-06-27T19:02:01Z",
+          "description": "Kestrel Grocers Rotterdam",
+          "fraud_score": 0.299,
+          "processor_ref": "PSP-cd7d6d20",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_f943c01a80",
+        "owner_id": "usr_2005",
+        "sensitive": false,
+        "data": {
+          "id": "txn_f943c01a80",
+          "account_id": "1006",
+          "direction": "debit",
+          "amount_minor": 204473,
+          "currency": "USD",
+          "counterparty_name": "Fernway Clinic",
+          "counterparty_iban": "XX24NWCB8827743704",
+          "category": "groceries",
+          "status": "pending",
+          "booked_at": "2026-07-03T19:02:01Z",
+          "description": "Fernway Clinic Bergen",
+          "fraud_score": 0.084,
+          "processor_ref": "PSP-9fecfae3",
+          "internal_notes": ""
+        }
+      },
+      {
+        "id": "txn_facb4bc4f9",
+        "owner_id": "usr_2000",
+        "sensitive": false,
+        "data": {
+          "id": "txn_facb4bc4f9",
+          "account_id": "1001",
+          "direction": "credit",
+          "amount_minor": 648699,
+          "currency": "USD",
+          "counterparty_name": "Payroll BV",
+          "counterparty_iban": "XX61NWCB8944587459",
+          "category": "transport",
+          "status": "booked",
+          "booked_at": "2026-06-29T19:02:01Z",
+          "description": "Blue Ibis Cafe Vilnius",
+          "fraud_score": 0.274,
+          "processor_ref": "PSP-5da0d32e",
+          "internal_notes": ""
+        }
+      }
+    ],
+    "cards": [
+      {
+        "id": "crd_56329690",
+        "owner_id": "usr_2005",
+        "sensitive": true,
+        "data": {
+          "id": "crd_56329690",
+          "account_id": "1006",
+          "brand": "mastercard",
+          "pan_masked": "411111******1912",
+          "expiry": "10/30",
+          "status": "active",
+          "pan_full": "4111111111191211",
+          "cvv": "632"
+        }
+      },
+      {
+        "id": "crd_5ca27446",
+        "owner_id": "usr_2004",
+        "sensitive": true,
+        "data": {
+          "id": "crd_5ca27446",
+          "account_id": "1005",
+          "brand": "mastercard",
+          "pan_masked": "411111******8043",
+          "expiry": "01/28",
+          "status": "active",
+          "pan_full": "4111111111804311",
+          "cvv": "775"
+        }
+      },
+      {
+        "id": "crd_6b0eea87",
+        "owner_id": "usr_2000",
+        "sensitive": true,
+        "data": {
+          "id": "crd_6b0eea87",
+          "account_id": "1001",
+          "brand": "visa",
+          "pan_masked": "411111******2935",
+          "expiry": "07/30",
+          "status": "active",
+          "pan_full": "4111111111293511",
+          "cvv": "645"
+        }
+      },
+      {
+        "id": "crd_dfb949e8",
+        "owner_id": "usr_2003",
+        "sensitive": true,
+        "data": {
+          "id": "crd_dfb949e8",
+          "account_id": "1004",
+          "brand": "mastercard",
+          "pan_masked": "411111******7946",
+          "expiry": "11/28",
+          "status": "active",
+          "pan_full": "4111111111794611",
+          "cvv": "499"
+        }
+      },
+      {
+        "id": "crd_e5005936",
+        "owner_id": "usr_2000",
+        "sensitive": true,
+        "data": {
+          "id": "crd_e5005936",
+          "account_id": "1013",
+          "brand": "visa",
+          "pan_masked": "411111******5160",
+          "expiry": "10/28",
+          "status": "active",
+          "pan_full": "4111111111516011",
+          "cvv": "342"
+        }
+      },
+      {
+        "id": "crd_ee4aa7d4",
+        "owner_id": "usr_2002",
+        "sensitive": true,
+        "data": {
+          "id": "crd_ee4aa7d4",
+          "account_id": "1003",
+          "brand": "visa",
+          "pan_masked": "411111******1413",
+          "expiry": "12/29",
+          "status": "active",
+          "pan_full": "4111111111141311",
+          "cvv": "723"
+        }
+      }
+    ],
+    "api_keys": [
+      {
+        "id": "ak_157bd01a8be2",
+        "owner_id": null,
+        "sensitive": true,
+        "data": {
+          "id": "ak_157bd01a8be2",
+          "name": "payments-gateway",
+          "prefix": "ak_157bd",
+          "scopes": [
+            "payments:write",
+            "accounts:read"
+          ],
+          "created_at": "2025-09-30T19:02:01Z",
+          "last_used_at": "2026-08-20T19:02:01Z",
+          "secret": "nwcb_sk_live_2890ec548c192653fe84f115cf8e1310"
+        }
+      },
+      {
+        "id": "ak_aa2381838b69",
+        "owner_id": null,
+        "sensitive": true,
+        "data": {
+          "id": "ak_aa2381838b69",
+          "name": "legacy-batch",
+          "prefix": "ak_aa238",
+          "scopes": [
+            "*"
+          ],
+          "created_at": "2026-02-10T19:02:01Z",
+          "last_used_at": "2026-08-13T19:02:01Z",
+          "secret": "nwcb_sk_live_bc42bbe288531d01c145eb2c6f81a00d"
+        }
+      },
+      {
+        "id": "ak_b97a0e2d95e9",
+        "owner_id": null,
+        "sensitive": true,
+        "data": {
+          "id": "ak_b97a0e2d95e9",
+          "name": "reporting-etl",
+          "prefix": "ak_b97a0",
+          "scopes": [
+            "accounts:read",
+            "transactions:read"
+          ],
+          "created_at": "2024-08-21T19:02:01Z",
+          "last_used_at": "2026-08-24T19:02:01Z",
+          "secret": "nwcb_sk_live_f505402e431aa8e4c9a23a6a9e682900"
+        }
+      }
+    ],
+    "config": [
+      {
+        "id": "runtime",
+        "owner_id": null,
+        "sensitive": true,
+        "data": {
+          "service": "northwind-core-api",
+          "version": "2.4.1",
+          "commit": "cae1294d47",
+          "environment": "production",
+          "region": "eu-west-1",
+          "database_url": "postgresql://nwcb_app@pg-core-01.internal.nwcb.test:5432/core",
+          "redis_url": "redis://cache-01.internal.nwcb.test:6379/2",
+          "ledger_service": "http://ledger-internal.nwcb.test:8080",
+          "feature_flags": {
+            "instant_transfers": true,
+            "legacy_v0_routes": true,
+            "graphql_introspection": true,
+            "strict_object_authz": false
+          },
+          "build_time": "2026-08-22T19:02:01Z"
+        }
+      }
+    ]
+  },
+  "test_credentials": [
+    {
+      "email": "b.mensah.0@example.net",
+      "password": "admin123",
+      "role": "admin",
+      "user_id": "usr_2000",
+      "status": "active"
+    },
+    {
+      "email": "a.alrashid.1@example.com",
+      "password": "admin123",
+      "role": "customer",
+      "user_id": "usr_2001",
+      "status": "active"
+    },
+    {
+      "email": "n.marchetti.2@example.com",
+      "password": "Password123",
+      "role": "customer",
+      "user_id": "usr_2002",
+      "status": "active"
+    },
+    {
+      "email": "m.okafor.3@example.com",
+      "password": "letmein",
+      "role": "customer",
+      "user_id": "usr_2003",
+      "status": "suspended"
+    },
+    {
+      "email": "k.vermeulen.4@example.net",
+      "password": "Summer2024!",
+      "role": "support",
+      "user_id": "usr_2004",
+      "status": "active"
+    },
+    {
+      "email": "j.iyer.5@mail.invalid",
+      "password": "Password123",
+      "role": "customer",
+      "user_id": "usr_2005",
+      "status": "active"
+    },
+    {
+      "email": "h.iyer.6@example.net",
+      "password": "qwerty123",
+      "role": "customer",
+      "user_id": "usr_2006",
+      "status": "suspended"
+    },
+    {
+      "email": "e.lindqvist.7@example.net",
+      "password": "Password123",
+      "role": "support",
+      "user_id": "usr_2007",
+      "status": "active"
+    },
+    {
+      "email": "e.zayed.8@example.net",
+      "password": "admin123",
+      "role": "customer",
+      "user_id": "usr_2008",
+      "status": "active"
+    },
+    {
+      "email": "a.park.9@example.com",
+      "password": "admin123",
+      "role": "analyst",
+      "user_id": "usr_2009",
+      "status": "active"
+    },
+    {
+      "email": "h.mensah.10@example.com",
+      "password": "northwind",
+      "role": "customer",
+      "user_id": "usr_2010",
+      "status": "suspended"
+    },
+    {
+      "email": "b.lindqvist.11@example.com",
+      "password": "Welcome1",
+      "role": "support",
+      "user_id": "usr_2011",
+      "status": "active"
+    }
+  ]
+}

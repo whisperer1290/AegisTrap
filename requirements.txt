@@ -1,0 +1,23 @@
+# AegisTrap runtime dependencies
+# Python 3.12+
+
+# --- API / decoy layer ---
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+starlette==1.6.0
+jinja2==3.1.6
+
+# --- config / validation ---
+pydantic==2.13.5
+pydantic-settings==2.15.0
+python-dotenv==1.2.3
+
+# --- LLM providers + red-team client (raw HTTP, no vendor SDKs) ---
+httpx==0.28.1
+
+# --- threat-intel report serialisation ---
+pyyaml==6.0.3
+
+# --- optional ML profiler (heuristics work without these) ---
+scikit-learn==1.9.0
+numpy==2.5.2

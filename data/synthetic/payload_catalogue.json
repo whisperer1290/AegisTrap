@@ -1,0 +1,113 @@
+{
+  "description": "Signature-scanner test vectors",
+  "items": [
+    {
+      "id": "benign_id",
+      "sample": "1001",
+      "matches": []
+    },
+    {
+      "id": "benign_email",
+      "sample": "adaeze.okafor.0@example.com",
+      "matches": []
+    },
+    {
+      "id": "sqli_tautology",
+      "sample": "1' OR '1'='1",
+      "matches": [
+        {
+          "family": "sqli",
+          "sophistication": 1,
+          "rule": "sqli_tautology"
+        }
+      ]
+    },
+    {
+      "id": "sqli_union",
+      "sample": "1 UNION ALL SELECT null,version()--",
+      "matches": [
+        {
+          "family": "sqli",
+          "sophistication": 2,
+          "rule": "sqli_union"
+        }
+      ]
+    },
+    {
+      "id": "sqli_blind",
+      "sample": "' AND (SELECT 1 FROM pg_sleep(5))--",
+      "matches": [
+        {
+          "family": "sqli",
+          "sophistication": 4,
+          "rule": "sqli_time_based"
+        }
+      ]
+    },
+    {
+      "id": "traversal",
+      "sample": "../../../../etc/passwd",
+      "matches": [
+        {
+          "family": "traversal",
+          "sophistication": 1,
+          "rule": "traversal_plain"
+        },
+        {
+          "family": "traversal",
+          "sophistication": 2,
+          "rule": "traversal_sensitive_target"
+        }
+      ]
+    },
+    {
+      "id": "xss_reflected",
+      "sample": "<script>alert(1)</script>",
+      "matches": [
+        {
+          "family": "xss",
+          "sophistication": 1,
+          "rule": "xss_script_tag"
+        }
+      ]
+    },
+    {
+      "id": "ssrf_metadata",
+      "sample": "http://169.254.169.254/latest/meta-data/",
+      "matches": [
+        {
+          "family": "ssrf",
+          "sophistication": 4,
+          "rule": "ssrf_metadata"
+        }
+      ]
+    },
+    {
+      "id": "cmdi",
+      "sample": ";cat /etc/passwd",
+      "matches": [
+        {
+          "family": "traversal",
+          "sophistication": 2,
+          "rule": "traversal_sensitive_target"
+        },
+        {
+          "family": "cmdi",
+          "sophistication": 2,
+          "rule": "cmdi_separator"
+        }
+      ]
+    },
+    {
+      "id": "nosqli",
+      "sample": "{\"password\": {\"$ne\": null}}",
+      "matches": [
+        {
+          "family": "nosqli",
+          "sophistication": 3,
+          "rule": "nosqli_operator"
+        }
+      ]
+    }
+  ]
+}

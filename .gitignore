@@ -1,0 +1,22 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Local secrets — never commit provider API keys
+.env
+
+# Runtime capture DB and trained models. Committed fixtures live in
+# data/synthetic/ and must not be ignored.
+data/*.sqlite3
+data/*.sqlite3-journal
+data/*.joblib
+*.sqlite3
+*.sqlite3-journal
+*.db
+artifacts/
+reports/
+*.log

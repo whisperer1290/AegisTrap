@@ -1,0 +1,22 @@
+services:
+  aegistrap:
+    build: .
+    ports:
+      # Host bind is loopback-only. Do not change this to 0.0.0.0 unless the
+      # machine is an isolated lab VM you fully control (synopsis Section 10).
+      - "127.0.0.1:8000:8000"
+    environment:
+      AEGISTRAP_LLM_PROVIDER: offline
+      AEGISTRAP_PERSONA: fintech
+      AEGISTRAP_ADAPTIVE_DECEPTION: "true"
+      AEGISTRAP_DASHBOARD_ENABLED: "true"
+      AEGISTRAP_DASHBOARD_TOKEN: ${AEGISTRAP_DASHBOARD_TOKEN:-}
+      AEGISTRAP_ANONYMISE_IPS: "true"
+    volumes:
+      - aegistrap-data:/app/data
+      - aegistrap-reports:/app/reports
+    restart: unless-stopped
+
+volumes:
+  aegistrap-data:
+  aegistrap-reports:

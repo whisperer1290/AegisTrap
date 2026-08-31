@@ -1,0 +1,46 @@
+{
+  "ground_truth_persona": "benign",
+  "notes": "Replay with: python scripts/replay_synthetic.py --persona benign",
+  "steps": [
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+        "accept": "application/json",
+        "accept-language": "en-GB,en;q=0.9",
+        "accept-encoding": "gzip, deflate, br",
+        "referer": "https://app.northwind.test/",
+        "sec-fetch-mode": "cors"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/accounts",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+        "accept": "application/json",
+        "accept-language": "en-GB,en;q=0.9",
+        "accept-encoding": "gzip, deflate, br",
+        "referer": "https://app.northwind.test/",
+        "sec-fetch-mode": "cors"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "headers": {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+        "accept": "application/json",
+        "accept-language": "en-GB,en;q=0.9",
+        "accept-encoding": "gzip, deflate, br",
+        "referer": "https://app.northwind.test/",
+        "sec-fetch-mode": "cors"
+      },
+      "json": {
+        "email": "a.alrashid.1@example.com",
+        "password": "admin123"
+      }
+    }
+  ]
+}

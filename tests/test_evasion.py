@@ -83,8 +83,9 @@ def test_per_request_headers_vary_without_changing_the_identity() -> None:
         "x-correlation-id",
         "x-envoy-upstream-service-time",
         "cf-ray",
-        "x-amz-request-id",
-    }
+            "x-amz-request-id",
+            "x-powered-by",
+        }
 
 
 def test_no_empty_header_values_are_emitted() -> None:

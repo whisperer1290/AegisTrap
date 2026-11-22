@@ -97,10 +97,7 @@
     border-radius: 4px; background: var(--bg-hover); border: 1px solid var(--border);
     color: var(--text-dim); margin: 1px 3px 1px 0;
   }
-  .tag.p-ai_agent { color: #d78cff; border-color: #4a2d63; background: #241733; }
-  .tag.p-skilled_human { color: #ff8a3d; border-color: #5c3418; background: #2b1a0c; }
-  .tag.p-scanner { color: #ffc93d; border-color: #5a4a12; background: #2a2408; }
-  .tag.p-script_kiddie { color: #6cb0ff; border-color: #1f3b5c; background: #0f1e2e; }
+  .tag.p-attacker { color: #ff8a3d; border-color: #5c3418; background: #2b1a0c; }
   .tag.p-benign { color: #4ad4a8; border-color: #1a4a3a; background: #0c241c; }
   .tag.p-unknown { color: var(--text-faint); }
 
@@ -167,7 +164,7 @@
     <div class="cards" id="ov-cards"></div>
     <div class="split">
       <div class="panel">
-        <h2>Attacker personas observed</h2>
+        <h2>Session classes observed</h2>
         <div class="panel-body" id="ov-personas"></div>
       </div>
       <div class="panel">
@@ -203,7 +200,7 @@
 
   <section id="view-policy" class="view">
     <div class="panel">
-      <h2>Deception policy by attacker persona</h2>
+      <h2>Deception policy by session class</h2>
       <div id="policy-table"></div>
     </div>
     <div class="panel">

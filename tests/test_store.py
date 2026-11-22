@@ -104,16 +104,16 @@ def test_persona_and_usage_are_persisted(store: StateStore) -> None:
     session, _ = _new_session(store)
     store.update_persona(
         session.id,
-        AttackerPersona.SKILLED_HUMAN,
+        AttackerPersona.ATTACKER,
         0.87,
-        {"skilled_human": 0.87},
+        {"attacker": 0.87},
         ["irregular pacing"],
     )
     store.record_llm_usage(session.id, tokens=140, latency_ms=920.0)
     store.record_consistency_violations(session.id, 3)
 
     reloaded = store.get_session(session.id)
-    assert reloaded.persona is AttackerPersona.SKILLED_HUMAN
+    assert reloaded.persona is AttackerPersona.ATTACKER
     assert reloaded.persona_confidence == 0.87
     assert reloaded.persona_signals == ["irregular pacing"]
     assert reloaded.llm_calls == 1
@@ -164,7 +164,7 @@ def test_events_record_and_read_back_in_order(store: StateStore) -> None:
             latency_ms=5.0,
             llm_tokens=0,
             weaknesses=["IDOR_ACCOUNT"] if seq == 2 else [],
-            persona_at_time="scanner",
+            persona_at_time="attacker",
         )
     events = store.get_events(session.id)
     assert [e.seq for e in events] == [1, 2, 3]

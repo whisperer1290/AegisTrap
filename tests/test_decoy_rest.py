@@ -114,7 +114,7 @@ def test_garbage_token_is_rejected(client: TestClient) -> None:
 def test_alg_none_forgery_is_gated_on_persona(
     client: TestClient, store: StateStore, pin_persona: Any
 ) -> None:
-    """The JWT ``alg=none`` flaw is reserved for high-skill sessions."""
+    """The JWT ``alg=none`` flaw is reserved for attacking sessions."""
     import base64
     import json
 
@@ -128,10 +128,10 @@ def test_alg_none_forgery_is_gated_on_persona(
     token = forge("usr_2000", "admin")
     headers = {"authorization": f"Bearer {token}"}
 
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.BENIGN)
     assert client.get("/api/v1/users/me", headers=headers).status_code == 401
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     response = client.get("/api/v1/users/me", headers=headers)
     assert response.status_code == 200
     assert response.json()["id"] == "usr_2000"
@@ -150,7 +150,7 @@ def test_user_enumeration_is_gated_on_persona(
     ).json()
     assert "user_exists" not in quiet
 
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.ATTACKER)
     loud = client.post(
         "/api/v1/auth/login", json={"email": user["email"], "password": "wrong"}
     ).json()
@@ -200,10 +200,10 @@ def test_transfer_moves_money_and_later_reads_agree(
     assert any(t["id"] == receipt.json()["transaction_id"] for t in history["items"])
 
 
-def test_transfer_beyond_balance_is_refused_at_low_skill(
+def test_transfer_beyond_balance_is_refused_for_benign_sessions(
     client: TestClient, seeded_login: dict[str, Any], store: StateStore, pin_persona: Any
 ) -> None:
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.BENIGN)
     headers = seeded_login["headers"]
     mine, theirs = _own_and_other(store, seeded_login["session_id"], seeded_login["user"]["id"])
     response = client.post(
@@ -241,7 +241,7 @@ def test_idor_decision_is_stable_across_retries(
     client: TestClient, seeded_login: dict[str, Any], store: StateStore, pin_persona: Any
 ) -> None:
     """A flaw that appears and disappears is the clearest honeypot tell."""
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     _, theirs = _own_and_other(store, seeded_login["session_id"], seeded_login["user"]["id"])
     statuses = {
         client.get(f"/api/v1/accounts/{theirs}", headers=seeded_login["headers"]).status_code
@@ -273,7 +273,7 @@ def test_owner_id_parameter_scope_flaw_is_gated(
     pin_persona(AttackerPersona.BENIGN)
     assert client.get(f"/api/v1/accounts?owner_id={victim}", headers=headers).status_code == 403
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     leaked = client.get(f"/api/v1/accounts?owner_id={victim}", headers=headers)
     assert leaked.status_code == 200
     assert all(item["owner_id"] == victim for item in leaked.json()["items"])
@@ -285,18 +285,13 @@ def test_sql_injection_verbosity_tracks_the_policy(
     headers = seeded_login["headers"]
     probe = "/api/v1/accounts/1001'%20OR%20'1'%3D'1"
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     debug = client.get(probe, headers=headers)
-    # A DB-level failure surfaces as a 500, and the deep tier leaks the query.
+    # A DB-level failure surfaces as a 500, and the attack surface leaks the query.
     assert debug.status_code == 500
     body = debug.json()
     assert "select" in body["query"].lower()
     assert body["_traceback"]
-
-    pin_persona(AttackerPersona.SCANNER)
-    standard = client.get(probe, headers=headers)
-    assert standard.status_code == 500
-    assert "query" not in standard.json()
 
     # Benign sessions never reach the flaw at all.
     pin_persona(AttackerPersona.BENIGN)
@@ -309,7 +304,7 @@ def test_debug_endpoint_is_hidden_from_benign_traffic(client: TestClient, pin_pe
     pin_persona(AttackerPersona.BENIGN)
     assert client.get("/api/v1/debug").status_code == 404
 
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.ATTACKER)
     exposed = client.get("/api/v1/debug")
     assert exposed.status_code == 200
     assert "database_url" in exposed.json()
@@ -318,10 +313,10 @@ def test_debug_endpoint_is_hidden_from_benign_traffic(client: TestClient, pin_pe
 def test_shadow_api_version_is_reserved_for_high_skill(
     client: TestClient, seeded_login: dict[str, Any], pin_persona: Any
 ) -> None:
-    pin_persona(AttackerPersona.SCANNER)
+    pin_persona(AttackerPersona.BENIGN)
     assert client.get("/api/v0/accounts", headers=seeded_login["headers"]).status_code == 404
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     found = client.get("/api/v0/accounts", headers=seeded_login["headers"])
     assert found.status_code == 200
     assert found.headers.get("deprecation") == "true"
@@ -331,7 +326,7 @@ def test_shadow_api_version_is_reserved_for_high_skill(
 def test_path_traversal_returns_synthetic_file_contents(
     client: TestClient, seeded_login: dict[str, Any], pin_persona: Any
 ) -> None:
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.ATTACKER)
     response = client.get(
         "/api/v1/reports/export?file=../../../../etc/passwd",
         headers=seeded_login["headers"],
@@ -347,12 +342,12 @@ def test_ssrf_is_reserved_for_high_skill(
 ) -> None:
     body = {"url": "http://169.254.169.254/latest/meta-data/iam/security-credentials/"}
 
-    pin_persona(AttackerPersona.SCANNER)
+    pin_persona(AttackerPersona.BENIGN)
     ignored = client.post("/api/v1/webhooks", json=body, headers=seeded_login["headers"])
     assert ignored.status_code == 201
     assert "upstream_body" not in ignored.json()
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     leaked = client.post("/api/v1/webhooks", json=body, headers=seeded_login["headers"])
     assert leaked.status_code == 502
     assert "ASIA" in leaked.json()["upstream_body"]
@@ -363,14 +358,14 @@ def test_mass_assignment_is_gated(
 ) -> None:
     headers = seeded_login["headers"]
 
-    pin_persona(AttackerPersona.SCANNER)
+    pin_persona(AttackerPersona.BENIGN)
     refused = client.patch(
         "/api/v1/users/me", json={"full_name": "Probe", "role": "admin"}, headers=headers
     ).json()
     assert refused["role"] == seeded_login["user"]["role"]
     assert refused["full_name"] == "Probe"
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     escalated = client.patch("/api/v1/users/me", json={"role": "admin"}, headers=headers).json()
     assert escalated["role"] == "admin"
     # The escalation must persist, or the next request contradicts this one.
@@ -381,7 +376,7 @@ def test_excessive_exposure_requires_asking_for_it(
     client: TestClient, seeded_login: dict[str, Any], store: StateStore, pin_persona: Any
 ) -> None:
     """The flaw is discoverable, not volunteered to every caller."""
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     headers = seeded_login["headers"]
     mine, _ = _own_and_other(store, seeded_login["session_id"], seeded_login["user"]["id"])
 
@@ -395,7 +390,7 @@ def test_excessive_exposure_requires_asking_for_it(
 def test_admin_surface_accepts_any_token_at_high_skill(
     client: TestClient, store: StateStore, pin_persona: Any
 ) -> None:
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     client.get("/api/v1/health")
     session = store.list_sessions(limit=1)[0]
     customer = next(
@@ -413,9 +408,7 @@ def test_admin_surface_accepts_any_token_at_high_skill(
     assert keys.status_code == 200
     assert any(item.get("secret") for item in keys.json()["items"])
 
-    # A novice must not stumble into a critical finding; the flaw unlocks at
-    # the scanner tier and above.
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.BENIGN)
     assert client.get("/api/v1/admin/api-keys", headers=headers).status_code == 403
 
 
@@ -426,14 +419,14 @@ def test_cors_origin_reflection_is_gated(client: TestClient, pin_persona: Any) -
     safe = client.get("/api/v1/health", headers={"origin": evil})
     assert safe.headers.get("access-control-allow-origin") != evil
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     reflected = client.get("/api/v1/health", headers={"origin": evil})
     assert reflected.headers.get("access-control-allow-origin") == evil
     assert reflected.headers.get("access-control-allow-credentials") == "true"
 
 
 def test_reflected_xss_is_served_as_unencoded_html(client: TestClient, pin_persona: Any) -> None:
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.ATTACKER)
     response = client.get("/api/v1/search?q=<script>alert(1)</script>")
     assert "text/html" in response.headers["content-type"]
     assert "<script>alert(1)</script>" in response.text
@@ -444,12 +437,11 @@ def test_page_size_ceiling_follows_the_policy(
 ) -> None:
     headers = seeded_login["headers"]
 
-    pin_persona(AttackerPersona.SCANNER)
+    pin_persona(AttackerPersona.BENIGN)
     capped = client.get("/api/v1/accounts?limit=500", headers=headers).json()
-    assert capped["limit"] == 20
+    assert capped["limit"] == 25
 
-    # Uncapped enumeration is a deep-surface reward.
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     uncapped = client.get("/api/v1/accounts?limit=500", headers=headers).json()
     assert uncapped["limit"] == 500
 
@@ -473,12 +465,12 @@ def test_control_headers_are_not_captured(client: TestClient, store: StateStore)
     """The harness must not pollute the features it is measuring."""
     client.get(
         "/api/v1/health",
-        headers={"x-aegistrap-session": "harness-1", "x-aegistrap-gt-persona": "scanner"},
+        headers={"x-aegistrap-session": "harness-1", "x-aegistrap-gt-persona": "attacker"},
     )
     session = store.list_sessions(limit=1)[0]
     captured = store.get_events(session.id)[0].headers
     assert not any(key.startswith("x-aegistrap-") for key in captured)
-    assert session.ground_truth_persona == "scanner"
+    assert session.ground_truth_persona == "attacker"
 
 
 def test_explicit_session_header_separates_harness_runs(

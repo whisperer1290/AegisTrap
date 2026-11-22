@@ -3,8 +3,8 @@
 Error responses do more work than success responses in a honeypot. They are
 where a real service accidentally leaks schema detail, and they are the main
 lever the deception policy pulls: the same missing account produces a bare
-``404 not_found`` for a scanner and a resolver-level Postgres error naming four
-real column names for a skilled human.
+``404 not_found`` for a benign client and a resolver-level Postgres error
+naming four real column names for an attacker.
 
 Two constraints shaped this module:
 

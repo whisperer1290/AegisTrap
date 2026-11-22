@@ -343,7 +343,7 @@ def _render_markdown(result: EvaluationResult) -> str:
         f"Heuristic accuracy: **{data['profiling']['heuristic']['accuracy']}** "
         f"(n={data['profiling']['heuristic']['n']}).",
         "",
-        "| Persona | Precision | Recall | F1 | Support |",
+        "| Class | Precision | Recall | F1 | Support |",
         "| --- | --- | --- | --- | --- |",
     ]
     for label, row in data["profiling"]["heuristic"]["per_class"].items():

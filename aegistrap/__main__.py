@@ -112,10 +112,21 @@ def _eval(argv: list[str]) -> int:
 def _train(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(
         prog="python -m aegistrap train-profiler",
-        description="Train the optional ML profiler on synthetic labelled sessions.",
+        description="Train the optional ML profiler on benign vs attacker sessions.",
     )
     parser.add_argument("--per-persona", type=int, default=300)
     parser.add_argument("--seed", type=int, default=20260831)
+    parser.add_argument(
+        "--csic-dir",
+        type=Path,
+        default=None,
+        help="directory of HTTP Dataset CSIC 2010 dumps (normal*.txt / anomalous*.txt)",
+    )
+    parser.add_argument(
+        "--include-synthetic",
+        action="store_true",
+        help="when --csic-dir is set, also mix in synthetic sessions",
+    )
     parser.add_argument(
         "--output",
         type=Path,
@@ -124,10 +135,51 @@ def _train(argv: list[str]) -> int:
     args = parser.parse_args(argv)
 
     from aegistrap.profiler.ml import MLProfiler
+    from aegistrap.profiler.synthetic import generate_dataset
 
-    model, metrics = MLProfiler.train(per_persona=args.per_persona, seed=args.seed)
+    labelled = None
+    source = "synthetic"
+    if args.csic_dir is not None:
+        from aegistrap.profiler.public_data import load_csic_directory, summarize_sessions
+
+        labelled = load_csic_directory(args.csic_dir)
+        source = "csic2010"
+        if args.include_synthetic:
+            labelled = list(labelled) + list(
+                generate_dataset(per_persona=args.per_persona, seed=args.seed)
+            )
+            source = "csic2010+synthetic"
+        print(json.dumps({"loaded": summarize_sessions(labelled), "source": source}, indent=2))
+
+    model, metrics = MLProfiler.train(
+        per_persona=args.per_persona,
+        seed=args.seed,
+        labelled_sessions=labelled,
+        source=source,
+    )
     path = model.save(args.output)
-    print(json.dumps({"saved": str(path), "samples": metrics["samples"]}, indent=2))
+    holdout = metrics["holdout_report"]
+    print(
+        json.dumps(
+            {
+                "saved": str(path),
+                "source": metrics["source"],
+                "samples": metrics["samples"],
+                "train_size": metrics["train_size"],
+                "test_size": metrics["test_size"],
+                "accuracy": holdout.get("accuracy"),
+                "macro_f1": (holdout.get("macro avg") or {}).get("f1-score"),
+                "weighted_f1": (holdout.get("weighted avg") or {}).get("f1-score"),
+                "per_class": {
+                    name: holdout[name]
+                    for name in ("benign", "attacker")
+                    if name in holdout
+                },
+                "top_features": metrics["top_features"],
+            },
+            indent=2,
+        )
+    )
     return 0
 
 

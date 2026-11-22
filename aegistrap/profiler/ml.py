@@ -6,10 +6,9 @@ available and interchangeable. This module stays entirely optional: if
 scikit-learn is missing or no model file has been trained, the profiler
 silently falls back to heuristics.
 
-Labels come from the synthetic generators, which encode the behavioural
-definition of each persona. That makes this a distillation of the heuristics'
-*definitions* rather than of their decisions, so it can disagree with the rule
-engine — which is the point of having it.
+Labels are binary (``benign`` / ``attacker``) and come from either the
+synthetic generators or a public corpus such as CSIC 2010. Training is not
+distilled from heuristic decisions, so the forest can disagree with the rules.
 """
 
 from __future__ import annotations
@@ -22,6 +21,7 @@ from typing import Any
 from aegistrap.logging_setup import get_logger
 from aegistrap.models import AttackerPersona
 from aegistrap.profiler.features import SessionFeatures, extract_features
+from aegistrap.store import Event
 
 log = get_logger("profiler.ml")
 
@@ -63,8 +63,15 @@ class MLProfiler:
         per_persona: int = 300,
         seed: int = 20260831,
         n_estimators: int = 300,
+        labelled_sessions: Sequence[tuple[AttackerPersona, list[Event]]] | None = None,
+        source: str = "synthetic",
     ) -> tuple[MLProfiler, dict[str, Any]]:
-        """Train on synthetic labelled sessions; returns the model and metrics."""
+        """Train on labelled sessions; returns the model and holdout metrics.
+
+        ``labelled_sessions`` is a list of ``(benign|attacker, events)``. When
+        omitted, synthetic generators supply the data. Pass CSIC 2010 sessions
+        from ``profiler.public_data`` to train on a public corpus.
+        """
         if not sklearn_available():
             raise RuntimeError("scikit-learn is not installed")
 
@@ -74,7 +81,13 @@ class MLProfiler:
 
         from aegistrap.profiler.synthetic import generate_dataset
 
-        dataset = generate_dataset(per_persona=per_persona, seed=seed)
+        dataset = (
+            list(labelled_sessions)
+            if labelled_sessions is not None
+            else generate_dataset(per_persona=per_persona, seed=seed)
+        )
+        if not dataset:
+            raise ValueError("no labelled sessions to train on")
         X = [extract_features(events).to_vector() for _, events in dataset]
         y = [persona.value for persona, _ in dataset]
 
@@ -98,6 +111,7 @@ class MLProfiler:
             reverse=True,
         )
         metrics = {
+            "source": source,
             "samples": len(dataset),
             "train_size": len(X_train),
             "test_size": len(X_test),

@@ -139,7 +139,7 @@ def test_introspection_is_gated_on_persona(client: TestClient, pin_persona: Any)
     denied = _gql(client, "{ __schema { types { name } } }")
     assert denied["errors"][0]["extensions"]["code"] == "INTROSPECTION_DISABLED"
 
-    pin_persona(AttackerPersona.SCANNER)
+    pin_persona(AttackerPersona.ATTACKER)
     allowed = _gql(client, "{ __schema { types { name } } }")
     names = {t["name"] for t in allowed["data"]["__schema"]["types"]}
     assert "Account" in names
@@ -148,7 +148,7 @@ def test_introspection_is_gated_on_persona(client: TestClient, pin_persona: Any)
 def test_introspection_advertises_the_query_and_mutation_roots(
     client: TestClient, pin_persona: Any
 ) -> None:
-    pin_persona(AttackerPersona.SCANNER)
+    pin_persona(AttackerPersona.ATTACKER)
     schema = _gql(client, "{ __schema { types { name } } }")["data"]["__schema"]
     assert schema["queryType"]["name"] == "Query"
     assert schema["mutationType"]["name"] == "Mutation"
@@ -162,11 +162,11 @@ def test_internal_fields_are_gated(
     internal = next(f for f in INTERNAL_FIELDS["accounts"] if f == "internal_notes")
     query = "{ accounts(limit: 1) { id internalNotes } }"
 
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.BENIGN)
     denied = _gql(client, query, seeded_login["headers"])
     assert denied.get("errors")
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     leaked = _gql(client, query, seeded_login["headers"])
     assert leaked["data"]["accounts"][0]["internalNotes"] is not None
     assert internal in INTERNAL_FIELDS["accounts"]
@@ -175,11 +175,11 @@ def test_internal_fields_are_gated(
 def test_depth_limit_applies_below_the_abuse_tier(client: TestClient, pin_persona: Any) -> None:
     deep = "{ " + "accounts { owner { " * 8 + "id" + " } }" * 8 + " }"
 
-    pin_persona(AttackerPersona.SCRIPT_KIDDIE)
+    pin_persona(AttackerPersona.BENIGN)
     refused = _gql(client, deep)
     assert refused["errors"][0]["extensions"]["code"] == "QUERY_TOO_DEEP"
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     accepted = _gql(client, deep)
     assert accepted.get("data") is not None
 
@@ -189,7 +189,7 @@ def test_cost_extension_is_only_shown_when_hints_are_allowed(
 ) -> None:
     deep = "{ " + "accounts { owner { " * 4 + "id" + " } }" * 4 + " }"
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     with_hints = _gql(client, deep, seeded_login["headers"])
     assert "extensions" in with_hints
 
@@ -225,11 +225,11 @@ def test_mass_assignment_via_mutation_is_gated_and_persists(
     headers = seeded_login["headers"]
     mutation = 'mutation { updateProfile(role: "admin") { id role } }'
 
-    pin_persona(AttackerPersona.SCANNER)
+    pin_persona(AttackerPersona.BENIGN)
     refused = _gql(client, mutation, headers)
     assert any(e["extensions"]["code"] == "FORBIDDEN_FIELD" for e in refused["errors"])
 
-    pin_persona(AttackerPersona.SKILLED_HUMAN)
+    pin_persona(AttackerPersona.ATTACKER)
     accepted = _gql(client, mutation, headers)
     assert accepted["data"]["updateProfile"]["role"] == "admin"
     # REST must agree with the GraphQL mutation.

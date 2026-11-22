@@ -66,7 +66,7 @@ def test_sophistication_ranks_blind_injection_above_cheat_sheet() -> None:
         ("Nuclei - Open-source project (github.com/projectdiscovery/nuclei)", ClientClass.SCANNER),
         ("curl/8.4.0", ClientClass.LIBRARY),
         ("python-requests/2.31.0", ClientClass.LIBRARY),
-        ("python-httpx/0.27.0 (LangChain; gpt-4o autonomous agent)", ClientClass.AI_AGENT),
+        ("python-httpx/0.27.0", ClientClass.LIBRARY),
     ],
 )
 def test_client_class_is_derived_from_user_agent(user_agent: str, expected: ClientClass) -> None:
@@ -165,7 +165,7 @@ def test_sequential_id_probing_is_counted() -> None:
 def test_reactive_reuse_of_returned_ids_is_detected() -> None:
     """Discovery-then-use is the signature of a reasoning attacker.
 
-    A wordlist replays a fixed list; an agent or a skilled human reads a
+    A wordlist replays a fixed list; a reasoning attacker reads a
     response and requests the identifiers it just learned.
     """
     listing = _event(
@@ -310,7 +310,7 @@ def test_scanner_is_recognised_from_tool_and_rate() -> None:
         )
     ]
     verdict = classify(extract_features(events))
-    assert verdict.persona is AttackerPersona.SCANNER
+    assert verdict.persona is AttackerPersona.ATTACKER
     assert verdict.confidence > 0.4
     assert verdict.signals
 
@@ -344,18 +344,15 @@ def test_probabilities_form_a_distribution() -> None:
 def test_synthetic_generator_covers_every_classifiable_persona() -> None:
     assert set(supported_personas()) == {
         AttackerPersona.BENIGN,
-        AttackerPersona.SCRIPT_KIDDIE,
-        AttackerPersona.SCANNER,
-        AttackerPersona.SKILLED_HUMAN,
-        AttackerPersona.AI_AGENT,
+        AttackerPersona.ATTACKER,
     }
 
 
 def test_synthetic_sessions_are_reproducible() -> None:
     import random
 
-    first = generate_session(AttackerPersona.SCANNER, random.Random(7))
-    second = generate_session(AttackerPersona.SCANNER, random.Random(7))
+    first = generate_session(AttackerPersona.ATTACKER, random.Random(7))
+    second = generate_session(AttackerPersona.ATTACKER, random.Random(7))
     assert [(e.method, e.path, e.body) for e in first] == [
         (e.method, e.path, e.body) for e in second
     ]
@@ -406,13 +403,17 @@ def test_classification_stabilises_as_a_session_grows() -> None:
     """Confidence should not swing wildly once the picture is clear."""
     import random
 
-    events = generate_session(AttackerPersona.SCANNER, random.Random(11))
+    events = []
+    for seed in range(11, 80):
+        events = generate_session(AttackerPersona.ATTACKER, random.Random(seed))
+        if len(events) > 12:
+            break
     assert len(events) > 12
     late = [
         classify(extract_features(events[:n])).persona
         for n in range(max(10, len(events) // 2), len(events) + 1, 3)
     ]
-    assert late.count(AttackerPersona.SCANNER) >= len(late) - 1
+    assert late.count(AttackerPersona.ATTACKER) >= len(late) - 1
 
 
 def test_profiler_service_persists_its_verdict(store, settings) -> None:
@@ -448,9 +449,9 @@ def test_profiler_service_persists_its_verdict(store, settings) -> None:
 
     profiler = AttackerProfiler(store, mode="heuristic", adaptive=True)
     result = profiler.profile(session.id)
-    assert result.persona is AttackerPersona.SCANNER
-    assert result.policy.persona is AttackerPersona.SCANNER
-    assert store.get_session(session.id).persona is AttackerPersona.SCANNER
+    assert result.persona is AttackerPersona.ATTACKER
+    assert result.policy.persona is AttackerPersona.ATTACKER
+    assert store.get_session(session.id).persona is AttackerPersona.ATTACKER
 
 
 def test_ablation_mode_ignores_the_verdict(store) -> None:

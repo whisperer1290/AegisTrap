@@ -7,7 +7,7 @@ Two kinds of signal live here:
 2. **Payload tradecraft** — which attack families a payload belongs to, and how
    sophisticated the attempt is. Sophistication is the discriminator that
    separates a copy-pasted ``' OR 1=1--`` from a hand-tuned blind-injection
-   probe, which is precisely the script-kiddie / skilled-human boundary.
+   probe. Sophistication remains a feature; it is no longer a class label.
 """
 
 from __future__ import annotations
@@ -22,7 +22,6 @@ class ClientClass(StrEnum):
     SCANNER = "scanner"
     LIBRARY = "library"
     BROWSER = "browser"
-    AI_AGENT = "ai_agent"
     UNKNOWN = "unknown"
 
 
@@ -51,16 +50,6 @@ LIBRARY_TOKENS: tuple[str, ...] = (
     "php", "lua-resty-http", "scrapy",
 )
 # fmt: on
-
-#: Self-identifying LLM agents and agent frameworks.
-# fmt: off
-AI_AGENT_TOKENS: tuple[str, ...] = (
-    "gptbot", "chatgpt", "openai", "anthropic", "claude", "claudebot",
-    "langchain", "llamaindex", "autogpt", "agentgpt", "babyagi", "crewai",
-    "autogen", "browser-use", "webvoyager", "llm-agent", "ai-agent",
-    "perplexitybot", "cohere", "mistral", "deepseek", "gemini", "bard",
-    "smolagent", "openhands", "swe-agent",
-)
 
 BROWSER_TOKENS: tuple[str, ...] = (
     "mozilla/5.0", "chrome/", "safari/", "firefox/", "edg/", "opr/", "webkit",
@@ -381,8 +370,6 @@ def classify_client(user_agent: str, header_names: set[str]) -> ClientClass:
     ua = (user_agent or "").strip().lower()
     if not ua:
         return ClientClass.EMPTY
-    if any(token in ua for token in AI_AGENT_TOKENS):
-        return ClientClass.AI_AGENT
     if any(token in ua for token in SCANNER_TOKENS):
         return ClientClass.SCANNER
     if any(token in ua for token in BROWSER_TOKENS):

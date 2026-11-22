@@ -1,6 +1,6 @@
 # AegisTrap — Technical Documentation
 
-An LLM-powered adaptive API honeypot: a stateful fake fintech (or e-commerce) REST/GraphQL backend that profiles attacker skill, adapts the vulnerability surface it exposes, and auto-generates MITRE ATT&CK / OWASP / CWE incident reports.
+An LLM-powered adaptive API honeypot: a stateful fake fintech (or e-commerce) REST/GraphQL backend that classifies each session as benign or attacker, adapts the vulnerability surface it exposes, and auto-generates MITRE ATT&CK / OWASP / CWE incident reports.
 
 This document is the operator and implementer reference. It covers how to run every part of the system, the technology stack, the algorithms behind profiling and reporting, the LLM design, and the synthetic test data under `data/synthetic/`.
 
@@ -46,15 +46,12 @@ Five modules match the project synopsis:
 
 Default mode is fully **offline**: no API key, no outbound model calls. That mode is also the static baseline used in evaluation.
 
-Personas the profiler can emit:
+Classes the profiler can emit:
 
 | Value | Meaning |
 | --- | --- |
 | `benign` | Looks like a real client |
-| `script_kiddie` | Low-skill, cheat-sheet payloads, generic HTTP clients |
-| `scanner` | sqlmap / ffuf / nuclei-style fanout |
-| `skilled_human` | Adaptive, sequential IDs, GraphQL, higher-sophistication payloads |
-| `ai_agent` | Agent User-Agents, metronomic pacing plus response reuse, canary echo |
+| `attacker` | Attack payloads, scanners, wordlists, or sequential exploitation |
 | `unknown` | Not enough evidence yet; keep the surface conservative |
 
 ---
@@ -174,10 +171,10 @@ With the server running:
 ```powershell
 $env:PYTHONPATH = "."
 python scripts/replay_synthetic.py --base http://127.0.0.1:8000
-python scripts/replay_synthetic.py --persona scanner
+python scripts/replay_synthetic.py --persona attacker
 ```
 
-This sends the HTTP scripts in `data/synthetic/http/` with `X-AegisTrap-Session: replay-<persona>` so the five personas do not collapse into one session. Then refresh `/dashboard`.
+This sends the HTTP scripts in `data/synthetic/http/` with `X-AegisTrap-Session: replay-<persona>` so the two classes do not collapse into one session. Then refresh `/dashboard`.
 
 ### 2.7 Run the test suite
 
@@ -199,9 +196,19 @@ Writes `artifacts/eval/results.json` and `results.md`: profiling accuracy, auto-
 
 ### 2.9 Train the optional ML profiler
 
+Synthetic (binary labels, 300 sessions per class):
+
 ```powershell
 python -m aegistrap train-profiler --per-persona 300 --output data/profiler_model.joblib
 ```
+
+Public corpus — HTTP Dataset CSIC 2010, labelled only as normal vs anomalous, which maps onto `benign` / `attacker`:
+
+```powershell
+python -m aegistrap train-profiler --csic-dir path\to\csic2010 --output data/profiler_model.joblib
+```
+
+Put `normalTrafficTraining.txt`, `normalTrafficTest.txt`, and `anomalousTrafficTest.txt` in that folder. The command prints holdout accuracy, per-class precision/recall/F1, and the top features — those numbers go in the paper. Mix generators on top of CSIC with `--include-synthetic` only if you want that ablation; the paper result should be CSIC-only.
 
 Then set profiler mode to `ml` or `hybrid` when constructing the app (see [§8.4](#84-optional-ml-arm-random-forest)). Heuristics remain the default.
 
@@ -425,14 +432,13 @@ Sophistication ordinal (payload signatures):
 3. Target-adapted / evasion-aware
 4. Blind / inferential / chained
 
-The numeric vector for the ML arm is 23 continuous fields + 6 one-hot client classes + 3 booleans (introspection, canary echo, prompt-injection echo) = **32 features**. Order is fixed in `SessionFeatures.VECTOR_FIELDS`.
+The numeric vector for the ML arm is 23 continuous fields + 5 one-hot client classes + 3 booleans (introspection, canary echo, prompt-injection echo) = **31 features**. Order is fixed in `SessionFeatures.VECTOR_FIELDS`.
 
 ### 8.2 Client classification
 
 `classify_client(user_agent, header_names)`:
 
 - Offensive-tool tokens → `scanner`
-- Agent-framework tokens → `ai_agent`
 - `curl` / `python-requests` / `Go-http-client` → `library`
 - `Mozilla/5.0` **and** browser headers → `browser`
 - Browser UA with no browser headers → not believed (scripted lie)
@@ -441,11 +447,11 @@ The numeric vector for the ML arm is 23 continuous fields + 6 one-hot client cla
 
 Weighted expert rules (`aegistrap/profiler/heuristic.py`). Each rule is `(persona, weight, human-readable label, predicate)`.
 
-Positive weights vote for a persona; negative weights veto (e.g. a sqlmap UA strongly vetoes “skilled human”).
+Positive weights vote for a class; negative weights veto (e.g. a sqlmap UA strongly vetoes “benign”).
 
 **Scoring**
 
-1. Sum weights of rules that fire, per persona.
+1. Sum weights of rules that fire, per class.
 2. Clamp negatives to 0 (actively contradicted personas do not compete).
 3. Temperature **softmax** with \(T = 1.25\):
 
@@ -466,7 +472,7 @@ Positive weights vote for a persona; negative weights veto (e.g. a sqlmap UA str
 
 Fired rule labels are stored on the session and shown on the dashboard. That is why heuristics are the default: a misclassification is explainable.
 
-On the committed 60-session fixture export, heuristic labels agreed with generator ground truth on **57/60 (0.95)**. Generators are noisy on purpose, so disagreement is expected.
+On the committed 24-session fixture export, heuristic labels agreed with generator ground truth on **24/24 (1.0)**. Generators are noisy on purpose; a larger sample can still disagree.
 
 ### 8.4 Optional ML arm (Random Forest)
 
@@ -479,8 +485,8 @@ On the committed 60-session fixture export, heuristic labels agreed with generat
 | `min_samples_leaf` | 2 |
 | `class_weight` | `balanced` |
 | Split | 75/25, stratified, `random_state=20260831` |
-| Features | `SessionFeatures.to_vector()` (32-d) |
-| Labels | Persona from **synthetic generators**, not from heuristic decisions |
+| Features | `SessionFeatures.to_vector()` (31-d) |
+| Labels | `benign` / `attacker` from **synthetic generators or CSIC 2010**, not from heuristic decisions |
 
 Training on generator labels (the behavioural definition) rather than heuristic outputs means the forest can disagree with the rules. That disagreement is the point of the Section 9 “rule-based baseline vs ML” comparison.
 
@@ -492,24 +498,34 @@ Equal blend of the two probability distributions, then argmax. If the blended wi
 
 Neither classifier is allowed to override the other: heuristics encode domain knowledge the forest cannot see; the forest catches feature combinations no single rule covers.
 
+### 8.6 Public corpora (CSIC 2010)
+
+`aegistrap/profiler/public_data.py` turns HTTP Dataset CSIC 2010 dumps into the same `(class, events)` pairs the synthetic generators emit.
+
+| Dataset field | AegisTrap class |
+| --- | --- |
+| normal / valid | `benign` |
+| anomalous / attack | `attacker` |
+
+Requests are grouped by `JSESSIONID`, or into windows of 10 if the cookie is missing. Feature extraction is unchanged (31-d). Public HTTP datasets do not label skill tiers, so those classes are not part of the model.
+
+Download the CSIC 2010 files from the original CSIC / ITEFI distribution (search for “HTTP Dataset CSIC 2010”). This repo does not vendor the corpus.
+
 ---
 
 ## 9. Deception policy
 
-`aegistrap/decoy/policy.py` maps persona → `DeceptionPolicy`.
+`aegistrap/decoy/policy.py` maps class → `DeceptionPolicy`.
 
-| Persona | Errors | IDOR leak p | LLM? | Notes |
+| Class | Errors | IDOR leak p | LLM? | Notes |
 | --- | --- | --- | --- | --- |
 | Benign | terse | 0 | no | Ordinary API, no bait |
 | Unknown | standard | 0.15 | yes | Stay plausible |
-| Script kiddie | verbose + stack | 0.65 | yes, low richness | Cheap obvious wins |
-| Scanner | standard | 0.25 | **no** | Structure not prose; save tokens and latency |
-| Skilled human | debug | 0.80 | yes, high | Deep surface, honey creds |
-| AI agent | debug | 0.75 | yes, high | Deep surface + canary injections |
+| Attacker | debug | 0.80 | yes, high | Deep surface, honey creds |
 
 `AEGISTRAP_ADAPTIVE_DECEPTION=false` uses a fixed mid-tier `BASELINE_POLICY` (the ablation arm).
 
-If confidence \(< 0.35\), policy pulls back to `unknown` rather than opening the skilled-human surface on a weak guess.
+If confidence \(< 0.35\), policy pulls back to `unknown` rather than opening the attack surface on a weak guess.
 
 Probabilistic deception (IDOR coin-flips) is **seeded on `(session_id, object_id)`**. Retrying `GET /accounts/1002` always yields the same leak-or-403. A flaw that appears and disappears is itself a honeypot tell.
 
@@ -553,15 +569,15 @@ Every repair is a `consistency_violation` counted on the session — the Section
 - **Circuit breaker**: 3 consecutive provider failures → 60s suspension, serve grounded templates.
 - **Latency floor** (default 40ms + 0–90ms jitter) so template replies are not 0.4ms.
 
-### 10.4 Canaries for AI agents
+### 10.4 Canaries for response-reading clients
 
-Responses under the AI-agent policy embed:
+Verbose/debug responses may embed:
 
 ```text
 X-Diagnostic-Token: AEGIS-VERIFY-<10 hex>
 ```
 
-Only a client that **read the previous body** would send that header back. Signature scanners have no reason to. Echoing it is a +7.0 rule for `ai_agent` (LLM Agent Honeypot-style, Reworr & Volkov 2024).
+Only a client that **read the previous body** would send that header back. Signature scanners have no reason to. Echoing it votes for `attacker` and vetoes `benign`.
 
 ---
 
@@ -627,7 +643,7 @@ Uvicorn’s own `Server` header is always disabled at process start.
 | Auto-report quality | ATT&CK F1 vs **request-only** ground truth (`eval.labels`), not vs the decoy’s own weakness log |
 | Consistency | Authenticated GET → transfer → GET; HTTP body must match SQLite |
 | Latency / cost | p50/p95 of live TestClient path; token counters when a generative provider is on |
-| Adaptive surface | Weaknesses actually unlocked per persona |
+| Adaptive surface | Weaknesses actually unlocked per session class |
 | Deception fidelity | **Not automated** — blind mix of real vs honeypot responses is a human study |
 
 ---
@@ -643,10 +659,10 @@ Regenerate: `python scripts/export_synthetic_fixtures.py` (seed `20260831`).
 | `manifest.json` | Index, seed, heuristic agreement on this export |
 | `world_fintech.json` | Full Northwind Capital world: users, accounts, transactions, cards, API keys, config, **test_credentials** |
 | `world_ecommerce.json` | Shop users, products, orders |
-| `sessions.jsonl` | 60 labelled sessions (12 per persona): features, heuristic verdict, truncated event transcript |
-| `feature_matrix.csv` | Same 60 rows as a 32-d numeric matrix for notebooks / RF experiments |
+| `sessions.jsonl` | 24 labelled sessions (12 per class): features, heuristic verdict, truncated event transcript |
+| `feature_matrix.csv` | Same 24 rows as a 31-d numeric matrix for notebooks / RF experiments |
 | `payload_catalogue.json` | Signature-scanner test vectors (benign + known families) |
-| `http/<persona>.json` | HTTP replay scripts for a live decoy |
+| `http/<class>.json` | HTTP replay scripts (`benign.json`, `attacker.json`) |
 
 Example fixture login (valid **inside `world_fintech.json`**, not necessarily on a live random session):
 
@@ -798,4 +814,4 @@ Ethics (synopsis §10):
 
 Minor project, Department of Electronics and Communication Engineering, MAIT. Arnav Chopra and Anshika Chaubey, guided by Lalit Agarwal.
 
-Related work the design is positioned against: Shellm, HoneyLLM, LLM Agent Honeypot, LDAP LLM honeypot, Honeyval — all SSH/shell/generic HTTP, none combining stateful business-API deception, multi-tier persona adaptation, and ATT&CK-mapped auto-reporting.
+Related work the design is positioned against: Shellm, HoneyLLM, LLM Agent Honeypot, LDAP LLM honeypot, Honeyval — all SSH/shell/generic HTTP, none combining stateful business-API deception, benign-vs-attacker adaptive surface, and ATT&CK-mapped auto-reporting.

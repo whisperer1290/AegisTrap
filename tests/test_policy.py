@@ -1,4 +1,4 @@
-"""Persona-adaptive deception policy and its ablation arm."""
+"""Benign-vs-attacker deception policy and its ablation arm."""
 
 from __future__ import annotations
 
@@ -22,54 +22,34 @@ def test_benign_traffic_gets_no_bait() -> None:
     assert unlocked_weaknesses(policy) == []
 
 
-def test_scanners_are_served_from_templates() -> None:
-    """Spending model tokens on a wordlist scan is pure cost (Section 13)."""
-    assert policy_for(AttackerPersona.SCANNER).use_llm is False
+def test_attackers_get_generation_budget() -> None:
+    policy = policy_for(AttackerPersona.ATTACKER)
+    assert policy.use_llm is True
+    assert policy.narrative_richness == "high"
+    assert policy.error_verbosity is ErrorVerbosity.DEBUG
 
 
-def test_high_skill_sessions_get_generation_budget() -> None:
-    for persona in (AttackerPersona.SKILLED_HUMAN, AttackerPersona.AI_AGENT):
-        policy = policy_for(persona)
-        assert policy.use_llm is True
-        assert policy.narrative_richness == "high"
-        assert policy.error_verbosity is ErrorVerbosity.DEBUG
-
-
-def test_surface_depth_increases_with_skill() -> None:
-    ordered = [
-        AttackerPersona.BENIGN,
-        AttackerPersona.UNKNOWN,
-        AttackerPersona.SCRIPT_KIDDIE,
-        AttackerPersona.SCANNER,
-        AttackerPersona.SKILLED_HUMAN,
-    ]
-    counts = [len(unlocked_weaknesses(policy_for(p))) for p in ordered]
-    assert counts == sorted(counts), counts
-    assert counts[-1] > counts[0]
-
-
-def test_script_kiddies_get_cheap_bait_but_not_critical_flaws() -> None:
-    policy = policy_for(AttackerPersona.SCRIPT_KIDDIE)
-    unlocked = set(unlocked_weaknesses(policy))
-    assert "DEBUG_ENDPOINT" in unlocked
-    assert "SQL_INJECTION" in unlocked
-    # Rank-4 flaws stay out of reach: a novice landing a critical finding
-    # smells like a trap.
-    assert "SSRF_WEBHOOK" not in unlocked
-    assert "JWT_ALG_NONE" not in unlocked
+def test_attackers_see_a_deeper_surface_than_benign() -> None:
+    benign = unlocked_weaknesses(policy_for(AttackerPersona.BENIGN))
+    attacker = unlocked_weaknesses(policy_for(AttackerPersona.ATTACKER))
+    assert benign == []
+    assert "DEBUG_ENDPOINT" in attacker
+    assert "SQL_INJECTION" in attacker
+    assert "JWT_ALG_NONE" in attacker
+    assert "SSRF_WEBHOOK" in attacker
+    assert len(attacker) > len(unlocked_weaknesses(policy_for(AttackerPersona.UNKNOWN)))
 
 
 def test_low_confidence_falls_back_to_the_neutral_tier() -> None:
-    """One odd header must not be enough to open the deep surface."""
-    guessed = policy_for(AttackerPersona.SKILLED_HUMAN, confidence=0.2)
+    """One odd header must not be enough to open the attack surface."""
+    guessed = policy_for(AttackerPersona.ATTACKER, confidence=0.2)
     assert guessed.persona is AttackerPersona.UNKNOWN
 
-    confident = policy_for(AttackerPersona.SKILLED_HUMAN, confidence=0.9)
-    assert confident.persona is AttackerPersona.SKILLED_HUMAN
+    confident = policy_for(AttackerPersona.ATTACKER, confidence=0.9)
+    assert confident.persona is AttackerPersona.ATTACKER
 
 
 def test_benign_classification_is_trusted_even_when_unsure() -> None:
-    # Erring toward "boring API" is the safe direction.
     assert policy_for(AttackerPersona.BENIGN, confidence=0.1).persona is AttackerPersona.BENIGN
 
 
@@ -78,11 +58,11 @@ def test_ablation_arm_ignores_the_profiler() -> None:
         assert policy_for(persona, adaptive=False) is BASELINE_POLICY
 
 
-def test_ablation_arm_exposes_a_fixed_mid_tier_surface() -> None:
+def test_ablation_arm_exposes_the_attack_surface() -> None:
     baseline = set(unlocked_weaknesses(BASELINE_POLICY))
     assert baseline
-    assert all(WEAKNESSES[wid].min_persona_rank <= 3 for wid in baseline)
-    assert "SSRF_WEBHOOK" not in baseline
+    assert all(WEAKNESSES[wid].min_persona_rank <= 2 for wid in baseline)
+    assert "SSRF_WEBHOOK" in baseline
 
 
 def test_no_weakness_is_reachable_at_the_benign_rank() -> None:
@@ -92,7 +72,7 @@ def test_no_weakness_is_reachable_at_the_benign_rank() -> None:
 
 def test_unknown_weakness_ids_are_never_unlocked() -> None:
     assert (
-        weakness_unlocked("NOT_A_REAL_WEAKNESS", policy_for(AttackerPersona.SKILLED_HUMAN)) is False
+        weakness_unlocked("NOT_A_REAL_WEAKNESS", policy_for(AttackerPersona.ATTACKER)) is False
     )
 
 

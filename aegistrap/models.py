@@ -1,4 +1,4 @@
-"""Shared domain types: attacker personas, deception policy, captured events."""
+"""Shared domain types: session class, deception policy, captured events."""
 
 from __future__ import annotations
 
@@ -8,46 +8,34 @@ from typing import Any
 
 
 class AttackerPersona(StrEnum):
-    """Skill tiers the profiler assigns to a session (Section 4)."""
+    """Binary session class the profiler assigns (plus unknown)."""
 
     BENIGN = "benign"
-    SCRIPT_KIDDIE = "script_kiddie"
-    SCANNER = "scanner"
-    SKILLED_HUMAN = "skilled_human"
-    AI_AGENT = "ai_agent"
+    ATTACKER = "attacker"
     UNKNOWN = "unknown"
 
     @property
     def label(self) -> str:
         return {
             AttackerPersona.BENIGN: "Benign client",
-            AttackerPersona.SCRIPT_KIDDIE: "Script kiddie",
-            AttackerPersona.SCANNER: "Automated scanner",
-            AttackerPersona.SKILLED_HUMAN: "Skilled human",
-            AttackerPersona.AI_AGENT: "Autonomous AI agent",
+            AttackerPersona.ATTACKER: "Attacker",
             AttackerPersona.UNKNOWN: "Unclassified",
         }[self]
 
     @property
     def skill_rank(self) -> int:
-        """Rough ordering used when deciding how much rope to give a session."""
+        """Whether the fake vulnerability surface is closed, conservative, or open."""
         return {
             AttackerPersona.BENIGN: 0,
             AttackerPersona.UNKNOWN: 1,
-            AttackerPersona.SCRIPT_KIDDIE: 2,
-            AttackerPersona.SCANNER: 3,
-            AttackerPersona.SKILLED_HUMAN: 4,
-            AttackerPersona.AI_AGENT: 5,
+            AttackerPersona.ATTACKER: 2,
         }[self]
 
 
-#: Personas the profiler is allowed to emit as a positive classification.
+#: Classes the profiler is allowed to emit as a positive classification.
 CLASSIFIABLE_PERSONAS: tuple[AttackerPersona, ...] = (
     AttackerPersona.BENIGN,
-    AttackerPersona.SCRIPT_KIDDIE,
-    AttackerPersona.SCANNER,
-    AttackerPersona.SKILLED_HUMAN,
-    AttackerPersona.AI_AGENT,
+    AttackerPersona.ATTACKER,
 )
 
 
@@ -62,10 +50,8 @@ class ErrorVerbosity(StrEnum):
 class DeceptionPolicy:
     """How much of the fake vulnerability surface to expose to a session.
 
-    This is the mechanism behind the "adapts the LLM's vulnerability surface"
-    contribution: the profiler picks a persona, the persona picks a policy, and
-    the policy is fed to both the deterministic decoy handlers and the LLM
-    prompt.
+    The profiler picks benign vs attacker, the class picks a policy, and the
+    policy is fed to both the deterministic decoy handlers and the LLM prompt.
     """
 
     persona: AttackerPersona

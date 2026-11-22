@@ -29,7 +29,7 @@ def _request(**overrides: Any) -> GenerationRequest:
             "status": "open",
         },
         "suggested_status": 200,
-        "policy": policy_for(AttackerPersona.SKILLED_HUMAN),
+        "policy": policy_for(AttackerPersona.ATTACKER),
         "transcript": ["GET /api/v1/accounts -> 200"],
         "extra_instructions": [],
         "exercised_weaknesses": [],
@@ -116,8 +116,8 @@ async def test_policy_can_veto_generation(settings, store) -> None:
     provider = _Provider([{"id": "1004"}])
     engine = ResponseEngine(settings, provider, store)
 
-    await engine.render(_request(policy=policy_for(AttackerPersona.SCANNER)))
-    assert provider.calls == 0, "scanner sessions must be served from templates"
+    await engine.render(_request(policy=policy_for(AttackerPersona.BENIGN)))
+    assert provider.calls == 0, "benign sessions must be served from templates"
 
     await engine.render(_request(allow_llm=False))
     assert provider.calls == 0, "allow_llm=False must be respected"
@@ -274,7 +274,7 @@ async def test_prompt_carries_state_and_policy_but_not_secrets(settings, store) 
     system, user = provider.prompts[0]
     combined = f"{system}\n{user}"
     assert "481233" in combined, "authoritative values must be in the prompt"
-    assert "skilled_human" in combined
+    assert "attacker" in combined
     assert "/api/v1/accounts/1004" in combined
     # The model is told never to contradict state.
     assert "contradict" in combined.lower() or "must not" in combined.lower()

@@ -1,4 +1,4 @@
-"""Replay persona HTTP fixtures against a running AegisTrap decoy."""
+"""Replay benign/attacker HTTP fixtures against a running AegisTrap decoy."""
 
 from __future__ import annotations
 
@@ -15,19 +15,19 @@ HTTP_DIR = REPO_ROOT / "data" / "synthetic" / "http"
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Replay synthetic persona traffic at a live decoy."
+        description="Replay synthetic benign/attacker traffic at a live decoy."
     )
     parser.add_argument("--base", default="http://127.0.0.1:8000")
     parser.add_argument(
         "--persona",
         default="all",
-        choices=["all", "benign", "scanner", "script_kiddie", "skilled_human", "ai_agent"],
+        choices=["all", "benign", "attacker"],
     )
     parser.add_argument("--delay-ms", type=int, default=80, help="pause between requests")
     args = parser.parse_args(argv)
 
     personas = (
-        ["benign", "scanner", "script_kiddie", "skilled_human", "ai_agent"]
+        ["benign", "attacker"]
         if args.persona == "all"
         else [args.persona]
     )

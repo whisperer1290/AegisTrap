@@ -3,10 +3,7 @@
   "per_persona": 12,
   "personas": [
     "benign",
-    "script_kiddie",
-    "scanner",
-    "skilled_human",
-    "ai_agent"
+    "attacker"
   ],
   "files": {
     "world_fintech.json": "Deterministic Northwind Capital fake world + login credentials",
@@ -14,12 +11,12 @@
     "sessions.jsonl": "Labelled synthetic sessions with features and truncated transcripts",
     "feature_matrix.csv": "Numeric feature matrix for the ML comparison arm",
     "payload_catalogue.json": "Payload-family detection fixtures",
-    "http/*.json": "HTTP replay scripts per persona, for a live decoy"
+    "http/*.json": "HTTP replay scripts for benign and attacker, for a live decoy"
   },
   "heuristic_agreement_on_this_export": {
-    "n": 60,
-    "matches": 57,
-    "accuracy": 0.95
+    "n": 24,
+    "matches": 24,
+    "accuracy": 1.0
   },
   "fintech_login_example": {
     "email": "a.alrashid.1@example.com",

@@ -403,13 +403,12 @@ def analyse_session(session: Session, events: Iterable[Event]) -> SessionAnalysi
         technique = ["T1071.001"]
         behaviours.append(
             Behaviour(
-                id="agent_canary_echo",
-                title="Automated agent confirmed via response-embedded canary",
+                id="response_canary_echo",
+                title="Client echoed a response-embedded diagnostic canary",
                 description=(
                     f"{canary_echoes} request(s) echoed an instruction planted in an "
-                    "earlier response body, indicating the client is an LLM-driven "
-                    "agent consuming responses as context rather than a human or a "
-                    "signature-based scanner."
+                    "earlier response body, indicating the client read and reused "
+                    "response content rather than fanning out from a wordlist."
                 ),
                 technique_ids=technique,
                 severity="medium",

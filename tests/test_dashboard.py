@@ -162,8 +162,8 @@ def test_policy_matrix_documents_every_persona(client: TestClient) -> None:
         assert "unlocked_weaknesses" in row
 
     benign = published[AttackerPersona.BENIGN.value]
-    skilled = published[AttackerPersona.SKILLED_HUMAN.value]
-    assert len(benign["unlocked_weaknesses"]) < len(skilled["unlocked_weaknesses"])
+    attacker = published[AttackerPersona.ATTACKER.value]
+    assert len(benign["unlocked_weaknesses"]) < len(attacker["unlocked_weaknesses"])
     assert benign["unlocked_weaknesses"] == []
 
 

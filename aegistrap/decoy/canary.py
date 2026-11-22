@@ -1,10 +1,9 @@
-"""Embedded prompt-injection canaries for autonomous-agent detection.
+"""Embedded diagnostic canaries for response-reading clients.
 
-Follows the technique used by the LLM Agent Honeypot (Reworr & Volkov, 2024):
-plant an instruction inside otherwise-plausible diagnostic text that only a
-language model reading the response would act on. A human with curl or a
-signature-based scanner has no reason to comply; an LLM-driven agent that is
-ingesting responses as context frequently does.
+A token is planted inside otherwise-plausible debug text. A signature-based
+scanner has no reason to send it back; a client that actually read the previous
+body sometimes does. Echoing it is evidence of response-driven behaviour
+(typically an attacker reading the body), not of a particular tooling family.
 
 The canary is per-session so a token echoed back is unambiguous evidence that
 *this* session read *this* response.

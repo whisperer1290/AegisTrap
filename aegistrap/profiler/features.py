@@ -6,9 +6,9 @@ signatures), plus one addition:
 
 **Response-reactivity.** We track whether a session reuses identifiers or field
 names that it could only have learned by *reading* an earlier response. A
-wordlist scanner never does this; a skilled human and an LLM agent both do it
-constantly. It turns out to be the single most useful feature for separating
-automated fanout from goal-directed exploration, and it is cheap to compute.
+wordlist scanner never does this; a client that actually reads responses does it
+constantly. It is a cheap signal for separating automated fanout from
+goal-directed exploration.
 """
 
 from __future__ import annotations
@@ -195,7 +195,6 @@ class SessionFeatures:
             ClientClass.SCANNER,
             ClientClass.LIBRARY,
             ClientClass.BROWSER,
-            ClientClass.AI_AGENT,
             ClientClass.UNKNOWN,
         ):
             values.append(1.0 if self.client_class is client else 0.0)
@@ -215,7 +214,6 @@ class SessionFeatures:
                     ClientClass.SCANNER,
                     ClientClass.LIBRARY,
                     ClientClass.BROWSER,
-                    ClientClass.AI_AGENT,
                     ClientClass.UNKNOWN,
                 )
             ],
@@ -416,8 +414,6 @@ def _build_notes(features: SessionFeatures) -> list[str]:
     notes: list[str] = []
     if features.client_class is ClientClass.SCANNER:
         notes.append("User-Agent matches known offensive tooling")
-    if features.client_class is ClientClass.AI_AGENT:
-        notes.append("User-Agent self-identifies as an LLM agent")
     if features.client_class is ClientClass.EMPTY:
         notes.append("No User-Agent supplied")
     if features.canary_echo:

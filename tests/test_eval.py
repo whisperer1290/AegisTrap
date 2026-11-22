@@ -30,12 +30,12 @@ def test_set_f1_penalises_invented_tags() -> None:
 
 def test_classification_report_accuracy() -> None:
     report = classification_report(
-        [("scanner", "scanner"), ("scanner", "script_kiddie"), ("ai_agent", "ai_agent")],
-        labels=["scanner", "script_kiddie", "ai_agent"],
+        [("attacker", "attacker"), ("attacker", "benign"), ("benign", "benign")],
+        labels=["attacker", "benign"],
     )
     assert report["n"] == 3
     assert report["accuracy"] == pytest.approx(2 / 3, abs=1e-4)
-    assert report["confusion"]["scanner"]["scanner"] == 1
+    assert report["confusion"]["attacker"]["attacker"] == 1
 
 
 def test_percentile_bounds() -> None:
@@ -62,7 +62,7 @@ def test_expected_techniques_from_sqli_and_wordlist() -> None:
             latency_ms=1.0,
             llm_tokens=0,
             weaknesses=[],
-            persona_at_time="scanner",
+            persona_at_time="attacker",
         ),
         Event(
             id=2,
@@ -80,7 +80,7 @@ def test_expected_techniques_from_sqli_and_wordlist() -> None:
             latency_ms=1.0,
             llm_tokens=0,
             weaknesses=[],
-            persona_at_time="scanner",
+            persona_at_time="attacker",
         ),
     ]
     tags = expected_techniques(events)
@@ -89,12 +89,12 @@ def test_expected_techniques_from_sqli_and_wordlist() -> None:
     assert "T1071.001" in tags
 
 
-def test_synthetic_scanner_session_has_expected_tags() -> None:
+def test_synthetic_attacker_session_has_expected_tags() -> None:
     import random
 
-    events = generate_session(AttackerPersona.SCANNER, random.Random(0))
+    events = generate_session(AttackerPersona.ATTACKER, random.Random(0))
     tags = expected_techniques(events)
-    assert tags  # a scanner session is never an empty campaign
+    assert tags  # an attacker session is never an empty campaign
 
 
 def test_evaluation_harness_writes_results(tmp_path: Path) -> None:
@@ -107,7 +107,7 @@ def test_evaluation_harness_writes_results(tmp_path: Path) -> None:
     )
     assert (tmp_path / "results.json").exists()
     assert (tmp_path / "results.md").exists()
-    assert result.profiling["heuristic"]["n"] == 6 * 5
+    assert result.profiling["heuristic"]["n"] == 6 * 2
     assert result.profiling["heuristic"]["accuracy"] >= 0.5
     assert result.consistency["ok"] is True
     assert result.consistency["http_agrees_with_store"] is True

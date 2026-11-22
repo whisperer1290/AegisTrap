@@ -5,10 +5,11 @@ red-team tool) makes two things practical: training the ML comparison arm on
 thousands of labelled sessions, and unit-testing the classifier without a
 running server.
 
-The generators encode the behavioural *definition* of each persona — pacing,
+The generators encode the behavioural *definition* of each class — pacing,
 header hygiene, payload grade, and whether the client reads what it is sent.
-They are intentionally noisy, with overlapping parameter ranges, so a
-classifier that scores well here is not simply memorising clean archetypes.
+Attack styles (scanner, cheat-sheet, sequential exploit) are mixed under
+``attacker`` so the feature space is not a single archetype. They are
+intentionally noisy, with overlapping parameter ranges.
 """
 
 from __future__ import annotations
@@ -17,7 +18,6 @@ import json
 import random
 from collections.abc import Callable
 
-from aegistrap.decoy.canary import canary_token
 from aegistrap.models import AttackerPersona
 from aegistrap.store import Event
 
@@ -53,14 +53,6 @@ _LIBRARY_UAS = (
     "Go-http-client/1.1",
     "PostmanRuntime/7.36.0",
 )
-_AGENT_UAS = (
-    "LangChain/0.2 python-httpx/0.27",
-    "autonomous-pentest-agent/0.4 (openai gpt-4o)",
-    "claude-agent-harness/1.2",
-    "browser-use/0.1.40",
-    "openhands-agent/0.9",
-)
-
 _DOC_PATHS = (
     "/api/v1/health",
     "/api/v1/accounts",
@@ -225,6 +217,7 @@ def _benign(rng: random.Random) -> list[Event]:
 
 
 def _script_kiddie(rng: random.Random) -> list[Event]:
+    """Cheat-sheet / copy-paste attack style. Labelled ``attacker``, not a class."""
     n = rng.randint(5, 24)
     ts = 1_700_000_000.0
     ua = rng.choice(_LIBRARY_UAS)
@@ -251,6 +244,7 @@ def _script_kiddie(rng: random.Random) -> list[Event]:
 
 
 def _scanner(rng: random.Random) -> list[Event]:
+    """High-rate wordlist attack style. Labelled ``attacker``, not a class."""
     n = rng.randint(25, 90)
     ts = 1_700_000_000.0
     headers = {"user-agent": rng.choice(_SCANNER_UAS), "accept": "*/*"}
@@ -276,11 +270,10 @@ def _scanner(rng: random.Random) -> list[Event]:
 
 
 def _skilled_human(rng: random.Random) -> list[Event]:
-    """A capable operator working by hand.
+    """Sequential-exploit attack style. Labelled ``attacker``, not a class.
 
-    Two things characterise this persona: irregular pacing with genuine
-    thinking pauses, and exploitation that builds on what earlier responses
-    disclosed.
+    Irregular pacing with thinking pauses, and exploitation that builds on
+    what earlier responses disclosed.
     """
     n = rng.randint(12, 40)
     ts = 1_700_000_000.0
@@ -367,99 +360,31 @@ def _skilled_human(rng: random.Random) -> list[Event]:
     return events
 
 
-def _ai_agent(rng: random.Random) -> list[Event]:
-    """An autonomous LLM-driven agent.
+_ATTACK_STYLES: tuple[Callable[[random.Random], list[Event]], ...] = (
+    _script_kiddie,
+    _scanner,
+    _skilled_human,
+)
 
-    Behaviourally this sits between a scanner and a skilled human: it reads and
-    acts on responses like a human, but it paces like software — regular
-    intervals set by inference latency rather than by thinking and typing.
-    That timing regularity is the main discriminator, and it is why some
-    sessions are only separable via the canary echo.
+
+def _attacker(rng: random.Random) -> list[Event]:
+    """Mix of scanner, cheat-sheet, and sequential-exploit behaviours.
+
+    Public HTTP corpora only label benign vs attack, so every offensive style
+    is stored under the same ``attacker`` class. Style diversity still exists
+    inside the generator so the feature space is not a single archetype.
     """
-    n = rng.randint(14, 45)
-    ts = 1_700_000_000.0
-    self_identifies = rng.random() < 0.45
-    headers = {
-        "user-agent": rng.choice(_AGENT_UAS) if self_identifies else rng.choice(_LIBRARY_UAS),
-        "accept": "application/json",
-        "content-type": "application/json",
-    }
-    echoes_canary = rng.random() < 0.5
-    events: list[Event] = []
-    discovered_ids: list[str] = []
-    learned_fields: list[str] = ["ledger_shard"]
-    base_interval = rng.uniform(0.8, 3.5)
-
-    for i in range(n):
-        ts += max(0.05, rng.gauss(base_interval, base_interval * rng.uniform(0.08, 0.3)))
-        roll = rng.random()
-        method, body, status = "GET", "", 200
-
-        if i == 0 or not discovered_ids:
-            ids = [str(1001 + k) for k in rng.sample(range(14), rng.randint(3, 6))]
-            discovered_ids.extend(ids)
-            path, response = "/api/v1/accounts", _account_list_response(rng, ids)
-        elif roll < 0.26:
-            target = rng.choice(discovered_ids)
-            path = f"/api/v1/accounts/{target}"
-            learned_fields.append("ledger_shard")
-            response = json.dumps({"id": target, "ledger_shard": "eu-w1-shard-2"})
-        elif roll < 0.42:
-            token = rng.choice(learned_fields)
-            target = rng.choice(discovered_ids)
-            path = f"/api/v1/transactions?account_id={target}&fields={token}"
-            learned_fields.append("processor_ref")
-            response = '{"items":[{"processor_ref":"PSP-1a2b","fraud_score":0.07}]}'
-        elif roll < 0.58:
-            method, path = "POST", "/api/v1/auth/login"
-            body = json.dumps(
-                {
-                    "email": "j.okafor@example.com",
-                    "password": rng.choice(("Summer2024!", "Password123", "Welcome1")),
-                }
-            )
-            status = rng.choice((200, 401))
-            response = '{"error":"invalid_password","user_exists":true}'
-        elif roll < 0.7:
-            method, path = "POST", "/graphql"
-            body = json.dumps(
-                {"query": "{ accounts { id balanceMinor owner { id role internalNotes } } }"}
-            )
-            response = '{"data":{"accounts":[{"id":"1001","ledgerShard":"eu-w1-shard-2"}]}}'
-        elif roll < 0.84:
-            target = rng.choice(discovered_ids)
-            path = f"/api/v1/accounts/{target}" + rng.choice(_ADVANCED_PAYLOADS)
-            status = 500
-            learned_fields.append("accounts_v2")
-            response = '{"error":"OperationalError","hint":"relation accounts_v2 does not exist"}'
-        else:
-            method, path = "PATCH", "/api/v1/users/me"
-            body = json.dumps({"role": "admin"})
-            status = rng.choice((200, 403))
-            response = '{"role":"customer"}'
-
-        request_headers = dict(headers)
-        if echoes_canary and i >= 3:
-            request_headers["x-diagnostic-token"] = canary_token("synthetic")
-        events.append(
-            _event(
-                i, ts, method, path, request_headers, body=body, status=status, response=response
-            )
-        )
-    return events
+    return rng.choice(_ATTACK_STYLES)(rng)
 
 
 _GENERATORS: dict[AttackerPersona, Callable[[random.Random], list[Event]]] = {
     AttackerPersona.BENIGN: _benign,
-    AttackerPersona.SCRIPT_KIDDIE: _script_kiddie,
-    AttackerPersona.SCANNER: _scanner,
-    AttackerPersona.SKILLED_HUMAN: _skilled_human,
-    AttackerPersona.AI_AGENT: _ai_agent,
+    AttackerPersona.ATTACKER: _attacker,
 }
 
 
 def generate_session(persona: AttackerPersona, rng: random.Random | None = None) -> list[Event]:
-    """Produce one synthetic session for the given persona."""
+    """Produce one synthetic session for the given class."""
     generator = _GENERATORS.get(persona)
     if generator is None:
         raise ValueError(f"no synthetic generator for persona {persona!r}")

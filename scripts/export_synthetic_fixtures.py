@@ -129,76 +129,20 @@ def export_http_replays() -> dict[str, list[dict]]:
                 "json": {"email": "REPLACE_EMAIL", "password": "REPLACE_PASSWORD"},
             },
         ],
-        "scanner": [
+        "attacker": [
             {
                 "method": "GET",
                 "path": "/.env",
                 "headers": {"user-agent": "sqlmap/1.8.2#stable (https://sqlmap.org)"},
             },
-            {"method": "GET", "path": "/openapi.json", "headers": {"user-agent": "ffuf/2.1.0"}},
             {"method": "GET", "path": "/admin", "headers": {"user-agent": "Nikto/2.5.0"}},
-            {"method": "GET", "path": "/swagger", "headers": {"user-agent": "gobuster/3.6"}},
-            {
-                "method": "GET",
-                "path": "/actuator/env",
-                "headers": {"user-agent": "feroxbuster/2.10.2"},
-            },
-            {
-                "method": "GET",
-                "path": "/api/v1/accounts/1001",
-                "headers": {"user-agent": "sqlmap/1.8.2#stable"},
-            },
-            {
-                "method": "GET",
-                "path": "/api/v1/accounts/1002",
-                "headers": {"user-agent": "sqlmap/1.8.2#stable"},
-            },
-            {
-                "method": "GET",
-                "path": "/graphql",
-                "headers": {"user-agent": "sqlmap/1.8.2#stable"},
-                "query": {"query": "{ __schema { types { name } } }"},
-            },
-        ],
-        "script_kiddie": [
-            {"method": "GET", "path": "/api/v1/health", "headers": {"user-agent": "curl/8.4.0"}},
             {
                 "method": "GET",
                 "path": "/api/v1/accounts/1' OR '1'='1",
                 "headers": {"user-agent": "python-requests/2.31.0"},
             },
-            {
-                "method": "GET",
-                "path": "/api/v1/accounts/1001",
-                "headers": {"user-agent": "curl/8.4.0"},
-            },
-            {
-                "method": "POST",
-                "path": "/api/v1/auth/login",
-                "headers": {"user-agent": "curl/8.4.0"},
-                "json": {"email": "admin@example.com", "password": "admin123"},
-            },
-            {
-                "method": "GET",
-                "path": "/api/v1/admin/api-keys",
-                "headers": {"user-agent": "curl/8.4.0"},
-            },
-        ],
-        "skilled_human": [
-            {"method": "GET", "path": "/openapi.json", "headers": browser},
             {"method": "GET", "path": "/api/v1/accounts/1001", "headers": browser},
             {"method": "GET", "path": "/api/v1/accounts/1002", "headers": browser},
-            {
-                "method": "GET",
-                "path": "/api/v1/accounts/1003?fields=internal_notes,ledger_shard",
-                "headers": browser,
-            },
-            {
-                "method": "POST",
-                "path": "/graphql",
-                "headers": browser,
-                "json": {"query": "{ accounts(limit: 3) { id balanceMinor owner { id role } } }"},
-            },
             {
                 "method": "GET",
                 "path": "/api/v1/accounts/1001' AND (SELECT 1 FROM pg_sleep(0))--",
@@ -209,40 +153,6 @@ def export_http_replays() -> dict[str, list[dict]]:
                 "path": "/api/v1/users/me",
                 "headers": browser,
                 "json": {"role": "admin"},
-            },
-        ],
-        "ai_agent": [
-            {
-                "method": "GET",
-                "path": "/api/v1/health",
-                "headers": {
-                    "user-agent": "LangChain/0.2 python-httpx/0.27",
-                    "accept": "application/json",
-                },
-            },
-            {
-                "method": "GET",
-                "path": "/openapi.json",
-                "headers": {"user-agent": "LangChain/0.2 python-httpx/0.27"},
-            },
-            {
-                "method": "POST",
-                "path": "/graphql",
-                "headers": {"user-agent": "autonomous-pentest-agent/0.4 (openai gpt-4o)"},
-                "json": {"query": "{ __schema { types { name fields { name } } } }"},
-            },
-            {
-                "method": "GET",
-                "path": "/api/v1/accounts/1001",
-                "headers": {
-                    "user-agent": "claude-agent-harness/1.2",
-                    "x-diagnostic-token": "AEGIS-VERIFY-PLACEHOLDER",
-                },
-            },
-            {
-                "method": "GET",
-                "path": "/api/v1/debug",
-                "headers": {"user-agent": "openhands-agent/0.9"},
             },
         ],
     }
@@ -338,7 +248,7 @@ def main() -> None:
             "sessions.jsonl": "Labelled synthetic sessions with features and truncated transcripts",
             "feature_matrix.csv": "Numeric feature matrix for the ML comparison arm",
             "payload_catalogue.json": "Payload-family detection fixtures",
-            "http/*.json": "HTTP replay scripts per persona, for a live decoy",
+            "http/*.json": "HTTP replay scripts for benign and attacker, for a live decoy",
         },
         "heuristic_agreement_on_this_export": {
             "n": len(sessions),

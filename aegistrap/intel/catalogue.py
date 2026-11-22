@@ -246,12 +246,9 @@ class Weakness:
 
     ``min_persona_rank`` implements the adaptive vulnerability surface: a
     weakness is only reachable once the profiler thinks the session is at least
-    this capable. Cheap bait is unlocked early; the subtle, high-value-looking
-    flaws are reserved for sessions worth keeping engaged.
-
-    The minimum is 1, not 0. Rank 0 is ``BENIGN``, and a session the profiler
-    believes is legitimate must see an ordinary, uninteresting API — so no
-    weakness may be reachable at that tier.
+    this capable. Rank 0 is ``BENIGN`` (nothing unlocked). Rank 1 is
+    ``UNKNOWN`` (cheap reconnaissance bait). Rank 2 is ``ATTACKER`` (full
+    seeded surface).
     """
 
     id: str
@@ -343,7 +340,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-639",
             techniques=("T1190", "T1213", "T1119"),
             severity="high",
-            min_persona_rank=3,
+            min_persona_rank=2,
         ),
         _w(
             id="USER_ENUMERATION",
@@ -385,7 +382,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-347",
             techniques=("T1134", "T1528", "T1078"),
             severity="critical",
-            min_persona_rank=4,
+            min_persona_rank=2,
             defender_note="Pin the accepted algorithm list server-side.",
         ),
         _w(
@@ -400,7 +397,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-915",
             techniques=("T1548", "T1068"),
             severity="high",
-            min_persona_rank=4,
+            min_persona_rank=2,
         ),
         _w(
             id="EXCESSIVE_DATA_EXPOSURE",
@@ -414,7 +411,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-213",
             techniques=("T1213", "T1552"),
             severity="high",
-            min_persona_rank=3,
+            min_persona_rank=2,
         ),
         _w(
             id="NO_RATE_LIMIT",
@@ -430,7 +427,7 @@ WEAKNESSES: dict[str, Weakness] = {
             severity="medium",
             # Uncapped pagination is a deep-surface reward, not ambient: every
             # other tier keeps its page ceiling so bulk enumeration stays cheap.
-            min_persona_rank=4,
+            min_persona_rank=2,
         ),
         _w(
             id="GRAPHQL_DEPTH_ABUSE",
@@ -444,7 +441,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-770",
             techniques=("T1499", "T1499.004"),
             severity="medium",
-            min_persona_rank=3,
+            min_persona_rank=2,
         ),
         _w(
             id="BFLA_ADMIN_ROUTE",
@@ -458,7 +455,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-285",
             techniques=("T1190", "T1068", "T1069"),
             severity="critical",
-            min_persona_rank=3,
+            min_persona_rank=2,
             defender_note="Move the role check into shared middleware for the admin router.",
         ),
         _w(
@@ -473,7 +470,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-770",
             techniques=("T1657", "T1565"),
             severity="critical",
-            min_persona_rank=4,
+            min_persona_rank=2,
         ),
         _w(
             id="SSRF_WEBHOOK",
@@ -487,7 +484,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-918",
             techniques=("T1190", "T1090", "T1552"),
             severity="high",
-            min_persona_rank=4,
+            min_persona_rank=2,
         ),
         _w(
             id="VERBOSE_ERROR",
@@ -528,7 +525,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-942",
             techniques=("T1190",),
             severity="medium",
-            min_persona_rank=4,
+            min_persona_rank=2,
         ),
         _w(
             id="GRAPHQL_INTROSPECTION",
@@ -556,7 +553,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-200",
             techniques=("T1595", "T1190"),
             severity="high",
-            min_persona_rank=4,
+            min_persona_rank=2,
         ),
         _w(
             id="OPENAPI_EXPOSED",
@@ -584,7 +581,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-798",
             techniques=("T1552", "T1552.001", "T1528"),
             severity="critical",
-            min_persona_rank=3,
+            min_persona_rank=2,
         ),
         _w(
             id="SQL_INJECTION",
@@ -612,7 +609,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-943",
             techniques=("T1190", "T1212"),
             severity="high",
-            min_persona_rank=3,
+            min_persona_rank=2,
         ),
         _w(
             id="PATH_TRAVERSAL",
@@ -639,7 +636,7 @@ WEAKNESSES: dict[str, Weakness] = {
             cwe="CWE-78",
             techniques=("T1059", "T1190"),
             severity="critical",
-            min_persona_rank=4,
+            min_persona_rank=2,
         ),
         _w(
             id="REFLECTED_XSS",

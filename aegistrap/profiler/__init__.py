@@ -1,4 +1,4 @@
-"""Attacker profiling: feature extraction and skill-tier classification."""
+"""Attacker profiling: feature extraction and benign-vs-attacker classification."""
 
 from aegistrap.profiler.service import AttackerProfiler, ProfileResult
 

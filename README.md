@@ -1,6 +1,6 @@
 # AegisTrap
 
-An LLM-powered adaptive **API honeypot**. It emulates a stateful fintech (or e-commerce) REST and GraphQL backend, profiles each attacker session by skill, changes how much of the fake vulnerability surface that session can reach, and turns the transcript into a MITRE ATT&CK / OWASP incident report.
+An LLM-powered adaptive **API honeypot**. It emulates a stateful fintech (or e-commerce) REST and GraphQL backend, profiles each session as benign or attacker, changes how much of the fake vulnerability surface that session can reach, and turns the transcript into a MITRE ATT&CK / OWASP incident report.
 
 This is a deception system for research and isolated-lab use. Every account, balance, name, and secret it serves is synthetic.
 
@@ -12,7 +12,7 @@ AegisTrap sits in that gap:
 
 1. **Decoy business API** — OpenAPI-documented Northwind Capital (or a shop API) with seeded, policy-gated flaws (IDOR, verbose errors, GraphQL introspection, a hidden admin surface).
 2. **Session state store** — SQLite holds a consistent fake world per attacker. The LLM renders state; it never invents it.
-3. **Attacker profiler** — buckets a session as benign, script kiddie, scanner, skilled human, or AI agent, then adapts the exposed surface.
+3. **Attacker profiler** — buckets a session as benign or attacker, then adapts the exposed surface.
 4. **LLM response engine** — optional Claude / GPT / Ollama generation, always reconciled against the store. Offline mode is a first-class static baseline.
 5. **Threat-intel auto-reporter** — on idle timeout, emits Markdown + YAML tagged with ATT&CK, OWASP API Top 10 (2023), OWASP Top 10 (2025), and CWE.
 
@@ -37,7 +37,7 @@ Then:
 | http://127.0.0.1:8000/api/v1/health | Decoy health probe |
 | http://127.0.0.1:8000/docs | Swagger UI for the fake bank |
 | http://127.0.0.1:8000/graphql | GraphQL endpoint |
-| http://127.0.0.1:8000/dashboard | Operator console (sessions, personas, reports) |
+| http://127.0.0.1:8000/dashboard | Operator console (sessions, classes, reports) |
 
 The default LLM provider is `offline`: deterministic, no API key, no outbound calls. That is also the static baseline used in evaluation.
 
@@ -53,7 +53,7 @@ python -m aegistrap eval
 ```
 attacker  -->  FastAPI decoy (REST + GraphQL)
                   |  1. resolve session (IP + User-Agent, or X-AegisTrap-Session)
-                  |  2. profile skill  -->  deception policy
+                  |  2. profile session (benign / attacker)  -->  deception policy
                   |  3. handler reads/writes SQLite world (authoritative)
                   |  4. response engine dresses the payload (LLM or template)
                   |  5. latency shaping + banner
@@ -66,15 +66,12 @@ attacker  -->  FastAPI decoy (REST + GraphQL)
 
 Handlers decide *whether* a check passes. The model only decides *how the JSON looks*. Divergent fields are repaired and counted as consistency violations.
 
-## Attacker personas
+## Session classes
 
-| Persona | Surface | LLM spend |
+| Class | Surface | LLM spend |
 | --- | --- | --- |
 | Benign | Ordinary API, no bait | none |
-| Script kiddie | Obvious wins, verbose errors | low |
-| Scanner | Structure over prose, templates | none |
-| Skilled human | Deep surface, schema hints, planted credentials | high |
-| AI agent | Skilled-human surface plus canary injections | high |
+| Attacker | Deep surface, schema hints, planted credentials | high |
 
 Set `AEGISTRAP_ADAPTIVE_DECEPTION=false` for the no-profiling ablation in Section 9.
 
@@ -86,7 +83,7 @@ Copy `.env.example` to `.env`. All keys are prefixed `AEGISTRAP_`.
 | --- | --- | --- |
 | `LLM_PROVIDER` | `offline` | `offline` / `anthropic` / `openai` / `ollama` |
 | `PERSONA` | `fintech` | `fintech` or `ecommerce` |
-| `ADAPTIVE_DECEPTION` | `true` | Persona-gated vulnerability surface |
+| `ADAPTIVE_DECEPTION` | `true` | Class-gated vulnerability surface |
 | `FINGERPRINT_EVASION` | `false` | Mutate banners per session |
 | `DASHBOARD_TOKEN` | empty | Shared secret for `/dashboard` (recommended if exposed) |
 | `ANONYMISE_IPS` | `false` | Truncate captured source addresses |
@@ -100,7 +97,8 @@ Hosted providers are for prototype quality. For a real deployment, use Ollama or
 python -m aegistrap serve --host 127.0.0.1 --port 8000
 python -m aegistrap                          # same as serve
 python -m aegistrap eval --output artifacts/eval
-python -m aegistrap train-profiler           # optional scikit-learn arm
+python -m aegistrap train-profiler           # synthetic benign vs attacker
+python -m aegistrap train-profiler --csic-dir path\to\csic2010
 python -m aegistrap report <session-id>
 ```
 
@@ -110,7 +108,7 @@ Always start with `python -m aegistrap`, not a raw `uvicorn` invocation. Uvicorn
 
 `python -m aegistrap eval` writes `artifacts/eval/results.md` with:
 
-- **Profiling accuracy** — precision / recall against synthetic labelled sessions
+- **Profiling accuracy** — precision / recall / F1 against labelled benign vs attacker sessions
 - **Auto-report F1** — ATT&CK tags vs request-only ground truth
 - **Consistency** — GET → transfer → GET on the fake ledger
 - **Latency** — p50 / p95 of the live decoy path

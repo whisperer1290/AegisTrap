@@ -13,6 +13,7 @@ distilled from heuristic decisions, so the forest can disagree with the rules.
 
 from __future__ import annotations
 
+from collections import Counter
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -110,11 +111,14 @@ class MLProfiler:
             key=lambda kv: kv[1],
             reverse=True,
         )
+        majority_class, majority_count = Counter(y_test).most_common(1)[0]
         metrics = {
             "source": source,
             "samples": len(dataset),
             "train_size": len(X_train),
             "test_size": len(X_test),
+            "majority_class": majority_class,
+            "majority_baseline": round(majority_count / len(y_test), 4),
             "holdout_report": report,
             "top_features": [
                 {"feature": name, "importance": round(float(value), 4)}

@@ -49,10 +49,11 @@ class AppRuntime:
 def build_runtime(
     settings: Settings | None = None,
     *,
-    profiler_mode: ProfilerMode = "heuristic",
+    profiler_mode: ProfilerMode | None = None,
     store: StateStore | None = None,
 ) -> AppRuntime:
     settings = settings or get_settings()
+    mode: ProfilerMode = profiler_mode or settings.profiler_mode
     settings.ensure_directories()
     store = store or get_store(settings.db_path)
 
@@ -71,7 +72,7 @@ def build_runtime(
     return AppRuntime(
         settings=settings,
         store=store,
-        profiler=AttackerProfiler(store, mode=profiler_mode, adaptive=settings.adaptive_deception),
+        profiler=AttackerProfiler(store, mode=mode, adaptive=settings.adaptive_deception),
         engine=ResponseEngine(settings, response_provider, store),
         reporter=ThreatIntelReporter(settings, reporter_provider, store),
         evasion=FingerprintMutator(

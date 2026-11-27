@@ -21,6 +21,7 @@ import statistics
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 from typing import Any
+from urllib.parse import unquote_plus
 
 from aegistrap.decoy.canary import canary_present
 from aegistrap.profiler.signatures import (
@@ -332,6 +333,20 @@ def extract_features(events: Iterable[Event], *, session_id: str = "") -> Sessio
     for event in history:
         blob = f"{event.path}?{event.query_string} {event.body}"
         matches = scan_payload(blob)
+        # Public corpora (notably CSIC 2010) percent-encode payloads, so the
+        # raw blob can miss a textbook attack. Re-scan up to two decoded
+        # layers while keeping the raw pass for encoding-evasion signals.
+        seen = {match.name for match in matches}
+        decoded = blob
+        for _ in range(2):
+            decoded_next = unquote_plus(decoded)
+            if decoded_next == decoded:
+                break
+            decoded = decoded_next
+            for match in scan_payload(decoded):
+                if match.name not in seen:
+                    matches.append(match)
+                    seen.add(match.name)
         if matches:
             payload_requests += 1
             for match in matches:

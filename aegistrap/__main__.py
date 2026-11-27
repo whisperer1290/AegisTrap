@@ -168,6 +168,8 @@ def _train(argv: list[str]) -> int:
                 "train_size": metrics["train_size"],
                 "test_size": metrics["test_size"],
                 "accuracy": holdout.get("accuracy"),
+                "majority_baseline": metrics.get("majority_baseline"),
+                "majority_class": metrics.get("majority_class"),
                 "macro_f1": (holdout.get("macro avg") or {}).get("f1-score"),
                 "weighted_f1": (holdout.get("weighted avg") or {}).get("f1-score"),
                 "per_class": {

@@ -52,7 +52,7 @@ _ALL_METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"]
 def create_app(
     settings: Settings | None = None,
     *,
-    profiler_mode: ProfilerMode = "heuristic",
+    profiler_mode: ProfilerMode | None = None,
     runtime: AppRuntime | None = None,
 ) -> FastAPI:
     settings = settings or get_settings()

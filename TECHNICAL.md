@@ -210,7 +210,7 @@ python -m aegistrap train-profiler --csic-dir path\to\csic2010 --output data/pro
 
 Put `normalTrafficTraining.txt`, `normalTrafficTest.txt`, and `anomalousTrafficTest.txt` in that folder. The command prints holdout accuracy, per-class precision/recall/F1, and the top features — those numbers go in the paper. Mix generators on top of CSIC with `--include-synthetic` only if you want that ablation; the paper result should be CSIC-only.
 
-Then set profiler mode to `ml` or `hybrid` when constructing the app (see [§8.4](#84-optional-ml-arm-random-forest)). Heuristics remain the default.
+Then set `AEGISTRAP_PROFILER_MODE=ml` (or `hybrid`) in `.env`, or pass `profiler_mode=` when constructing the app (see [§8.4](#84-optional-ml-arm-random-forest)). Heuristics remain the default.
 
 ### 2.10 Generate a report for a stored session
 

@@ -127,10 +127,39 @@ def _csic_sessions(kind: str, count: int) -> str:
     return "\n".join(blocks)
 
 
+def test_unique_jsessionids_fall_back_to_fixed_windows() -> None:
+    """CSIC mints a fresh cookie per request; don't emit 1-request sessions."""
+    records = parse_csic_http_dump(_csic_sessions("normal", 25))
+    sessions = sessions_from_records(records, label=AttackerPersona.BENIGN)
+    assert len(sessions) == 3
+    assert sorted(len(events) for _, events in sessions) == [5, 10, 10]
+
+
+def test_encoded_sqli_payload_is_detected_after_decoding() -> None:
+    records = parse_csic_http_dump(_ATTACK_DUMP)
+    _, events = sessions_from_records(records, label=AttackerPersona.ATTACKER)[0]
+    features = extract_features(events)
+    assert "sqli" in features.payload_families
+
+
+def test_double_encoded_xss_payload_is_detected_after_decoding() -> None:
+    dump = (
+        "GET http://localhost:8080/tienda1/publico/registro.jsp?"
+        "login=%253Cscript%253Ealert%25281%2529%253C%252Fscript%253E HTTP/1.1\n"
+        "User-Agent: Mozilla/5.0 (compatible; Konqueror/3.5; Linux)\n"
+        "Host: localhost:8080\nCookie: JSESSIONID=DDDD4444\nConnection: close\n"
+    )
+    records = parse_csic_http_dump(dump)
+    _, events = sessions_from_records(records, label=AttackerPersona.ATTACKER)[0]
+    features = extract_features(events)
+    assert "xss" in features.payload_families
+    assert "xss_script_tag" in features.matched_signatures
+
+
 @pytest.mark.skipif(not sklearn_available(), reason="scikit-learn is not installed")
 def test_random_forest_trains_on_csic_sessions(tmp_path: Path) -> None:
-    (tmp_path / "normalTrafficTraining.txt").write_text(_csic_sessions("normal", 16), encoding="latin-1")
-    (tmp_path / "anomalousTrafficTest.txt").write_text(_csic_sessions("attack", 16), encoding="latin-1")
+    (tmp_path / "normalTrafficTraining.txt").write_text(_csic_sessions("normal", 100), encoding="latin-1")
+    (tmp_path / "anomalousTrafficTest.txt").write_text(_csic_sessions("attack", 100), encoding="latin-1")
     sessions = load_csic_directory(tmp_path)
     model, metrics = MLProfiler.train(
         labelled_sessions=sessions, source="csic2010", n_estimators=20, seed=20260831

@@ -127,15 +127,34 @@ def sessions_from_records(
     label: AttackerPersona,
     source: str = "csic",
 ) -> list[tuple[AttackerPersona, list[Event]]]:
-    grouped: dict[str, list[dict[str, str | dict[str, str]]]] = defaultdict(list)
+    keyed: list[tuple[str, dict[str, str | dict[str, str]]]] = []
     unkeyed: list[dict[str, str | dict[str, str]]] = []
     for record in records:
         headers = dict(record["headers"])  # type: ignore[arg-type]
         key = _cookie_session_key(headers)
         if key:
-            grouped[key].append(record)
+            keyed.append((key, record))
         else:
             unkeyed.append(record)
+
+    # CSIC 2010 mints a fresh JSESSIONID for every request, so cookie grouping
+    # would produce one-request "sessions" and erase every session-level
+    # feature. Only trust the cookie when it actually groups more than one
+    # request; otherwise fall back to fixed-size windows over the whole dump.
+    cookie_keys = [key for key, _ in keyed]
+    if len(set(cookie_keys)) == len(cookie_keys):
+        if keyed:
+            log.info(
+                "%s: no repeated session cookies; using %d-request windows",
+                source,
+                _WINDOW,
+            )
+        unkeyed = list(records)
+        keyed = []
+
+    grouped: dict[str, list[dict[str, str | dict[str, str]]]] = defaultdict(list)
+    for key, record in keyed:
+        grouped[key].append(record)
 
     sessions: list[tuple[AttackerPersona, list[Event]]] = []
     for key, chunk in grouped.items():

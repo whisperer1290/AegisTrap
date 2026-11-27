@@ -82,6 +82,7 @@ Copy `.env.example` to `.env`. All keys are prefixed `AEGISTRAP_`.
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `LLM_PROVIDER` | `offline` | `offline` / `anthropic` / `openai` / `ollama` |
+| `PROFILER_MODE` | `heuristic` | `heuristic` / `ml` / `hybrid` (ML needs `train-profiler`) |
 | `PERSONA` | `fintech` | `fintech` or `ecommerce` |
 | `ADAPTIVE_DECEPTION` | `true` | Class-gated vulnerability surface |
 | `FINGERPRINT_EVASION` | `false` | Mutate banners per session |

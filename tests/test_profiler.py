@@ -543,3 +543,23 @@ def test_profiling_a_live_session_is_fast_enough_to_be_inline(store) -> None:
         profiler.profile(session.id)
     per_call_ms = (time.perf_counter() - started) * 100
     assert per_call_ms < 60, per_call_ms
+
+
+def test_build_runtime_reads_profiler_mode_from_settings(settings, monkeypatch) -> None:
+    from aegistrap import app_state
+
+    captured: dict[str, str] = {}
+
+    class _CaptureProfiler:
+        def __init__(self, store, *, mode, adaptive):
+            captured["mode"] = mode
+            self.mode = mode
+
+    monkeypatch.setattr(app_state, "AttackerProfiler", _CaptureProfiler)
+    configured = settings.model_copy(update={"profiler_mode": "hybrid"})
+    runtime = app_state.build_runtime(configured)
+    try:
+        assert captured["mode"] == "hybrid"
+        assert runtime.profiler.mode == "hybrid"
+    finally:
+        runtime.store.close()

@@ -15,6 +15,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ProviderName = Literal["offline", "anthropic", "openai", "ollama"]
 PersonaName = Literal["fintech", "ecommerce"]
+ProfilerModeName = Literal["heuristic", "ml", "hybrid"]
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
@@ -49,6 +50,11 @@ class Settings(BaseSettings):
     llm_temperature: float = 0.4
     llm_cache_enabled: bool = True
     llm_cache_ttl_seconds: int = 900
+
+    # --- attacker profiler ---------------------------------------------------
+    #: heuristic (default) | ml | hybrid. The ML modes require a trained model
+    #: at data/profiler_model.joblib; otherwise the profiler falls back to rules.
+    profiler_mode: ProfilerModeName = "heuristic"
 
     # --- deception behaviour -------------------------------------------------
     persona: PersonaName = "fintech"

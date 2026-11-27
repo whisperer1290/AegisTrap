@@ -6,6 +6,9 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 
+# macOS metadata
+.DS_Store
+
 # Local secrets — never commit provider API keys
 .env
 
